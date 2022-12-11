@@ -21,7 +21,7 @@ public class Sound {
     
     public Sound()
     {
-        String pathName = "src/main/java/Assets/";
+        String pathName = "src/main/java/Assets/Sounds";
         soundFile[0] =  new File(pathName +"Catch_it.wav");
         soundFile[1] =  new File(pathName +"Taratata.wav");
     }
