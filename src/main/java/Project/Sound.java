@@ -3,7 +3,6 @@ package Project;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -21,7 +20,7 @@ public class Sound {
     
     public Sound()
     {
-        String pathName = "src/main/java/Assets/Sounds";
+        String pathName = "src/main/java/Assets/Sounds/";
         soundFile[0] =  new File(pathName +"Catch_it.wav");
         soundFile[1] =  new File(pathName +"Taratata.wav");
     }
