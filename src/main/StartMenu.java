@@ -71,7 +71,7 @@ public class StartMenu extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == startBtu)
         {
-            gameManager.sound.stopSound();
+            //gameManager.sound.stopSound();
             gameManager = new GameManager(false, true);
             gameManager.time.start();
             

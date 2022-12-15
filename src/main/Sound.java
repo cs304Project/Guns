@@ -9,10 +9,7 @@ import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-/**
- *
- * @author hossa
- */
+//this class is going to use for sound effects in the game
 public class Sound {
     
     Clip clip;
@@ -40,14 +37,11 @@ public class Sound {
         }
         catch (Exception e)
         {
-            System.out.println("OUT OF CONTROL");
+            System.out.println("The sound has error");
         }
         
-         
         
     }
-    
-    
     
     private void start()
     {

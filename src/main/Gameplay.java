@@ -1,10 +1,15 @@
 
 package Main;
 
+import Main.Enemys.Enemy;
+import com.sun.opengl.util.Animator;
+import com.sun.opengl.util.FPSAnimator;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.media.opengl.GLCanvas;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,12 +23,26 @@ public class Gameplay extends JFrame implements ActionListener {
     
     JButton menuBtu;
     GameManager gameManager;
+    MainCode mc;
     
     public Gameplay(JLabel textTime , GameManager gameManager)
     {
-        super("GamePlay");
         
         this.gameManager = gameManager;
+        mc = new MainCode();
+        
+        GLCanvas glcanvas;
+        Animator animator;
+        glcanvas = new GLCanvas();
+        getContentPane().add(glcanvas, BorderLayout.CENTER);
+        glcanvas.addGLEventListener(mc);
+        mc.setCanvas(glcanvas);
+        
+        animator = new FPSAnimator(60);
+        animator.add(glcanvas);
+        animator.start();
+        
+        
         
         menuBtu = new JButton();
         menuBtu.setBounds(10, 10, 60, 40);
@@ -33,15 +52,21 @@ public class Gameplay extends JFrame implements ActionListener {
         title.setBounds(140,200 , 400 , 40);
         title.setFont(new Font("", Font.BOLD, 20));
         
-        add(textTime);
-        add(menuBtu);
-        add(title);
+          
+          //add(textTime);
+          add(menuBtu);
+          //add(title);
+          add(glcanvas);
         
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(null);
-        this.setSize(500, 500);
-        this.setVisible(true);
+        setTitle("Guns");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(500, 500);
         setLocationRelativeTo(null);
+        setVisible(true);
+        setFocusable(true);
+        glcanvas.requestFocus();
+                
+        
     }
     
     public final JButton createBtu(JButton btu , String text)
@@ -63,7 +88,7 @@ public class Gameplay extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == menuBtu)
         {
-            gameManager.sound.stopSound();
+            //gameManager.sound.stopSound();
             gameManager =  new GameManager(true, false);
             gameManager.time.stop();
             this.dispose();
