@@ -1,7 +1,7 @@
-package Main;
+package main;
 
-import Main.Enemys.Enemy;
-import Main.Keys.HandleKeys;
+import main.Enemys.Enemy;
+import main.Keys.HandleKeys;
 import Textures.AnimListener;
 import Textures.TextureReader;
 import java.io.IOException;

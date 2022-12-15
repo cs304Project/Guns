@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package main.Players;
-import Main.Keys.HandleKeys;
+import main.Keys.HandleKeys;
 import Textures.TextureReader;
 import java.util.ArrayList;
 import java.util.Objects;

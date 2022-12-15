@@ -1,7 +1,7 @@
-package Main.Enemys;
+package main.Enemys;
 
 
-import Main.Keys.HandleKeys;
+import main.Keys.HandleKeys;
 import javax.media.opengl.GL;
 import main.Players.Collision;
 
