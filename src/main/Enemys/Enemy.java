@@ -12,8 +12,8 @@ public class Enemy  {
     //Enemy setting
     float xWorld;
     float yWorld;
-    float scale = 0.1f;
-    float speed;
+   public float scale = 0.1f;
+    public float speed;
     float angle;
     float startAngle = 90;
     
@@ -23,7 +23,7 @@ public class Enemy  {
     //default object to attach the class with the maincode class
     GL gl;
     
-    final int textureIndex = 2;
+    final int textureIndex = 6;
     
     public Enemy(GL  gl, HandleKeys key, float x, float y)
     {
