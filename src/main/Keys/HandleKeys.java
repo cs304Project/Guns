@@ -15,6 +15,8 @@ public class HandleKeys implements KeyListener {
     public final int DOWN = KeyEvent.VK_DOWN;
     public final int LEFT = KeyEvent.VK_LEFT;
     public final int RIGHT = KeyEvent.VK_RIGHT;
+    public final int SPACE = KeyEvent.VK_SPACE;
+
        
     
     final BitSet keyBits = new BitSet(256);
