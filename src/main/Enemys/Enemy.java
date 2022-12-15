@@ -3,6 +3,7 @@ package Main.Enemys;
 
 import Main.Keys.HandleKeys;
 import javax.media.opengl.GL;
+import main.Players.Collision;
 
 
 
@@ -19,6 +20,7 @@ public class Enemy  {
     
     //Keyboard orders
     HandleKeys key;
+    public Collision c= new Collision(xWorld*speed*scale,yWorld*speed*scale,0.09f);
     
     //default object to attach the class with the maincode class
     GL gl;
@@ -42,7 +44,7 @@ public class Enemy  {
        this.key = key;
        this.gl = gl;
        
-       xWorld = 0f;
+       xWorld = -100f;
        yWorld = 100f;
        speed = 0.05f;
        angle = 0; 
@@ -97,8 +99,11 @@ public class Enemy  {
         gl.glPopMatrix();
         
         gl.glDisable(GL.GL_BLEND);
+        c.drawCirclie(gl,xWorld*speed*scale,yWorld*speed*scale);
+
         
     }
+    
     
     public void move()
     {
