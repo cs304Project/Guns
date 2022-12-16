@@ -15,7 +15,7 @@ public class Collision {
     
     float x ;
     float y ;
-    float r;
+    float r ;
     public Collision(float x,float y,float radius){
         this.x =x;
         this.y =y;
@@ -23,8 +23,9 @@ public class Collision {
         
     }
     
-    public void drawCirclie(GL gl) {
-
+    public void drawCirclie(GL gl ,float x,float y) {
+        this.x =x;
+        this.y =y;
         gl.glBegin(GL.GL_LINE_LOOP);
 
         for (int i = 0; i < 360; i ++) {
@@ -38,6 +39,7 @@ public class Collision {
      public static void resolveColision(Collision c1,Collision c2){
 
         if(( Math.abs(c1.x-c2.x)<=c1.r+c2.r )&&( Math.abs(c1.y-c2.y)<=c1.r+c2.r )){
+
             
         }
         

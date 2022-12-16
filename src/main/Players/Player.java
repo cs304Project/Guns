@@ -1,6 +1,8 @@
 package main.Players;
 
-import Main.Keys.HandleKeys;
+import main.Enemys.Enemy;
+import main.Keys.HandleKeys;
+import main.MainCode;
 import javax.media.opengl.GL;
 
 public class Player {
@@ -10,10 +12,14 @@ public class Player {
     float yWorld;
     public float scale = 0.1f;
     public float speed = 0.09f;
+    public boolean damege = false;
+    public int powerUp = 3;
 
     //Keyboard orders
     HandleKeys key;
     //default object to attach the class with the maincode class
+    public Collision c = new Collision(0 * speed * scale, 0 * speed * scale, 0.09f);
+
     GL gl;
 
     int textureIndex = 1;
@@ -33,9 +39,8 @@ public class Player {
         this.gl = gl;
 
         xWorld = 0f;
-        yWorld = 0f;
+        yWorld = -100f;
         speed = 0.09f;
-
     }
 
     public void setXWorld(float x) {
@@ -67,6 +72,7 @@ public class Player {
         gl.glScaled(scale, scale, 1);
         gl.glBegin(GL.GL_QUADS);
         // Front Face
+
         gl.glTexCoord2f(0.0f, 0.0f);
         gl.glVertex3f(-1.0f, -1.0f, -1.0f);
         gl.glTexCoord2f(1.0f, 0.0f);
@@ -77,15 +83,15 @@ public class Player {
         gl.glVertex3f(-1.0f, 1.0f, -1.0f);
         gl.glEnd();
         gl.glPopMatrix();
-
         gl.glDisable(GL.GL_BLEND);
+        c.drawCirclie(gl, xWorld * scale * speed, yWorld * scale * speed);
 
     }
 
     public void move(double maxX, double maxY) {
 
         if (key.isKeyPressed(key.UP)) {
-            if (yWorld < maxY ) {
+            if (yWorld < maxY) {
 
                 yWorld++;
                 textureIndex++;
@@ -100,18 +106,35 @@ public class Player {
                 textureIndex = (textureIndex % 4) + 1;
             }
         } else if (key.isKeyPressed(key.LEFT)) {
-            if (xWorld+5 > -100) {
+            if (xWorld + 5 > -100) {
 
                 xWorld--;
                 textureIndex = (textureIndex % 4) + 1;
             }
         } else if (key.isKeyPressed(key.RIGHT)) {
-            if (xWorld-5 < maxX ) {
+            if (xWorld - 5 < maxX) {
 
                 xWorld++;
                 textureIndex = (textureIndex % 4) + 1;
             }
         }
+    }
+    int count = 0;
+
+    public void resolveColision(Object c2) {
+        if (c2 instanceof Enemy) {
+            if (detectCollision(((Enemy) c2).c)) {
+                MainCode.destroy((Enemy) c2);
+            }
+        }
+
+    }
+
+    public boolean detectCollision(Collision c2) {
+        double offset = 0.01;
+        double r = (c.r - offset) + (c2.r - offset);
+
+        return (Math.abs(c.x - c2.x) <= r) && (Math.abs(c.y - c2.y) <= r);
 
     }
 

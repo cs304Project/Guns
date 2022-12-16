@@ -1,7 +1,5 @@
+package main;
 
-package Main;
-
-import Main.Enemys.Enemy;
 import com.sun.opengl.util.Animator;
 import com.sun.opengl.util.FPSAnimator;
 import java.awt.BorderLayout;

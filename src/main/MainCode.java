@@ -1,7 +1,7 @@
-package Main;
+package main;
 
-import Main.Enemys.Enemy;
-import Main.Keys.HandleKeys;
+import main.Enemys.Enemy;
+import main.Keys.HandleKeys;
 import Textures.AnimListener;
 import Textures.TextureReader;
 import java.io.IOException;
@@ -11,6 +11,7 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCanvas;
 import javax.media.opengl.glu.GLU;
 import main.Players.Bullet;
+import main.Players.Collision;
 import main.Players.Player;
 
 //this calss is used to run the game in infinite loop using AnimListener
@@ -40,11 +41,11 @@ public class MainCode extends AnimListener {
 
     //player setting
     Player player = new Player(gl, key);
-    ArrayList<Bullet> bullets = new ArrayList<>();
-
+    static ArrayList<Bullet> bullets = new ArrayList<>();
 
     //Enemy setting
-    ArrayList<Enemy> enemyList = new ArrayList(1);
+    public static ArrayList<Enemy> enemyList = new ArrayList<>();
+    public static int stage1 = 4;
 
     @Override
     public void init(GLAutoDrawable glad) {
@@ -56,7 +57,12 @@ public class MainCode extends AnimListener {
         gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
         readTexture(textureNames, textures, texture);
 
+        for (int i = 0; i < stage1; i++) {
+            createEnemy(20*i, 20*i);
+        }
+
         gl.glLoadIdentity();
+
     }
 
     //Run the code in this method
@@ -70,10 +76,11 @@ public class MainCode extends AnimListener {
 
         //Draw the player
         player.drawPlayer(gl);
-        player.move(maxX,maxY);
+        player.move(maxX, maxY);
         drawBullet();
         //Draw enemies
-        drawEnemy(0);
+         drawEnemy(stage1);
+
 
     }
 
@@ -108,25 +115,21 @@ public class MainCode extends AnimListener {
         gl.glDisable(GL.GL_BLEND);
     }
 
-    public void drawEnemy(int enemyNum) {
+    public void drawEnemy(int stage1) {
 
-        if (enemyList.size() - 1 < enemyNum) {
-            createEnemy(50, 50);
+        for (int i = 0; i < enemyList.size(); i++) {
+            enemyList.get(i).setXWorld(enemyList.get(i).getXWorld());
+            enemyList.get(i).setYWorld(enemyList.get(i).getYWorld());
+            enemyList.get(i).drawSprite(gl);
+            player.resolveColision(enemyList.get(i));
         }
-        enemyList.get(enemyNum).move();
-        float x = enemyList.get(enemyNum).getXWorld();
-        float y = enemyList.get(enemyNum).getYWorld();
-        enemyList.get(enemyNum).setXWorld(x);
-        enemyList.get(enemyNum).setYWorld(y);
-        enemyList.get(enemyNum).drawSprite(gl);
-       
     }
 
     public void drawBullet() {
         if (key.isKeyPressed(key.SPACE)) {
             float bulletX = player.getXWorld() * player.scale * player.speed;
-            float bulletY =player.getYWorld() * player.scale * player.speed;
-            Bullet bullet = new Bullet(gl,bulletX ,bulletY );
+            float bulletY = player.getYWorld() * player.scale * player.speed;
+            Bullet bullet = new Bullet(gl, bulletX, bulletY);
             bullets.add(bullet);
         }
         for (int i = 0; i < bullets.size(); i++) {
@@ -138,8 +141,9 @@ public class MainCode extends AnimListener {
         }
     }
 
-    public void destroy(Object ob) {
+    public static void destroy(Object ob) {
         if (ob instanceof Enemy) {
+
             enemyList.remove(ob);
 
         }
@@ -152,7 +156,6 @@ public class MainCode extends AnimListener {
     public void createEnemy(float x, float y) {
         Enemy enemy = new Enemy(gl, key, x, y);
         enemyList.add(enemy);
-        
 
     }
 
