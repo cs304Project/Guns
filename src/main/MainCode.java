@@ -1,7 +1,7 @@
-package Main;
+package main;
 
-import Main.Enemys.Enemy;
-import Main.Keys.HandleKeys;
+import main.Enemys.Enemy;
+import main.Keys.HandleKeys;
 import Textures.AnimListener;
 import Textures.TextureReader;
 import java.io.IOException;
@@ -11,7 +11,9 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCanvas;
 import javax.media.opengl.glu.GLU;
 import main.Players.Bullet;
+import main.Players.Collision;
 import main.Players.Player;
+import main.Players.PowerUp;
 
 //this calss is used to run the game in infinite loop using AnimListener
 //display, init, reshape and displayChanged  are abtract method from GLeventLisener into AnimListener class
@@ -30,7 +32,7 @@ public class MainCode extends AnimListener {
     String textureNames[] = {
         "Man1.png", "Man2.png", "Man3.png", "Man4.png",
         "back1.jpg", "24.png",
-        "bullet.png"};
+        "bullet.png", "present.png", "healthy.png"};
 
     TextureReader.Texture texture[] = new TextureReader.Texture[textureNames.length];
     int textures[] = new int[textureNames.length];
@@ -40,12 +42,13 @@ public class MainCode extends AnimListener {
 
     //player setting
     Player player = new Player(gl, key);
-    ArrayList<Bullet> bullets = new ArrayList<>();
-
+    static ArrayList<Bullet> bullets = new ArrayList<>();
 
     //Enemy setting
-    ArrayList<Enemy> enemyList = new ArrayList(1);
-
+    public static ArrayList<Enemy> enemyList = new ArrayList<>();
+    public static int stage1 = 4;
+    
+    static ArrayList<PowerUp> presents = new ArrayList<>();
     @Override
     public void init(GLAutoDrawable glad) {
 
@@ -56,7 +59,12 @@ public class MainCode extends AnimListener {
         gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
         readTexture(textureNames, textures, texture);
 
+        for (int i = 0; i < stage1; i++) {
+            createEnemy(20 * i, 20 * i);
+        }
+
         gl.glLoadIdentity();
+
     }
 
     //Run the code in this method
@@ -70,11 +78,14 @@ public class MainCode extends AnimListener {
 
         //Draw the player
         player.drawPlayer(gl);
-        player.move(maxX,maxY);
+        player.move(maxX, maxY);
         drawBullet();
         //Draw enemies
-        drawEnemy(0);
+        drawEnemy(stage1);
 
+        fillPresentsArray(2);
+        drawPresent(0);
+        drawPresent(1);
     }
 
     public void setCanvas(GLCanvas canvas) {
@@ -108,25 +119,21 @@ public class MainCode extends AnimListener {
         gl.glDisable(GL.GL_BLEND);
     }
 
-    public void drawEnemy(int enemyNum) {
+    public void drawEnemy(int stage1) {
 
-        if (enemyList.size() - 1 < enemyNum) {
-            createEnemy(50, 50);
+        for (int i = 0; i < enemyList.size(); i++) {
+            enemyList.get(i).setXWorld(enemyList.get(i).getXWorld());
+            enemyList.get(i).setYWorld(enemyList.get(i).getYWorld());
+            enemyList.get(i).drawSprite(gl);
+            player.resolveColision(enemyList.get(i));
         }
-        enemyList.get(enemyNum).move();
-        float x = enemyList.get(enemyNum).getXWorld();
-        float y = enemyList.get(enemyNum).getYWorld();
-        enemyList.get(enemyNum).setXWorld(x);
-        enemyList.get(enemyNum).setYWorld(y);
-        enemyList.get(enemyNum).drawSprite(gl);
-       
     }
 
     public void drawBullet() {
         if (key.isKeyPressed(key.SPACE)) {
             float bulletX = player.getXWorld() * player.scale * player.speed;
-            float bulletY =player.getYWorld() * player.scale * player.speed;
-            Bullet bullet = new Bullet(gl,bulletX ,bulletY );
+            float bulletY = player.getYWorld() * player.scale * player.speed;
+            Bullet bullet = new Bullet(gl, bulletX, bulletY);
             bullets.add(bullet);
         }
         for (int i = 0; i < bullets.size(); i++) {
@@ -138,22 +145,41 @@ public class MainCode extends AnimListener {
         }
     }
 
-    public void destroy(Object ob) {
+    public void drawPresent(int present) {
+
+        presents.get(present).drawPresent(gl);
+        presents.get(present).movePresent();
+        if (presents.get(present).getyPresent() < minY - 1) {
+            float speed = presents.get(present).getSpeed();
+            destroy(presents.get(present));
+        }
+        player.resolveColision(presents.get(present));
+        //System.out.println("score: "+ presents.get(present).getPowerScore());
+    }
+
+    public static void destroy(Object ob) {
         if (ob instanceof Enemy) {
+
             enemyList.remove(ob);
 
         }
         if (ob instanceof Bullet) {
             bullets.remove(ob);
-
+        }
+         if (ob instanceof PowerUp) {
+            presents.remove(ob);
         }
     }
 
     public void createEnemy(float x, float y) {
         Enemy enemy = new Enemy(gl, key, x, y);
         enemyList.add(enemy);
-        
 
+    }
+
+    public void createPresent(float x, float y, float spead, boolean hitted) {
+        PowerUp present = new PowerUp(gl, x, y, spead, hitted);
+        presents.add(present);
     }
 
     //Set the texture and read it 
@@ -203,4 +229,27 @@ public class MainCode extends AnimListener {
         //useless method
     }
 
+    public void fillPresentsArray(int n) {
+        int max = 1;
+        int min = -1;
+        for (int i = 0; i < n; i++) {
+            float speed = 0.01f;
+            float positiony = 1f;
+            float positionX = (float) (Math.random() * (max - (min))) + (min);
+            createPresent(positionX, positiony, speed, false);
+            speed += 0.5f; //does not change
+            positiony += 0.5;
+        }
+//        for (int i = 0; i < n; i++) {
+//            System.out.println("i: " + i);
+//            System.out.println("speed:" + presents.get(i).getSpeed());
+//            System.out.println("y: " + presents.get(i).getyPresent());
+//            System.out.println("x: " + presents.get(i).getxPresent());
+//        }
+//        createPresent(0.1f, 1f, 0.5f, false);
+//        createPresent(0.1f, 1f, 0.5f, false);
+//        createPresent(1f,   1f, 2f, false);
+//        createPresent(0.3f, 2f, 0.4f, false);
+//        createPresent(-0.3f, 2f, 0.4f, false);
+    }
 }
