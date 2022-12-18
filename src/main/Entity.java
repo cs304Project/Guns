@@ -1,7 +1,7 @@
 
-package Main;
+package main;
 
-import Main.Enemys.Enemy;
+import main.Enemys.Enemy;
 import Textures.TextureReader;
 import java.io.IOException;
 import java.util.ArrayList;

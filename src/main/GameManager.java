@@ -1,5 +1,5 @@
 
-package Main;
+package main;
 
 
 public class GameManager {

@@ -1,8 +1,8 @@
 package main.Players;
 
-import Main.Enemys.Enemy;
-import Main.Entity;
-import Main.Keys.HandleKeys;
+import main.Enemys.Enemy;
+import main.Entity;
+import main.Keys.HandleKeys;
 import java.util.ArrayList;
 import javax.media.opengl.GL;
 

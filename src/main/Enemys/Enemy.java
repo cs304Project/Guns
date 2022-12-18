@@ -1,10 +1,10 @@
-package Main.Enemys;
+package main.Enemys;
 
 
-import Main.Entity;
-import Main.Keys.HandleKeys;
-import Main.MainCode;
-import Main.Timing;
+import main.Entity;
+import main.Keys.HandleKeys;
+import main.MainCode;
+import main.Timing;
 import java.util.ArrayList;
 import javax.media.opengl.GL;
 import main.Players.Bullet;

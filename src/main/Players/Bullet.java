@@ -5,7 +5,7 @@
  */
 package main.Players;
 
-import Main.Keys.HandleKeys;
+import main.Keys.HandleKeys;
 import javax.media.opengl.GL;
 
 
