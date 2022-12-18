@@ -73,7 +73,7 @@ public class StartMenu extends JFrame implements ActionListener{
         {
             //gameManager.sound.stopSound();
             gameManager = new GameManager(false, true);
-            gameManager.time.start();
+            gameManager.time.start( gameManager.time.time);
             
             
             this.dispose();

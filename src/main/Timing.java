@@ -18,12 +18,13 @@ import javax.swing.Timer;
 public class Timing  extends JFrame{
     
     public JLabel timeText;
-    public int seconds = 0;;
+    public int seconds = 0;
+    public float melliseconds = 0;
     String secondText = String.format("%02d", seconds);;
-    int consumingTime = 0;
+    public int consumingTime = 0;
     
     
-    Timer time = new Timer(1000 , new ActionListener(){
+    public Timer time = new Timer(100 , new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 consumingTime += 1000;
@@ -35,7 +36,12 @@ public class Timing  extends JFrame{
                 timeText.setText(secondText);
             }
         }); 
-   
+   public Timer melliTime = new Timer(1,new ActionListener(){
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            melliseconds++;
+        }
+   });
     
     public Timing(){
         
@@ -48,17 +54,18 @@ public class Timing  extends JFrame{
     }
     
     
-    public void start()
+    public void start(Timer t)
     {
         
-        this.time.start();
+        t.start();
         Println("GAME IS RUNNING");
     }
     
-    public void stop()
+    
+    public void stop(Timer t)
     {
         
-        this.time.stop();
+        t.stop();
         Println("GAME IS STOPPING");
         
     }

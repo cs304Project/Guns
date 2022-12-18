@@ -26,6 +26,7 @@ public class MainCode extends AnimListener {
     double maxY = 100;
     GL gl;
     GLCanvas canvas;
+    Timing t = new Timing();
 
     //texture setting
     String textureNames[] = {
@@ -45,11 +46,12 @@ public class MainCode extends AnimListener {
 
     //Enemy setting
     public static ArrayList<Enemy> enemyList = new ArrayList<>();
+    public static ArrayList<Bullet> enemyBullets = new ArrayList<>();
     public static int stage1 = 4;
 
     @Override
     public void init(GLAutoDrawable glad) {
-
+        t.start(t.time);
         gl = glad.getGL();
         gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);    //This Will Clear The Background Color To Black
         gl.glOrtho(minX, maxX, minY, maxY, 0, 0);
@@ -77,10 +79,11 @@ public class MainCode extends AnimListener {
         //Draw the player
         player.drawPlayer(gl);
         player.move(maxX, maxY);
+        
         drawBullet();
         //Draw enemies
          drawEnemy(stage1);
-
+        
 
     }
 
@@ -116,11 +119,12 @@ public class MainCode extends AnimListener {
     }
 
     public void drawEnemy(int stage1) {
-
+        
         for (int i = 0; i < enemyList.size(); i++) {
             enemyList.get(i).setXWorld(enemyList.get(i).getXWorld());
             enemyList.get(i).setYWorld(enemyList.get(i).getYWorld());
             enemyList.get(i).drawSprite(gl);
+            enemyList.get(i).AutoAttack(gl, enemyBullets);
             player.resolveColision(enemyList.get(i));
         }
     }

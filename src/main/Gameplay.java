@@ -88,7 +88,6 @@ public class Gameplay extends JFrame implements ActionListener {
         {
             //gameManager.sound.stopSound();
             gameManager =  new GameManager(true, false);
-            gameManager.time.stop();
             this.dispose();
         }
         

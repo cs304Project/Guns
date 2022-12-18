@@ -1,9 +1,13 @@
 package main.Enemys;
 
 
+import java.util.ArrayList;
 import main.Keys.HandleKeys;
 import javax.media.opengl.GL;
+import main.MainCode;
+import main.Players.Bullet;
 import main.Players.Collision;
+import main.Timing;
 
 
 
@@ -17,6 +21,9 @@ public class Enemy  {
     public float speed;
     float angle;
     float startAngle = 90;
+    Timing time;
+    int rem = (int)(Math.random()*10);
+    int fireRate=500+(int)(Math.random()*20000000);
     
     //Keyboard orders
     HandleKeys key;
@@ -36,7 +43,8 @@ public class Enemy  {
        yWorld = y;
        speed = 0.05f;
        angle = 0; 
-       
+       time= new Timing();
+       time.start(time.melliTime);
     }
     
     public Enemy(GL  gl, HandleKeys key)
@@ -48,7 +56,8 @@ public class Enemy  {
        yWorld = 100f;
        speed = 0.05f;
        angle = 0; 
-       
+       time= new Timing();
+       time.start(time.melliTime);
     }
     
     public void setXWorld(float x)
@@ -166,6 +175,24 @@ public class Enemy  {
         }
        
     }
-            
+    
+    public void AutoAttack(GL gl,ArrayList<Bullet> bullets){
+        float bulletX = getXWorld() * scale * speed;
+        float bulletY = getYWorld() * scale * speed;
+        if(fireRate==500){
+            Bullet bullet = new Bullet(gl, bulletX, bulletY);
+            bullets.add(bullet);
+        }
+        for(int i=0;i<bullets.size();i++){
+            bulletY-=0.001f;
+            bullets.get(i).setYWorld(bullets.get(i).getYWorld() - 0.001f);
+            bullets.get(i).drawBullet(gl);
+            if (bullets.get(i).getYWorld() > -100) {
+                MainCode.destroy(bullets.get(i));
+            }
+        }
+        fireRate = (fireRate+1)%501;
+        System.out.println(fireRate);
+    }
     
 }
