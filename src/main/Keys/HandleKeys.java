@@ -1,9 +1,12 @@
 
-package main.Keys;
+package Main.Keys;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.BitSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import main.Players.Player;
 
 /**
  *
@@ -17,26 +20,30 @@ public class HandleKeys implements KeyListener {
     public final int RIGHT = KeyEvent.VK_RIGHT;
     public final int SPACE = KeyEvent.VK_SPACE;
 
-       
+    
     
     final BitSet keyBits = new BitSet(256);
     
     @Override
     public void keyTyped( final KeyEvent e) {
+        
     }
 
     @Override
     public void keyPressed(final KeyEvent e) {
         int keyCode = e.getKeyCode();
+        
         keyBits.set(keyCode);
        
+
+       // System.out.println(Player.fireRate);
+        
         
     }
 
     @Override
     public void keyReleased(final KeyEvent e) {
        int keyCode = e.getKeyCode();
-       
         keyBits.clear(keyCode);
     }
     

@@ -4,10 +4,8 @@
  * and open the template in the editor.
  */
 package main.Players;
-import main.Keys.HandleKeys;
-import Textures.TextureReader;
-import java.util.ArrayList;
-import java.util.Objects;
+
+import Main.Keys.HandleKeys;
 import javax.media.opengl.GL;
 
 
@@ -16,47 +14,42 @@ import javax.media.opengl.GL;
  * @author hp
  */
 public class Bullet {
+    
     float xWorld;
     float yWorld;
     float scale = 0.02f;
-   public float speed = 0.02f;
-
+    String typeBullet;
+    final float speed;
+    HandleKeys key ;
     
     //default object to attach the class with the maincode class
     GL gl;
     
     final int textureIndex = 7;
     
-    public Bullet(GL  gl, float x, float y)
+    public Bullet(GL  gl,  float x, float y , float speed, String typeBullet)
     {
        this.gl = gl;
-       
        xWorld = x;
        yWorld = y;
+       this.typeBullet = typeBullet;
+       this.speed = speed;
        
     }
-    
-    
-    public void setXWorld(float x)
-    {
-        xWorld = x;
-    }
-    
+
     public float getXWorld()
     {
         return this.xWorld;
     }
-    
-    public void setYWorld(float y)
-    {
-        yWorld = y;
-    }
-    
+
     public float getYWorld()
     {
         return this.yWorld;
     }
-    public void drawBullet(GL gl)
+    
+    
+    
+    public void drawBullet(GL gl , String typePlayer)
     {
         
         
@@ -66,7 +59,10 @@ public class Bullet {
         //gl.glColor3f(1, 1, 0);
         gl.glPushMatrix();
         
-        gl.glTranslated((xWorld ) , (yWorld ) , 1);
+        if("PlayerBullet".equals(typePlayer)) yWorld = yWorld + (speed);
+        else if("EnemyBullet".equals(typePlayer)) yWorld = yWorld - (speed) ;
+  
+        gl.glTranslated(xWorld, yWorld , 1);
         //System.out.println("xWorld: " + xWorld +  ", yWorld: " + yWorld );
         gl.glScaled(scale, scale, 1);
         gl.glBegin(GL.GL_QUADS);
@@ -86,6 +82,11 @@ public class Bullet {
         
     }
     
+    
+    
+    
+
    
+    
 }
             

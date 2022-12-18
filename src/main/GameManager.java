@@ -1,12 +1,12 @@
 
-package main;
+package Main;
 
 
 public class GameManager {
     
     public boolean menuOn;
     public boolean gameplayOn;
-    public  Timing time;
+    //public  Timing time;
     //public Sound sound = new Sound();
  
     
@@ -15,7 +15,7 @@ public class GameManager {
         
         this.menuOn = menuOn;
         this.gameplayOn = gameplayOn;
-        time = new Timing();
+        //time = new Timing();
         
         // Active the menu windows
         if(this.menuOn)
@@ -28,8 +28,8 @@ public class GameManager {
         // Active the gameplay windows
         if(this.gameplayOn)
         {
-            
-            Gameplay gameplay = new Gameplay(time.timeText , this);
+            //Gameplay gameplay = new Gameplay(time.timeText , this);
+            Gameplay gameplay = new Gameplay( this);
             //sound.playSound(1);
         }
         
@@ -39,7 +39,7 @@ public class GameManager {
     {
         menuOn = true;
         gameplayOn = false;
-        time = new Timing();
+        //time = new Timing();
         //sound.playSound(0);
         
         

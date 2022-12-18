@@ -1,6 +1,6 @@
 
 
-package main;
+package Main;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -73,7 +73,8 @@ public class StartMenu extends JFrame implements ActionListener{
         {
             //gameManager.sound.stopSound();
             gameManager = new GameManager(false, true);
-            gameManager.time.start();
+            
+            //gameManager.time.start();
             
             
             this.dispose();
