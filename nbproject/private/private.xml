@@ -3,13 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/college/year%203/cs304/projects/final%20project/Guns/src/main/GameManager.java</file>
-            <file>file:/D:/college/year%203/cs304/projects/final%20project/Guns/src/main/Timing.java</file>
-            <file>file:/D:/college/year%203/cs304/projects/final%20project/Guns/src/main/MainCode.java</file>
-            <file>file:/D:/college/year%203/cs304/projects/final%20project/Guns/src/main/StartMenu.java</file>
-            <file>file:/D:/college/year%203/cs304/projects/final%20project/Guns/src/main/Guns.java</file>
-            <file>file:/D:/college/year%203/cs304/projects/final%20project/Guns/src/main/Gameplay.java</file>
-            <file>file:/D:/college/year%203/cs304/projects/final%20project/Guns/src/main/Sound.java</file>
+            <file>file:/D:/Guns/src/main/Timing.java</file>
+            <file>file:/D:/Guns/src/main/Entity.java</file>
+            <file>file:/D:/Guns/src/Textures/TextureReader.java</file>
+            <file>file:/D:/Guns/src/Textures/AnimListener.java</file>
+            <file>file:/D:/Guns/src/main/Guns.java</file>
+            <file>file:/D:/Guns/src/main/MainCode.java</file>
+            <file>file:/D:/Guns/src/main/Players/Bullet.java</file>
         </group>
     </open-files>
 </project-private>

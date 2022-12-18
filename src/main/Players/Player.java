@@ -1,25 +1,32 @@
 package main.Players;
 
-import main.Enemys.Enemy;
-import main.Keys.HandleKeys;
-import main.MainCode;
+import Main.Enemys.Enemy;
+import Main.Entity;
+import Main.Keys.HandleKeys;
+import java.util.ArrayList;
 import javax.media.opengl.GL;
 
 public class Player {
-
-    //Enemy setting
+    
+   Entity e = new Entity();
+    
+    
+    //Player setting
     float xWorld;
     float yWorld;
     public float scale = 0.1f;
     public float speed = 0.09f;
     public boolean damege = false;
     public int powerUp = 3;
-
+    public static int fireRate;
+    
+    //projectile 
+    public static ArrayList<Bullet> bullets = new ArrayList<>();
     //Keyboard orders
     HandleKeys key;
     //default object to attach the class with the maincode class
     public Collision c = new Collision(0 * speed * scale, 0 * speed * scale, 0.09f);
-
+    
     GL gl;
 
     int textureIndex = 1;
@@ -88,10 +95,10 @@ public class Player {
 
     }
 
-    public void move(double maxX, double maxY) {
+    public void move() {
 
         if (key.isKeyPressed(key.UP)) {
-            if (yWorld < maxY) {
+            if (yWorld < 100) {
 
                 yWorld++;
                 textureIndex++;
@@ -112,30 +119,38 @@ public class Player {
                 textureIndex = (textureIndex % 4) + 1;
             }
         } else if (key.isKeyPressed(key.RIGHT)) {
-            if (xWorld - 5 < maxX) {
+            if (xWorld < 100) {
 
                 xWorld++;
                 textureIndex = (textureIndex % 4) + 1;
             }
         }
+        
+        if (key.isKeyPressed(key.SPACE) && fireRate > 10)
+        {
+            createBullet();
+        }
     }
-    int count = 0;
 
-    public void resolveColision(Object c2) {
-        if (c2 instanceof Enemy) {
-            if (detectCollision(((Enemy) c2).c)) {
-                MainCode.destroy((Enemy) c2);
+    public void drawPlayerBullet(GL gl) {
+ 
+        for (int i = 0; i < Player.bullets.size(); i++) {
+            //Player.bullets.get(i).setYWorld(Player.bullets.get(i).getYWorld());
+            Player.bullets.get(i).drawBullet(gl, "PlayerBullet");
+            if (Player.bullets.get(i).getYWorld()> 1) {
+                e.destroyBulletFromList(Player.bullets.get(i),Player.bullets);
             }
         }
-
+        Player.fireRate += 1;
+        
     }
-
-    public boolean detectCollision(Collision c2) {
-        double offset = 0.01;
-        double r = (c.r - offset) + (c2.r - offset);
-
-        return (Math.abs(c.x - c2.x) <= r) && (Math.abs(c.y - c2.y) <= r);
-
+    
+    
+    public void createBullet()
+    {
+        
+        Bullet bullet = new Bullet(gl,xWorld * scale * speed, yWorld * scale * speed , 0.009f, "PlayerBullet");
+        bullets.add(bullet);
+        fireRate = 0;
     }
-
 }

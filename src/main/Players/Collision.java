@@ -35,14 +35,20 @@ public class Collision {
         gl.glEnd();
 
     }
-
-     public static void resolveColision(Collision c1,Collision c2){
-
-        if(( Math.abs(c1.x-c2.x)<=c1.r+c2.r )&&( Math.abs(c1.y-c2.y)<=c1.r+c2.r )){
-
-            
-        }
-        
+    
+    public float getRadius()
+    {
+        return this.r;
+    }
+    
+    public float getX()
+    {
+        return this.x;
+    }
+    
+    public float getY()
+    {
+        return this.y;
     }
 
 }

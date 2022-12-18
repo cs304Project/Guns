@@ -1,5 +1,5 @@
 
-package main;
+package Main;
 
 
 import java.awt.Font;
@@ -21,13 +21,16 @@ public class Timing  extends JFrame{
     public int seconds = 0;;
     String secondText = String.format("%02d", seconds);;
     int consumingTime = 0;
+    public float mSeconds = 0;
     
     
-    Timer time = new Timer(1000 , new ActionListener(){
+    
+    Timer secondsTime = new Timer(1000 , new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
                 consumingTime += 1000;
                 //1000 ms = 1 sec;
+                mSeconds = consumingTime / 1000000;
                 seconds = consumingTime / 1000;
                 secondText = String.format("%02d", seconds);
                 
@@ -36,6 +39,7 @@ public class Timing  extends JFrame{
             }
         }); 
    
+    
     
     public Timing(){
         
@@ -51,21 +55,21 @@ public class Timing  extends JFrame{
     public void start()
     {
         
-        this.time.start();
-        Println("GAME IS RUNNING");
+        this.secondsTime.start();
+        
     }
     
     public void stop()
     {
         
-        this.time.stop();
+        this.secondsTime.stop();
         Println("GAME IS STOPPING");
         
     }
     
     public void reset()
     {
-        time.restart();
+        secondsTime.restart();
     }
     
     public final void Println(String s)

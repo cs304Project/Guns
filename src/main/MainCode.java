@@ -1,17 +1,15 @@
-package main;
+package Main;
 
-import main.Enemys.Enemy;
-import main.Keys.HandleKeys;
+import Main.Enemys.Enemy;
+import Main.Enemys.EnemyAI;
+import Main.Keys.HandleKeys;
 import Textures.AnimListener;
 import Textures.TextureReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCanvas;
-import javax.media.opengl.glu.GLU;
 import main.Players.Bullet;
-import main.Players.Collision;
 import main.Players.Player;
 
 //this calss is used to run the game in infinite loop using AnimListener
@@ -20,12 +18,9 @@ import main.Players.Player;
 public class MainCode extends AnimListener {
 
     //deault Objects
-    public double minX = 0;
-    public double maxX = 100;
-    double minY = 0;
-    double maxY = 100;
     GL gl;
     GLCanvas canvas;
+    Entity e = new Entity();
 
     //texture setting
     String textureNames[] = {
@@ -41,24 +36,48 @@ public class MainCode extends AnimListener {
 
     //player setting
     Player player = new Player(gl, key);
-    static ArrayList<Bullet> bullets = new ArrayList<>();
 
     //Enemy setting
     public static ArrayList<Enemy> enemyList = new ArrayList<>();
-    public static int stage1 = 4;
+
+    ArrayList<Bullet> enemyBullets = new ArrayList<>();
+    ;
+    EnemyAI ai = new EnemyAI();
+    //public static int stage1 = 24;
+    public static int stage2 = 40;
+
+    public void setCanvas(GLCanvas canvas) {
+        canvas.addKeyListener(key);
+        this.canvas = canvas;
+    }
+
+    public GLCanvas getCanvas() {
+        return this.canvas;
+    }
 
     @Override
     public void init(GLAutoDrawable glad) {
 
-        gl = glad.getGL();
-        gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);    //This Will Clear The Background Color To Black
-        gl.glOrtho(minX, maxX, minY, maxY, 0, 0);
-        gl.glEnable(GL.GL_TEXTURE_2D);  // Enable Texture Mapping
-        gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
-        readTexture(textureNames, textures, texture);
+        initdefaultvalues(glad);
 
-        for (int i = 0; i < stage1; i++) {
-            createEnemy(20*i, 20*i);
+        /*-------------LEVEL_1------------------*/
+//        for (int i = 0; i < stage1; i++) {
+//            createEnemy(-200  ,0); 
+//        }
+
+        /*-------------LEVEL_2------------------*/
+        float startPosition;
+        for (int i = 0; i < stage2; i++) {
+            if ((stage2 - 1) / 4 >= i) {
+                startPosition = 20f;
+            } else if (2 * (stage2 - 1) / 4 >= i) {
+                startPosition = 70f;
+            } else if (3 * (stage2 - 1) / 4 >= i) {
+                startPosition = 120f;
+            } else {
+                startPosition = 170f;
+            }
+            createEnemy(enemyList, -200 - (i * 50), startPosition);
         }
 
         gl.glLoadIdentity();
@@ -68,29 +87,26 @@ public class MainCode extends AnimListener {
     //Run the code in this method
     @Override
     public void display(GLAutoDrawable glad) {
+
         gl = glad.getGL();
-        gl.glClear(GL.GL_COLOR_BUFFER_BIT);       //Clear The Screen And The Depth Buffer
+        gl.glClear(GL.GL_COLOR_BUFFER_BIT);
 
         //Draw the background
         drawBackground(gl);
 
         //Draw the player
-        player.drawPlayer(gl);
-        player.move(maxX, maxY);
-        drawBullet();
+        playerActions(gl);
+
         //Draw enemies
-         drawEnemy(stage1);
-
+        drawEnemy();
+        drawenemyBullets(gl, enemyBullets);
 
     }
 
-    public void setCanvas(GLCanvas canvas) {
-        canvas.addKeyListener(key);
-        this.canvas = canvas;
-    }
-
-    public GLCanvas getCanvas() {
-        return this.canvas;
+    private void playerActions(GL gl) {
+        player.drawPlayer(gl);
+        player.move();
+        player.drawPlayerBullet(gl);
     }
 
     public void drawBackground(GL gl) {
@@ -115,85 +131,35 @@ public class MainCode extends AnimListener {
         gl.glDisable(GL.GL_BLEND);
     }
 
-    public void drawEnemy(int stage1) {
+    private void drawEnemy() {
+        //ai.createAI01(enemyList , gl , player , enemyBullets);
 
-        for (int i = 0; i < enemyList.size(); i++) {
-            enemyList.get(i).setXWorld(enemyList.get(i).getXWorld());
-            enemyList.get(i).setYWorld(enemyList.get(i).getYWorld());
-            enemyList.get(i).drawSprite(gl);
-            player.resolveColision(enemyList.get(i));
-        }
+        ai.createAI02(enemyList, gl, player, enemyBullets);
+
     }
 
-    public void drawBullet() {
-        if (key.isKeyPressed(key.SPACE)) {
-            float bulletX = player.getXWorld() * player.scale * player.speed;
-            float bulletY = player.getYWorld() * player.scale * player.speed;
-            Bullet bullet = new Bullet(gl, bulletX, bulletY);
-            bullets.add(bullet);
-        }
+    private void drawenemyBullets(GL gl, ArrayList<Bullet> bullets) {
         for (int i = 0; i < bullets.size(); i++) {
-            bullets.get(i).setYWorld(bullets.get(i).getYWorld() + bullets.get(i).speed);
-            bullets.get(i).drawBullet(gl);
-            if (bullets.get(i).getYWorld() > maxY) {
-                destroy(bullets.get(i));
+            bullets.get(i).drawBullet(gl, "EnemyBullet");
+            if (bullets.get(i).getYWorld() < -1) {
+                e.destroyBulletFromList(bullets.get(i), bullets);
             }
-        }
-    }
-
-    public static void destroy(Object ob) {
-        if (ob instanceof Enemy) {
-
-            enemyList.remove(ob);
-
-        }
-        if (ob instanceof Bullet) {
-            bullets.remove(ob);
 
         }
     }
 
-    public void createEnemy(float x, float y) {
+    public void createEnemy(ArrayList<Enemy> enemyList, float x, float y) {
         Enemy enemy = new Enemy(gl, key, x, y);
         enemyList.add(enemy);
-
     }
 
-    //Set the texture and read it 
-    public void readTexture(String[] textureNames, int[] textureContainer, TextureReader.Texture texture[]) {
-
-        gl.glGenTextures(textureNames.length, textureContainer, 0);
-
-        for (int i = 0; i < textureNames.length; i++) {
-            try {
-
-                if (textureNames[i] == "back1.jpg" || textureNames[i] == "24.png") {
-                    String pathName = "src/Assets/Photos/";
-                    texture[i] = TextureReader.readTexture(pathName + textureNames[i], true);
-
-                } else {
-                    String pathName = "src/PlayerAssets/man/";
-                    texture[i] = TextureReader.readTexture(pathName + textureNames[i], true);
-
-                }
-
-                gl.glBindTexture(GL.GL_TEXTURE_2D, textures[i]);
-
-//                mipmapsFromPNG(gl, new GLU(), texture[i]);
-                new GLU().gluBuild2DMipmaps(
-                        GL.GL_TEXTURE_2D,
-                        GL.GL_RGBA, // Internal Texel Format,
-                        texture[i].getWidth(), texture[i].getHeight(),
-                        GL.GL_RGBA, // External format from image,
-                        GL.GL_UNSIGNED_BYTE,
-                        texture[i].getPixels() // Imagedata
-                );
-
-            } catch (IOException e) {
-                System.out.println(e);
-                e.printStackTrace();
-            }
-        }
+    private void initdefaultvalues(GLAutoDrawable glad) {
+        gl = glad.getGL();
+        gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);    //This Will Clear The Background Color To Black
+        //gl.glOrtho(1, , , , 0, 0);
+        gl.glEnable(GL.GL_TEXTURE_2D);  // Enable Texture Mapping
+        gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
+        e.readTexture(gl, textureNames, textures, texture);
     }
 
     @Override

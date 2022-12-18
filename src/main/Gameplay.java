@@ -1,5 +1,7 @@
-package main;
 
+package Main;
+
+import Main.Enemys.Enemy;
 import com.sun.opengl.util.Animator;
 import com.sun.opengl.util.FPSAnimator;
 import java.awt.BorderLayout;
@@ -22,8 +24,8 @@ public class Gameplay extends JFrame implements ActionListener {
     JButton menuBtu;
     GameManager gameManager;
     MainCode mc;
-    
-    public Gameplay(JLabel textTime , GameManager gameManager)
+    //public Gameplay(JLabel textTime , GameManager gameManager)
+    public Gameplay(GameManager gameManager)
     {
         
         this.gameManager = gameManager;
@@ -43,7 +45,7 @@ public class Gameplay extends JFrame implements ActionListener {
         
         
         menuBtu = new JButton();
-        menuBtu.setBounds(10, 10, 60, 40);
+        menuBtu.setBounds(5, 5, 40, 20);
         menuBtu = createBtu(this.menuBtu, "MENU");
         
         JLabel title = new JLabel("DROP YOUR CODE");
@@ -58,7 +60,7 @@ public class Gameplay extends JFrame implements ActionListener {
         
         setTitle("Guns");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 500);
+        setSize(700, 700);
         setLocationRelativeTo(null);
         setVisible(true);
         setFocusable(true);
@@ -72,7 +74,7 @@ public class Gameplay extends JFrame implements ActionListener {
         
         btu.setText(text);
         btu.setFocusable(false);
-        btu.setFont(new Font("", Font.BOLD, 12));
+        btu.setFont(new Font("", Font.BOLD, 8));
         btu.setBackground(Color.lightGray);
         btu.setForeground(Color.black);
         btu.addActionListener(this);
@@ -88,7 +90,7 @@ public class Gameplay extends JFrame implements ActionListener {
         {
             //gameManager.sound.stopSound();
             gameManager =  new GameManager(true, false);
-            gameManager.time.stop();
+            //gameManager.time.stop();
             this.dispose();
         }
         
