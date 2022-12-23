@@ -128,7 +128,7 @@ public class MainCode extends AnimListener {
     private void playerActions(GL gl) {
         player.drawPlayer(gl);
         player.move();
-        player.drawPlayerBullet(gl);
+        player.drawPlayerBullet(gl , "stage3");
     }
 
     public void drawBackground(GL gl) {
@@ -167,7 +167,7 @@ public class MainCode extends AnimListener {
     private void drawenemyBullets(GL gl, ArrayList<Bullet> bullets) {
         for (int i = 0; i < bullets.size(); i++) {
 
-            bullets.get(i).drawBullet(gl, "EnemyBullet");
+            bullets.get(i).drawBullet(gl);
             if (bullets.get(i).getYWorld() < -1 || bullets.get(i).getYWorld() > 1) {
                 e.destroyBulletFromList(bullets.get(i), bullets);
             }
@@ -190,7 +190,7 @@ public class MainCode extends AnimListener {
             
             if (bullets.get(i).getYWorld() < -1) {
 
-            bullets.get(i).drawBullet(gl, "EnemyBullet");
+            bullets.get(i).drawBullet(gl);
             if (bullets.get(i).getYWorld() < -1 || bullets.get(i).getYWorld() > 1) {
 
                 e.destroyBulletFromList(bullets.get(i), bullets);
@@ -198,10 +198,10 @@ public class MainCode extends AnimListener {
 
         }
     }
-
+}
     public void createEnemy(ArrayList<Enemy> enemyList, float x, float y) {
-        //Enemy enemy = new Enemy(gl, key, x, y);
-        EnemyBoss enemy = new EnemyBoss(gl, x, y);
+        Enemy enemy = new Enemy(gl, x, y);
+        //EnemyBoss enemy = new EnemyBoss(gl, x, y);
         enemyList.add(enemy);
         
     }

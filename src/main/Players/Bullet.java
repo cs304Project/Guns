@@ -40,7 +40,9 @@ public class Bullet {
         this.speed = speed;
         this.angle = angle;
         this.scale = scale;
-
+        r = 0.03f;
+        
+        bullet_collision = new Collision( xWorld * scale * speed, yWorld * scale * speed ,r);
 
     }
 
@@ -86,6 +88,8 @@ public class Bullet {
         gl.glPopMatrix();
 
         gl.glDisable(GL.GL_BLEND);
+        
+        bullet_collision.drawCirclie(gl, xWorld, yWorld);
 
     }
 
@@ -122,8 +126,6 @@ public class Bullet {
         gl.glPopMatrix();
 
         gl.glDisable(GL.GL_BLEND);
-
-
 
 
         bullet_collision.drawCirclie(gl, xWorld, yWorld);

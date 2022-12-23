@@ -24,7 +24,7 @@ public class Entity {
     public void destroyBulletFromList(Bullet bullet, ArrayList<Bullet> list) {
 
         list.remove(bullet);
-        //System.out.println("Bullet is Deleted");
+        System.out.println("Bullet is Deleted");
     }
 
     private void destroyEnemyFromList(Enemy enemy, ArrayList<Enemy> list) {
@@ -129,11 +129,6 @@ public class Entity {
     }
     
     
-    private boolean detectCollision(Collision c1 , Collision c2)
-    {
-        double offset = 0.01;
-        double r = (c1.getRadius() - offset) + (c2.getRadius()- offset);
-        return (Math.abs(c1.getX() - c2.getX()) <= r) && (Math.abs(c1.getY() - c2.getY()) <= r);
-    }
+    
 
 }
