@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCanvas;
+import main.Enemys.EnemyBoss;
 import main.Players.Bullet;
 import main.Players.Player;
 
@@ -41,10 +42,13 @@ public class MainCode extends AnimListener {
     public static ArrayList<Enemy> enemyList = new ArrayList<>(),AI03_01EnemyList = new ArrayList<>(),AI03_02EnemyList = new ArrayList<>();
 
     ArrayList<Bullet> enemyBullets = new ArrayList<>();
+
+
     EnemyAI ai = new EnemyAI();
     //public static int stage1 = 24;
 //    public static int stage2 = 40;
     public static int stage3 = 15;
+
 
     public void setCanvas(GLCanvas canvas) {
         canvas.addKeyListener(key);
@@ -55,12 +59,13 @@ public class MainCode extends AnimListener {
         return this.canvas;
     }
 
+        
     @Override
     public void init(GLAutoDrawable glad) {
-
+       
         initdefaultvalues(glad);
-
-        /*-------------LEVEL_1------------------*/
+        
+        /*-------------Stage_1------------------*/
 //        for (int i = 0; i < stage1; i++) {
 //            createEnemy(-200  ,0); 
 //        }
@@ -80,6 +85,11 @@ public class MainCode extends AnimListener {
 //            createEnemy(enemyList, -200 - (i * 50), startPosition);
 //        }
 
+        
+        /*-------------BossFight------------------*/
+//        createEnemy(enemyList, 0f, 20f);
+        
+
         for(int i = 0;i<stage3;i++){
             if(i<stage3/2){
                 createEnemy(AI03_01EnemyList,-i*50,220);                
@@ -89,13 +99,13 @@ public class MainCode extends AnimListener {
         }
 
         gl.glLoadIdentity();
-
+ 
     }
 
     //Run the code in this method
     @Override
     public void display(GLAutoDrawable glad) {
-
+        
         gl = glad.getGL();
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
 
@@ -107,8 +117,12 @@ public class MainCode extends AnimListener {
 
         //Draw enemies
         drawEnemy();
-        drawenemyBullets(gl, enemyBullets);
-
+        //drawenemyBullets(gl, enemyBullets);
+        
+        
+        drawBossBullets(gl, Entity.bossStorage);
+        
+        
     }
 
     private void playerActions(GL gl) {
@@ -141,13 +155,18 @@ public class MainCode extends AnimListener {
 
     private void drawEnemy() {
         //ai.createAI01(enemyList , gl , player , enemyBullets);
+  
+        
+        //enemyList.get(0).drawEnemy(gl);
 
 //        ai.createAI02(enemyList, gl, player, enemyBullets);
         ai.createAI03(AI03_01EnemyList,AI03_02EnemyList, gl, player, enemyBullets,stage3);
+
     }
 
     private void drawenemyBullets(GL gl, ArrayList<Bullet> bullets) {
         for (int i = 0; i < bullets.size(); i++) {
+
             bullets.get(i).drawBullet(gl, "EnemyBullet");
             if (bullets.get(i).getYWorld() < -1 || bullets.get(i).getYWorld() > 1) {
                 e.destroyBulletFromList(bullets.get(i), bullets);
@@ -155,10 +174,36 @@ public class MainCode extends AnimListener {
 
         }
     }
+    
+    private void drawBossBullets(GL gl,  ArrayList<Bullet> bullets)
+    {
+        for (int i = 0; i < bullets.size(); i++) {
+            if("SpecilEnemyBullet".equals(bullets.get(i).typeBullet))
+            {
+                bullets.get(i).drawFollowingBullet(gl, player.getXWorld() * player.scale * player.speed , player.getYWorld()* player.scale * player.speed );
+                
+            }
+            else
+            {
+                bullets.get(i).drawBullet(gl);
+            }
+            
+            if (bullets.get(i).getYWorld() < -1) {
+
+            bullets.get(i).drawBullet(gl, "EnemyBullet");
+            if (bullets.get(i).getYWorld() < -1 || bullets.get(i).getYWorld() > 1) {
+
+                e.destroyBulletFromList(bullets.get(i), bullets);
+            }
+
+        }
+    }
 
     public void createEnemy(ArrayList<Enemy> enemyList, float x, float y) {
-        Enemy enemy = new Enemy(gl, key, x, y);
+        //Enemy enemy = new Enemy(gl, key, x, y);
+        EnemyBoss enemy = new EnemyBoss(gl, x, y);
         enemyList.add(enemy);
+        
     }
 
     private void initdefaultvalues(GLAutoDrawable glad) {
