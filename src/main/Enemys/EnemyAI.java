@@ -28,15 +28,17 @@ public class EnemyAI {
 
     //target to reach a position 1 and translate to another position
     //
-    
     public void createAI01(ArrayList<Enemy> eList, GL gl, Player player,
             ArrayList<Bullet> enemyBullets) {
         int rowStep = 0;
         int colStep = 0;
         for (int i = 0; i < eList.size(); i++) {
             if (i % 8 == 0) {
-                if (i == 0) rowStep = 0;
-                else  rowStep++;
+                if (i == 0) {
+                    rowStep = 0;
+                } else {
+                    rowStep++;
+                }
                 colStep = 0;
 
             } else {
@@ -57,7 +59,7 @@ public class EnemyAI {
                     speed = (10f / (i + 1));
                     eList.get(i).setXWorld(x + timer.seconds * speed);
                 }
-                eList.get(i).drawSprite(gl);
+                eList.get(i).drawEnemy(gl);
             } else if (timer.seconds >= 6) {
                 //r* angle
                 angle = angle + 1f;
@@ -65,41 +67,36 @@ public class EnemyAI {
                 float a1 = 20 * (float) Math.cos(Math.toRadians(angle));
                 float a2 = 20 * (float) Math.sin(Math.toRadians(angle));
                 System.out.println(a1);
-                eList.get(i).drawSprite_AnimationAI(gl, x + a1, y + a2 , "AI01");
+                eList.get(i).drawEnemy_AnimationAI(gl, x + a1, y + a2, "AI01");
                 eList.get(i).AutoAttack(gl, enemyBullets);
             }
-            
-            e.collision(eList.get(i), player);
 
+            e.collision(eList.get(i), player);
 
         }
 
     }
-    
-    public void createAI02(ArrayList<Enemy> eList ,GL gl, Player player 
-            , ArrayList<Bullet> enemyBullets) {
 
-        for(int i = 0; i < eList.size(); i++)
-        {
-             
-            AI02(eList ,gl,i);
+    public void createAI02(ArrayList<Enemy> eList, GL gl, Player player,
+             ArrayList<Bullet> enemyBullets) {
+
+        for (int i = 0; i < eList.size(); i++) {
+
+            AI02(eList, gl, i);
 
             eList.get(i).AutoAttack(gl, enemyBullets);
             e.collision(eList.get(i), player);
-            
-        }       
+
+        }
     }
-    
-    
-    private void AI02(ArrayList<Enemy> eList ,GL gl , int index)
-    {
-        float startPosition = eList.get(index).getYWorld(); 
+
+    private void AI02(ArrayList<Enemy> eList, GL gl, int index) {
+        float startPosition = eList.get(index).getYWorld();
         float curretX = eList.get(index).getXWorld() + 2f; //y = sin(x) // PI/180 Math.PI/ 3.14. 
         float omega = 2f;
-        float currentY =  startPosition + 20 * (float) Math.sin(omega * Math.toRadians(curretX));
-        eList.get(index).drawSprite_AnimationAI(gl, curretX  , currentY , "AI02" );
-        eList.get(index).setXWorld(curretX >= 200? -curretX:curretX);
+        float currentY = startPosition + 20 * (float) Math.sin(omega * Math.toRadians(curretX));
+        eList.get(index).drawEnemy_AnimationAI(gl, curretX, currentY, "AI02");
+        eList.get(index).setXWorld(curretX >= 200 ? -curretX : curretX);
     }
-    
-  
+
 }

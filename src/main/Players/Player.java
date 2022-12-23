@@ -1,16 +1,14 @@
 package main.Players;
 
-import main.Enemys.Enemy;
 import main.Entity;
 import main.Keys.HandleKeys;
 import java.util.ArrayList;
 import javax.media.opengl.GL;
 
 public class Player {
-    
-   Entity e = new Entity();
-    
-    
+
+    Entity e = new Entity();
+
     //Player setting
     float xWorld;
     float yWorld;
@@ -19,14 +17,14 @@ public class Player {
     public boolean damege = false;
     public int powerUp = 3;
     public static int fireRate;
-    
+
     //projectile 
     public static ArrayList<Bullet> bullets = new ArrayList<>();
     //Keyboard orders
     HandleKeys key;
     //default object to attach the class with the maincode class
     public Collision c = new Collision(0 * speed * scale, 0 * speed * scale, 0.09f);
-    
+
     GL gl;
 
     int textureIndex = 1;
@@ -125,31 +123,28 @@ public class Player {
                 textureIndex = (textureIndex % 4) + 1;
             }
         }
-        
-        if (key.isKeyPressed(key.SPACE) && fireRate > 10)
-        {
+
+        if (key.isKeyPressed(key.SPACE) && fireRate > 10) {
             createBullet();
         }
     }
 
     public void drawPlayerBullet(GL gl) {
- 
+
         for (int i = 0; i < Player.bullets.size(); i++) {
             //Player.bullets.get(i).setYWorld(Player.bullets.get(i).getYWorld());
-            Player.bullets.get(i).drawBullet(gl, "PlayerBullet");
-            if (Player.bullets.get(i).getYWorld()> 1) {
-                e.destroyBulletFromList(Player.bullets.get(i),Player.bullets);
+            Player.bullets.get(i).drawBullet(gl);
+            if (Player.bullets.get(i).getYWorld() > 1) {
+                e.destroyBulletFromList(Player.bullets.get(i), Player.bullets);
             }
         }
         Player.fireRate += 1;
-        
+
     }
-    
-    
-    public void createBullet()
-    {
-        
-        Bullet bullet = new Bullet(gl,xWorld * scale * speed, yWorld * scale * speed , 0.009f, "PlayerBullet");
+
+    public void createBullet() {
+
+        Bullet bullet = new Bullet(gl, xWorld * scale * speed, yWorld * scale * speed, 0.009f, "PlayerBullet", 90, 0.02f);
         bullets.add(bullet);
         fireRate = 0;
     }

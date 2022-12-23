@@ -1,4 +1,3 @@
-
 package main;
 
 import main.Enemys.Enemy;
@@ -11,33 +10,52 @@ import main.Players.Bullet;
 import main.Players.Collision;
 import main.Players.Player;
 
-
 public class Entity {
-    
-   
+
+    //public int currTime = 0;
+    public static ArrayList<Bullet> bossStorage = new ArrayList<>();
+
     public void destroy(Object obj) {
 
         obj = null;
-        System.out.println( "obj is Deleted");
+        System.out.println("obj is Deleted");
     }
 
     public void destroyBulletFromList(Bullet bullet, ArrayList<Bullet> list) {
-        
+
         list.remove(bullet);
-        System.out.println("Bullet is Deleted");
+        //System.out.println("Bullet is Deleted");
     }
-    
-    
+
     private void destroyEnemyFromList(Enemy enemy, ArrayList<Enemy> list) {
-        
+
         list.remove(enemy);
         System.out.println("Enemy is Deleted");
     }
-    
 
-    
+    public void collision(Object obj1, Object obj2) {
+        if ((obj1 instanceof Enemy enemy && obj2 instanceof Player player)) {
+            if (detectCollision(enemy.c, player.c)) {
+                destroyEnemyFromList(enemy, MainCode.enemyList);
+            }
+
+        } else if ((obj2 instanceof Enemy enemy && obj1 instanceof Player player)) {
+            if (detectCollision(player.c, enemy.c)) {
+                destroyEnemyFromList(enemy, MainCode.enemyList);
+            }
+
+        }
+
+    }
+
+    private boolean detectCollision(Collision c1, Collision c2) {
+        double offset = 0.01;
+        double r = (c1.getRadius() - offset) + (c2.getRadius() - offset);
+        return (Math.abs(c1.getX() - c2.getX()) <= r) && (Math.abs(c1.getY() - c2.getY()) <= r);
+    }
+
     //Set the texture and read it 
-    public void readTexture(GL gl,String[] textureNames,
+    public void readTexture(GL gl, String[] textureNames,
             int[] textureContainer, TextureReader.Texture texture[]) {
 
         gl.glGenTextures(textureNames.length, textureContainer, 0);
@@ -73,32 +91,5 @@ public class Entity {
             }
         }
     }
-    
-    
-    public void collision(Object obj1, Object obj2)
-    {
-        if ((obj1 instanceof Enemy enemy && obj2 instanceof Player player) )
-        {
-            if(detectCollision(enemy.c , player.c))
-                destroyEnemyFromList(enemy, MainCode.enemyList);
-            
-        }
-        else if ((obj2 instanceof Enemy enemy && obj1 instanceof Player player))
-        {
-            if(detectCollision(player.c , enemy.c ))
-                destroyEnemyFromList(enemy, MainCode.enemyList);
-   
-        }
-     
-    }
-    
-    
-    private boolean detectCollision(Collision c1 , Collision c2)
-    {
-        double offset = 0.01;
-        double r = (c1.getRadius() - offset) + (c2.getRadius()- offset);
-        return (Math.abs(c1.getX() - c2.getX()) <= r) && (Math.abs(c1.getY() - c2.getY()) <= r);
-    }
-    
-    
+
 }
