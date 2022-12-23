@@ -90,6 +90,24 @@ public class Entity {
                 destroyEnemyFromList(enemy, eList);
    
         }
+        if ((obj2 instanceof Bullet bullet && obj1 instanceof Enemy enemy)) {
+            if (detectCollision(bullet.bullet_collision, enemy.c)) {
+               destroyEnemyFromList(enemy, MainCode.enemyList);
+               bullet.isDestroyed=true;
+               //destroyBulletFromList(bullet, Player.bullets);
+           
+            }
+            
+        }
+        else if ((obj2 instanceof Enemy enemy && obj1 instanceof Bullet bullet)) {
+            if (detectCollision(enemy.c,bullet.bullet_collision)) {
+                destroyEnemyFromList(enemy, MainCode.enemyList);
+                bullet.isDestroyed=true;
+                //destroyBulletFromList(bullet, Player.bullets);
+             
+            }
+            
+        }
      
     }
     
