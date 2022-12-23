@@ -92,4 +92,30 @@ public class Entity {
         }
     }
 
+    public void collision(Object obj1, Object obj2,ArrayList<Enemy> eList)
+    {
+        if ((obj1 instanceof Enemy enemy && obj2 instanceof Player player) )
+        {
+            if(detectCollision(enemy.c , player.c)){
+                destroyEnemyFromList(enemy, eList);
+            }
+            
+        }
+        else if ((obj2 instanceof Enemy enemy && obj1 instanceof Player player))
+        {
+            if(detectCollision(player.c , enemy.c ))
+                destroyEnemyFromList(enemy, eList);
+   
+        }
+     
+    }
+    
+    
+    private boolean detectCollision(Collision c1 , Collision c2)
+    {
+        double offset = 0.01;
+        double r = (c1.getRadius() - offset) + (c2.getRadius()- offset);
+        return (Math.abs(c1.getX() - c2.getX()) <= r) && (Math.abs(c1.getY() - c2.getY()) <= r);
+    }
+
 }
