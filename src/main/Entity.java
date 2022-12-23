@@ -75,18 +75,19 @@ public class Entity {
     }
     
     
-    public void collision(Object obj1, Object obj2)
+    public void collision(Object obj1, Object obj2,ArrayList<Enemy> eList)
     {
         if ((obj1 instanceof Enemy enemy && obj2 instanceof Player player) )
         {
-            if(detectCollision(enemy.c , player.c))
-                destroyEnemyFromList(enemy, MainCode.enemyList);
+            if(detectCollision(enemy.c , player.c)){
+                destroyEnemyFromList(enemy, eList);
+            }
             
         }
         else if ((obj2 instanceof Enemy enemy && obj1 instanceof Player player))
         {
             if(detectCollision(player.c , enemy.c ))
-                destroyEnemyFromList(enemy, MainCode.enemyList);
+                destroyEnemyFromList(enemy, eList);
    
         }
      

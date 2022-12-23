@@ -69,7 +69,7 @@ public class EnemyAI {
                 eList.get(i).AutoAttack(gl, enemyBullets);
             }
             
-            e.collision(eList.get(i), player);
+            e.collision(eList.get(i), player,main.MainCode.enemyList);
 
 
         }
@@ -85,7 +85,7 @@ public class EnemyAI {
             AI02(eList ,gl,i);
 
             eList.get(i).AutoAttack(gl, enemyBullets);
-            e.collision(eList.get(i), player);
+            e.collision(eList.get(i),player,main.MainCode.enemyList);
             
         }       
     }
@@ -101,5 +101,57 @@ public class EnemyAI {
         eList.get(index).setXWorld(curretX >= 200? -curretX:curretX);
     }
     
-  
+    public void createAI03(ArrayList<Enemy> eList,ArrayList<Enemy> eList2 ,GL gl, Player player 
+            , ArrayList<Bullet> enemyBullets,int enemiesNumber) {
+
+        for(int i = 0; i < eList.size(); i++)
+        {
+            AI03_01(eList ,gl,i,enemiesNumber);
+
+            eList.get(i).AutoAttack(gl, enemyBullets);
+            e.collision(eList.get(i),player,main.MainCode.AI03_01EnemyList);
+            
+        }       
+        for(int i = 0; i < eList2.size(); i++)
+        {
+            AI03_02(eList2 ,gl,i,enemiesNumber);
+
+            eList2.get(i).AutoAttack(gl, enemyBullets);
+            e.collision(eList2.get(i),player,main.MainCode.AI03_02EnemyList);
+            
+        }       
+    }
+    private void AI03_01(ArrayList<Enemy> eList ,GL gl , int index,int enemiesNumber){
+        float currentX = eList.get(index).getXWorld() +(float) Math.cos(Math.toRadians(eList.get(index).angle))*2.5f;
+        float currentY =  eList.get(index).getYWorld() +  (float) Math.sin(Math.toRadians(eList.get(index).angle))*2.5f;
+        eList.get(index).setXWorld(currentX);
+        eList.get(index).setYWorld(currentY);
+       
+        eList.get(index).drawSprite_AnimationAI(gl, currentX  , currentY , "AI02" );
+        
+        if (currentX>210 && eList.get(index).angle!=210){
+            eList.get(index).angle=210;
+        }else if(currentX<-50*enemiesNumber-1 && eList.get(index).angle!=90){
+            eList.get(index).angle=90;
+        }else if(currentY>=220 && eList.get(index).angle!=0){
+            eList.get(index).angle=0;
+        }
+    }
+    
+    private void AI03_02(ArrayList<Enemy> eList ,GL gl , int index,int enemiesNumber){
+        float currentX =  eList.get(index).getXWorld() +(float) Math.cos(Math.toRadians(eList.get(index).angle))*2.5f;
+        float currentY =  eList.get(index).getYWorld() +  (float) Math.sin(Math.toRadians(eList.get(index).angle))*2.5f;
+        eList.get(index).setXWorld(currentX);
+        eList.get(index).setYWorld(currentY);
+       
+        eList.get(index).drawSprite_AnimationAI(gl, currentX  , currentY , "AI02" );
+        
+         if (currentX<-210 && eList.get(index).angle!=-30){
+            eList.get(index).angle=-30;
+        }else if(currentX>50*enemiesNumber-1 && eList.get(index).angle!=90){
+            eList.get(index).angle=90;
+        }else if(currentY>=220 && eList.get(index).angle!=180){
+            eList.get(index).angle=180;
+        }
+    }
 }
