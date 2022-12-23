@@ -4,6 +4,7 @@ import main.Entity;
 import main.Keys.HandleKeys;
 import java.util.ArrayList;
 import javax.media.opengl.GL;
+import static main.MainCode.enemyList;
 
 public class Player {
 
@@ -133,9 +134,25 @@ public class Player {
 
         for (int i = 0; i < Player.bullets.size(); i++) {
             //Player.bullets.get(i).setYWorld(Player.bullets.get(i).getYWorld());
+
             Player.bullets.get(i).drawBullet(gl);
             if (Player.bullets.get(i).getYWorld() > 1) {
                 e.destroyBulletFromList(Player.bullets.get(i), Player.bullets);
+
+            Player.bullets.get(i).drawBullet(gl, "PlayerBullet");
+            for(int j=0;j<enemyList.size()&&bullets.get(i).isDestroyed==false;j++){
+                     
+                  e.collision(bullets.get(i),enemyList.get(j),enemyList);
+                    
+                 }
+            if(bullets.get(i).isDestroyed==true){
+                e.destroyBulletFromList(Player.bullets.get(i),Player.bullets);
+                
+            }
+
+            else if (Player.bullets.get(i).getYWorld()> 1) {
+                e.destroyBulletFromList(Player.bullets.get(i),Player.bullets);
+
             }
         }
         Player.fireRate += 1;

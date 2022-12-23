@@ -1,30 +1,36 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package main.Players;
+
+import java.util.ArrayList;
+import main.Keys.HandleKeys;
+import javax.media.opengl.GL;
+import main.Enemys.Enemy;
+import main.Entity;
 
 
 import javax.media.opengl.GL;
 
-/**
- *
- * @author hp
- */
 public class Bullet {
 
     float xWorld;
     float yWorld;
     float scale = 0.02f;
+
     float angle;
     public final String typeBullet;
     final float speed;
+    float r;
+    HandleKeys key ;
+     public Collision bullet_collision;
+     private Entity e; 
+   public boolean isDestroyed=false;
+    
 
     //default object to attach the class with the maincode class
     GL gl;
 
     final int textureIndex = 7;
+
 
     public Bullet(GL gl, float x, float y, float speed, String typeBullet, float angle, float scale) {
         this.gl = gl;
@@ -34,6 +40,7 @@ public class Bullet {
         this.speed = speed;
         this.angle = angle;
         this.scale = scale;
+
 
     }
 
@@ -115,6 +122,22 @@ public class Bullet {
         gl.glPopMatrix();
 
         gl.glDisable(GL.GL_BLEND);
+
+
+
+
+        bullet_collision.drawCirclie(gl, xWorld, yWorld);
     }
+    
+    
+    
+    
+private void detectCollision(ArrayList<Enemy> enemys){
+        for(int i=0;i<enemys.size();i++){
+             e.collision(this,enemys.get(i),enemys);
+        }
+    }
+   
+    
 
 }
