@@ -24,6 +24,7 @@ public class Enemy {
     float accumelation = 0.1f;
     protected float collidingRaduis = 0.09f;
     float bulletScale = 0.02f;
+    public int health=1;
 
     //Keyboard orders
 
@@ -51,7 +52,16 @@ public class Enemy {
         angle = 0;
         c = new Collision(xWorld * speed * scale, yWorld * speed * scale, collidingRaduis);
     }
-
+    
+    public Enemy(GL gl,float x, float y,int health){
+        this.gl = gl;
+        xWorld = x;
+        yWorld = y;
+        speed = 0.05f;
+        angle = 0;
+        this.health = health;
+        c = new Collision(xWorld * speed * scale, yWorld * speed * scale, collidingRaduis);
+    }
     public void setXWorld(float x) {
         xWorld = x;
     }
