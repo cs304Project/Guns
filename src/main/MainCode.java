@@ -38,13 +38,13 @@ public class MainCode extends AnimListener {
     Player player = new Player(gl, key);
 
     //Enemy setting
-    public static ArrayList<Enemy> enemyList = new ArrayList<>();
+    public static ArrayList<Enemy> enemyList = new ArrayList<>(),AI03_01EnemyList = new ArrayList<>(),AI03_02EnemyList = new ArrayList<>();
 
     ArrayList<Bullet> enemyBullets = new ArrayList<>();
-    ;
     EnemyAI ai = new EnemyAI();
     //public static int stage1 = 24;
-    public static int stage2 = 40;
+//    public static int stage2 = 40;
+    public static int stage3 = 15;
 
     public void setCanvas(GLCanvas canvas) {
         canvas.addKeyListener(key);
@@ -67,17 +67,25 @@ public class MainCode extends AnimListener {
 
         /*-------------LEVEL_2------------------*/
         float startPosition;
-        for (int i = 0; i < stage2; i++) {
-            if ((stage2 - 1) / 4 >= i) {
-                startPosition = 20f;
-            } else if (2 * (stage2 - 1) / 4 >= i) {
-                startPosition = 70f;
-            } else if (3 * (stage2 - 1) / 4 >= i) {
-                startPosition = 120f;
-            } else {
-                startPosition = 170f;
+//        for (int i = 0; i < stage2; i++) {
+//            if ((stage2 - 1) / 4 >= i) {
+//                startPosition = 20f;
+//            } else if (2 * (stage2 - 1) / 4 >= i) {
+//                startPosition = 70f;
+//            } else if (3 * (stage2 - 1) / 4 >= i) {
+//                startPosition = 120f;
+//            } else {
+//                startPosition = 170f;
+//            }
+//            createEnemy(enemyList, -200 - (i * 50), startPosition);
+//        }
+
+        for(int i = 0;i<stage3;i++){
+            if(i<stage3/2){
+                createEnemy(AI03_01EnemyList,-i*50,220);                
+            }else{
+                createEnemy(AI03_02EnemyList,(i%(stage3/2+1))*50,220);
             }
-            createEnemy(enemyList, -200 - (i * 50), startPosition);
         }
 
         gl.glLoadIdentity();
@@ -134,14 +142,14 @@ public class MainCode extends AnimListener {
     private void drawEnemy() {
         //ai.createAI01(enemyList , gl , player , enemyBullets);
 
-        ai.createAI02(enemyList, gl, player, enemyBullets);
-
+//        ai.createAI02(enemyList, gl, player, enemyBullets);
+        ai.createAI03(AI03_01EnemyList,AI03_02EnemyList, gl, player, enemyBullets,stage3);
     }
 
     private void drawenemyBullets(GL gl, ArrayList<Bullet> bullets) {
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).drawBullet(gl, "EnemyBullet");
-            if (bullets.get(i).getYWorld() < -1) {
+            if (bullets.get(i).getYWorld() < -1 || bullets.get(i).getYWorld() > 1) {
                 e.destroyBulletFromList(bullets.get(i), bullets);
             }
 
