@@ -18,21 +18,20 @@ import javax.swing.Timer;
 public class Timing  extends JFrame{
     
     public JLabel timeText;
-    public int seconds = 0;;
-    String secondText = String.format("%02d", seconds);;
-    int consumingTime = 0;
-    public float mSeconds = 0;
+    public float seconds = 0;;
+    String secondText = String.format("%03f", seconds);;
+    float consumingTime = 0;
+ 
     
     
     
-    Timer secondsTime = new Timer(1000 , new ActionListener(){
+    Timer secondsTime = new Timer(100 , new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                consumingTime += 1000;
+                consumingTime += 100f;
                 //1000 ms = 1 sec;
-                mSeconds = consumingTime / 1000000;
-                seconds = consumingTime / 1000;
-                secondText = String.format("%02d", seconds);
+                seconds = consumingTime/1000;
+                secondText = String.format("%03f", seconds);
                 
                 
                 timeText.setText(secondText);
