@@ -94,7 +94,7 @@ public class Bullet {
     
 private void detectCollision(ArrayList<Enemy> enemys){
         for(int i=0;i<enemys.size();i++){
-             e.collision(this,enemys.get(i));
+             e.collision(this,enemys.get(i),enemys);
         }
     }
    

@@ -140,7 +140,7 @@ public class Player {
             Player.bullets.get(i).drawBullet(gl, "PlayerBullet");
             for(int j=0;j<enemyList.size()&&bullets.get(i).isDestroyed==false;j++){
                      
-                  e.collision(bullets.get(i),enemyList.get(j));
+                  e.collision(bullets.get(i),enemyList.get(j),enemyList);
                   
                     
                  }
