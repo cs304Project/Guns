@@ -127,7 +127,7 @@ public class EnemyAI {
         eList.get(index).setXWorld(currentX);
         eList.get(index).setYWorld(currentY);
        
-        eList.get(index).drawSprite_AnimationAI(gl, currentX  , currentY , "AI02" );
+        eList.get(index).drawEnemy_AnimationAI(gl, currentX  , currentY , "AI02" );
         
         if (currentX>210 && eList.get(index).angle!=210){
             eList.get(index).angle=210;
@@ -144,7 +144,7 @@ public class EnemyAI {
         eList.get(index).setXWorld(currentX);
         eList.get(index).setYWorld(currentY);
        
-        eList.get(index).drawSprite_AnimationAI(gl, currentX  , currentY , "AI02" );
+        eList.get(index).drawEnemy_AnimationAI(gl, currentX  , currentY , "AI02" );
         
          if (currentX<-210 && eList.get(index).angle!=-30){
             eList.get(index).angle=-30;
