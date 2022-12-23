@@ -40,7 +40,6 @@ public class MainCode extends AnimListener {
 
     //Enemy setting
     public static ArrayList<Enemy> enemyList = new ArrayList<>(),AI03_01EnemyList = new ArrayList<>(),AI03_02EnemyList = new ArrayList<>();
-
     ArrayList<Bullet> enemyBullets = new ArrayList<>();
 
 
@@ -87,16 +86,16 @@ public class MainCode extends AnimListener {
 
         
         /*-------------BossFight------------------*/
-//        createEnemy(enemyList, 0f, 20f);
+        createEnemy(enemyList, 0f, 20f);
         
 
-        for(int i = 0;i<stage3;i++){
-            if(i<stage3/2){
-                createEnemy(AI03_01EnemyList,-i*50,220);                
-            }else{
-                createEnemy(AI03_02EnemyList,(i%(stage3/2+1))*50,220);
-            }
-        }
+//        for(int i = 0;i<stage3;i++){
+//            if(i<stage3/2){
+//                createEnemy(AI03_01EnemyList,-i*50,220,4);                
+//            }else{
+//                createEnemy(AI03_02EnemyList,i*50,220,4);
+//            }
+//        }
 
         gl.glLoadIdentity();
  
@@ -128,7 +127,7 @@ public class MainCode extends AnimListener {
     private void playerActions(GL gl) {
         player.drawPlayer(gl);
         player.move();
-        player.drawPlayerBullet(gl , "stage3");
+        player.drawPlayerBullet(gl , "BossFight");
     }
 
     public void drawBackground(GL gl) {
@@ -157,11 +156,12 @@ public class MainCode extends AnimListener {
         //ai.createAI01(enemyList , gl , player , enemyBullets);
   
         
-        //enemyList.get(0).drawEnemy(gl);
+        if(!enemyList.isEmpty())
+            enemyList.get(0).drawEnemy(gl);
 
 //        ai.createAI02(enemyList, gl, player, enemyBullets);
-        ai.createAI03(AI03_01EnemyList,AI03_02EnemyList, gl, player, enemyBullets,stage3);
-
+//        ai.createAI03(AI03_01EnemyList,AI03_02EnemyList, gl, player, enemyBullets,stage3);
+        
     }
 
     private void drawenemyBullets(GL gl, ArrayList<Bullet> bullets) {
@@ -200,7 +200,13 @@ public class MainCode extends AnimListener {
     }
 }
     public void createEnemy(ArrayList<Enemy> enemyList, float x, float y) {
-        Enemy enemy = new Enemy(gl, x, y);
+//        Enemy enemy = new Enemy(gl, x, y);
+        EnemyBoss enemy = new EnemyBoss(gl, x, y);
+        enemyList.add(enemy);
+        
+    }
+    public void createEnemy(ArrayList<Enemy> enemyList, float x, float y ,int health) {
+        Enemy enemy = new Enemy(gl, x, y,health);
         //EnemyBoss enemy = new EnemyBoss(gl, x, y);
         enemyList.add(enemy);
         

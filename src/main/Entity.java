@@ -118,7 +118,10 @@ public class Entity {
         }
         else if ((obj2 instanceof Enemy enemy && obj1 instanceof Bullet bullet)) {
             if (detectCollision(enemy.c,bullet.bullet_collision)) {
-                destroyEnemyFromList(enemy, eList);
+                enemy.health--;
+                if(enemy.health<=0){
+                    destroyEnemyFromList(enemy, eList);
+                }
                 bullet.isDestroyed=true;
                 //destroyBulletFromList(bullet, Player.bullets);
              
