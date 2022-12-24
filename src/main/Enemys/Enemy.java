@@ -1,8 +1,7 @@
 package main.Enemys;
 
 import main.Entity;
-import main.Keys.HandleKeys;
-import main.Timing;
+
 import java.util.ArrayList;
 import javax.media.opengl.GL;
 import main.Players.Bullet;
@@ -12,7 +11,7 @@ public class Enemy {
 
     //default object to attach the class with the maincode class
     Entity e = new Entity();
-    GL gl;
+    
 
     //Enemy setting
     protected float xWorld;
@@ -34,8 +33,8 @@ public class Enemy {
 
     final int textureIndex = 6;
 
-    public Enemy(GL gl, float x, float y) {
-        this.gl = gl;
+    public Enemy( float x, float y) {
+        
         xWorld = x;
         yWorld = y;
         speed = 0.05f;
@@ -43,9 +42,9 @@ public class Enemy {
         c = new Collision(xWorld * speed * scale, yWorld * speed * scale, collidingRaduis);
     }
 
-    public Enemy(GL gl) {
+    public Enemy() {
 
-        this.gl = gl;
+        
         xWorld = -100f;
         yWorld = 100f;
         speed = 0.05f;
@@ -53,8 +52,8 @@ public class Enemy {
         c = new Collision(xWorld * speed * scale, yWorld * speed * scale, collidingRaduis);
     }
     
-    public Enemy(GL gl,float x, float y,int health){
-        this.gl = gl;
+    public Enemy(float x, float y,int health){
+
         xWorld = x;
         yWorld = y;
         speed = 0.05f;
@@ -120,9 +119,9 @@ public class Enemy {
             } else if (verticalAnimation < 0f) {
                 accumelation = -accumelation;
             }
-            translateEnemy(x, y + (speed * scale * verticalAnimation));
+            translateEnemy(gl,x, y + (speed * scale * verticalAnimation));
         } else if ("AI02".equals(s)) {
-            translateEnemy(x, y);
+            translateEnemy(gl,x, y);
         }
 
         gl.glScaled(scale, scale, 1);
@@ -143,7 +142,7 @@ public class Enemy {
         c.drawCirclie(gl, x * speed * scale, y * speed * scale + (speed * scale * verticalAnimation));
     }
 
-    private void translateEnemy(float x, float y) {
+    private void translateEnemy(GL gl, float x, float y) {
         gl.glTranslated(x * speed * scale, y * speed * scale, 1);
     }
 

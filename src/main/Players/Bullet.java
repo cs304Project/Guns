@@ -3,7 +3,6 @@ package main.Players;
 
 import java.util.ArrayList;
 import main.Keys.HandleKeys;
-import javax.media.opengl.GL;
 import main.Enemys.Enemy;
 import main.Entity;
 
@@ -21,8 +20,7 @@ public class Bullet {
     final float speed;
     float r;
     HandleKeys key ;
-     public Collision bullet_collision;
-     private Entity e; 
+    public Collision bullet_collision;
    public boolean isDestroyed=false;
     
 
@@ -136,7 +134,7 @@ public class Bullet {
     
 private void detectCollision(ArrayList<Enemy> enemys){
         for(int i=0;i<enemys.size();i++){
-             e.collision(this,enemys.get(i),enemys);
+             bullet_collision.collision(this,enemys.get(i),enemys);
         }
     }
    

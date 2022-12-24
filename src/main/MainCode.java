@@ -1,7 +1,7 @@
 package main;
 
 import main.Enemys.Enemy;
-import main.Enemys.EnemyAI;
+
 import main.Keys.HandleKeys;
 import Textures.AnimListener;
 import Textures.TextureReader;
@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCanvas;
-import main.Enemys.EnemyBoss;
 import main.Players.Bullet;
 import main.Players.Player;
+import main.Stage.Stage;
 
 //this calss is used to run the game in infinite loop using AnimListener
 //display, init, reshape and displayChanged  are abtract method from GLeventLisener into AnimListener class
@@ -22,6 +22,8 @@ public class MainCode extends AnimListener {
     GL gl;
     GLCanvas canvas;
     Entity e = new Entity();
+    Stage stage = new Stage();
+    Timing time = new Timing();
 
     //texture setting
     String textureNames[] = {
@@ -38,15 +40,18 @@ public class MainCode extends AnimListener {
     //player setting
     Player player = new Player(gl, key);
 
-    //Enemy setting
-    public static ArrayList<Enemy> enemyList = new ArrayList<>(),AI03_01EnemyList = new ArrayList<>(),AI03_02EnemyList = new ArrayList<>();
-    ArrayList<Bullet> enemyBullets = new ArrayList<>();
+   
 
-
-    EnemyAI ai = new EnemyAI();
-    //public static int stage1 = 24;
-//    public static int stage2 = 40;
+    
+    //EnemyAI ai = new EnemyAI();
+    public static int stage1 = 24;
+    public static int stage2 = 40;
     public static int stage3 = 15;
+    boolean StageOneOn = true;
+    boolean StageAnimation = true;
+    boolean StageTwoOn = false;
+    boolean StageThreeOn = false;
+    
 
 
     public void setCanvas(GLCanvas canvas) {
@@ -62,41 +67,7 @@ public class MainCode extends AnimListener {
     @Override
     public void init(GLAutoDrawable glad) {
        
-        initdefaultvalues(glad);
-        
-        /*-------------Stage_1------------------*/
-//        for (int i = 0; i < stage1; i++) {
-//            createEnemy(-200  ,0); 
-//        }
-
-        /*-------------LEVEL_2------------------*/
-        float startPosition;
-//        for (int i = 0; i < stage2; i++) {
-//            if ((stage2 - 1) / 4 >= i) {
-//                startPosition = 20f;
-//            } else if (2 * (stage2 - 1) / 4 >= i) {
-//                startPosition = 70f;
-//            } else if (3 * (stage2 - 1) / 4 >= i) {
-//                startPosition = 120f;
-//            } else {
-//                startPosition = 170f;
-//            }
-//            createEnemy(enemyList, -200 - (i * 50), startPosition);
-//        }
-
-        
-        /*-------------BossFight------------------*/
-        createEnemy(enemyList, 0f, 20f);
-        
-
-//        for(int i = 0;i<stage3;i++){
-//            if(i<stage3/2){
-//                createEnemy(AI03_01EnemyList,-i*50,220,4);                
-//            }else{
-//                createEnemy(AI03_02EnemyList,i*50,220,4);
-//            }
-//        }
-
+        initDefaultValues(glad);
         gl.glLoadIdentity();
  
     }
@@ -107,19 +78,71 @@ public class MainCode extends AnimListener {
         
         gl = glad.getGL();
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
-
+        
         //Draw the background
         drawBackground(gl);
 
         //Draw the player
         playerActions(gl);
 
+        
+        
+        //-------------------------NewClearCode-------------------------------//
+        if(StageOneOn)
+        {
+            if (StageAnimation) {
+                
+                
+                e.createStage1Enemys(stage1);
+                
+                //if(time < 2)
+                //drawText(jlabel) 1 --> 2
+                //else if(time > 2
+                StageAnimation = !StageAnimation;
+                
+            }
+            
+            stage.drawEnemy(gl, player, 1);
+            
+        }
+        else if(StageTwoOn)
+        {
+            if (StageAnimation) {
+                e.createStage1Enemys(stage2);
+                StageAnimation = !StageAnimation;   
+            }else
+            {
+                stage.drawEnemy(gl, player, 2);
+            }
+            
+            
+        }
+        else if(StageThreeOn)
+        {
+            if (StageAnimation) {
+                e.createStage1Enemys(stage3);
+                StageAnimation = !StageAnimation;   
+            }
+            
+            stage.drawEnemy(gl, player, 3);
+        }
+//        else if(StageFourOn)
+//        {
+//            if (StageAnimation) {
+//                e.createStage1Enemys(stage1);
+//                StageAnimation = !StageAnimation;   
+//            }
+//            
+//            stage.drawEnemy(gl, player, 4);
+//        }
+        
+            
         //Draw enemies
-        drawEnemy();
+        //drawEnemy(gl);
         //drawenemyBullets(gl, enemyBullets);
         
         
-        drawBossBullets(gl, Entity.bossStorage);
+        //drawBossBullets(gl, Entity.bossStorage);
         
         
     }
@@ -152,17 +175,7 @@ public class MainCode extends AnimListener {
         gl.glDisable(GL.GL_BLEND);
     }
 
-    private void drawEnemy() {
-        //ai.createAI01(enemyList , gl , player , enemyBullets);
   
-        
-        if(!enemyList.isEmpty())
-            enemyList.get(0).drawEnemy(gl);
-
-//        ai.createAI02(enemyList, gl, player, enemyBullets);
-//        ai.createAI03(AI03_01EnemyList,AI03_02EnemyList, gl, player, enemyBullets,stage3);
-        
-    }
 
     private void drawenemyBullets(GL gl, ArrayList<Bullet> bullets) {
         for (int i = 0; i < bullets.size(); i++) {
@@ -180,7 +193,10 @@ public class MainCode extends AnimListener {
         for (int i = 0; i < bullets.size(); i++) {
             if("SpecilEnemyBullet".equals(bullets.get(i).typeBullet))
             {
-                bullets.get(i).drawFollowingBullet(gl, player.getXWorld() * player.scale * player.speed , player.getYWorld()* player.scale * player.speed );
+                bullets.get(i).drawFollowingBullet(gl,
+                        player.getScaledXWorld() 
+                        , player.getScaledYWorld() );
+                
                 
             }
             else
@@ -199,20 +215,15 @@ public class MainCode extends AnimListener {
         }
     }
 }
-    public void createEnemy(ArrayList<Enemy> enemyList, float x, float y) {
-//        Enemy enemy = new Enemy(gl, x, y);
-        EnemyBoss enemy = new EnemyBoss(gl, x, y);
-        enemyList.add(enemy);
-        
-    }
+   
     public void createEnemy(ArrayList<Enemy> enemyList, float x, float y ,int health) {
-        Enemy enemy = new Enemy(gl, x, y,health);
+        Enemy enemy = new Enemy( x, y,health);
         //EnemyBoss enemy = new EnemyBoss(gl, x, y);
         enemyList.add(enemy);
         
     }
 
-    private void initdefaultvalues(GLAutoDrawable glad) {
+    private void initDefaultValues(GLAutoDrawable glad) {
         gl = glad.getGL();
         gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);    //This Will Clear The Background Color To Black
         //gl.glOrtho(1, , , , 0, 0);

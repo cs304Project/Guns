@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import javax.media.opengl.GL;
 import main.Enemys.Enemy;
 import main.MainCode;
-import static main.MainCode.enemyList;
+
 
 public class Player {
 
@@ -58,6 +58,11 @@ public class Player {
     public float getXWorld() {
         return this.xWorld;
     }
+    
+    public float getScaledXWorld()
+    {
+        return getXWorld() * speed * scale;
+    }
 
     public void setYWorld(float y) {
         yWorld = y;
@@ -65,6 +70,11 @@ public class Player {
 
     public float getYWorld() {
         return this.yWorld;
+    }
+    
+    public float getScaledYWorld()
+    {
+        return getYWorld() * speed * scale;
     }
 
     public void drawPlayer(GL gl) {
@@ -142,22 +152,22 @@ public class Player {
             
             if("stage1".equals(name))
             {
-                EnemyLoop( MainCode.enemyList , i);
+                CheckEnemyColisionWithBullet( Entity.EnemyStage_1 , i);
             }
             if("stage2".equals(name))
             {
-                EnemyLoop( MainCode.enemyList , i);
+                CheckEnemyColisionWithBullet( Entity.EnemyStage_2 , i);
             }
             if("stage3".equals(name))
             {
-                EnemyLoop( MainCode.AI03_01EnemyList , i);
-                EnemyLoop( MainCode.AI03_02EnemyList , i);
+                CheckEnemyColisionWithBullet( Entity.EnemyStage_3_01, i);
+                CheckEnemyColisionWithBullet( Entity.EnemyStage_3_02, i);
             }
-            if("BossFight".equals(name))
-            {
-                
-                EnemyLoop( MainCode.enemyList , i);
-            }
+//            if("BossFight".equals(name))
+//            {
+//                
+//                CheckEnemyColisionWithBullet( MainCode.enemyList , i);
+//            }
             
             
             if (bullets.get(i).isDestroyed == true) {
@@ -173,15 +183,17 @@ public class Player {
         Player.fireRate += 1;
     }
         
-    public void EnemyLoop(ArrayList<Enemy> list , int bulletIndex)
+    private void CheckEnemyColisionWithBullet(ArrayList<Enemy> list , int bulletNum)
     {
-        for (int j = 0; j < list.size() && bullets.get(bulletIndex).isDestroyed == false; j++) 
-                e.collision(bullets.get(bulletIndex), list.get(j), list);
+        for (int j = 0; j < list.size() &&
+                bullets.get(bulletNum).isDestroyed == false; j++) 
+                c.collision(bullets.get(bulletNum), list.get(j), list);
     }
 
     public void createBullet() {
 
-        Bullet bullet = new Bullet(gl, xWorld * scale * speed, yWorld * scale * speed, 0.009f, "PlayerBullet", 90, 0.02f);
+        Bullet bullet = new Bullet(gl, getScaledXWorld(), getScaledYWorld(),
+                0.009f, "PlayerBullet", 90, 0.02f);
         bullets.add(bullet);
         fireRate = 0;
     }
