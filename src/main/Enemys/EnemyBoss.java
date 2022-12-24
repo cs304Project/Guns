@@ -6,7 +6,7 @@ import javax.media.opengl.GL;
 import main.Entity;
 import main.Players.Bullet;
 import main.Players.Collision;
-import main.Players.Player;
+
 import main.Timing;
 
 /**
@@ -25,9 +25,9 @@ public class EnemyBoss extends Enemy {
 
     Timing t = new Timing();
 
-    public EnemyBoss(GL gl, float x, float y) {
+    public EnemyBoss(float x, float y) {
 
-        super(gl, x, y,50);
+        super( x, y,50);
 
         scale = .5f;
         collidingRaduis = .28f;

@@ -5,6 +5,7 @@ import main.Timing;
 import java.util.ArrayList;
 import javax.media.opengl.GL;
 import main.Players.Bullet;
+import main.Players.Collision;
 import main.Players.Player;
 
 /**
@@ -14,6 +15,7 @@ import main.Players.Player;
 public class EnemyAI {
 
     Entity e = new Entity();
+    Collision collision = new Collision();
     Timing timer = new Timing();
     public float delta;
     public long currentTime;
@@ -71,7 +73,7 @@ public class EnemyAI {
                 eList.get(i).AutoAttack(gl, enemyBullets);
             }
 
-            e.collision(eList.get(i), player, main.MainCode.enemyList);
+            collision.collision(eList.get(i), player, Entity.EnemyStage_1);
 
         }
 
@@ -86,7 +88,7 @@ public class EnemyAI {
 
             eList.get(i).AutoAttack(gl, enemyBullets);
 
-            e.collision(eList.get(i),player,main.MainCode.enemyList);
+            collision.collision(eList.get(i),player,Entity.EnemyStage_2);
             
         }       
     }
@@ -109,7 +111,7 @@ public class EnemyAI {
             AI03_01(eList ,gl,i,enemiesNumber);
 
             eList.get(i).AutoAttack(gl, enemyBullets);
-            e.collision(eList.get(i),player,main.MainCode.AI03_01EnemyList);
+            collision.collision(eList.get(i),player,Entity.EnemyStage_3_01);
             
         }       
         for(int i = 0; i < eList2.size(); i++)
@@ -117,7 +119,7 @@ public class EnemyAI {
             AI03_02(eList2 ,gl,i,enemiesNumber);
 
             eList2.get(i).AutoAttack(gl, enemyBullets);
-            e.collision(eList2.get(i),player,main.MainCode.AI03_02EnemyList);
+            collision.collision(eList2.get(i),player,Entity.EnemyStage_3_02);
             
         }       
     }

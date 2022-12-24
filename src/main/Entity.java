@@ -7,13 +7,25 @@ import java.util.ArrayList;
 import javax.media.opengl.GL;
 import javax.media.opengl.glu.GLU;
 import main.Players.Bullet;
-import main.Players.Collision;
-import main.Players.Player;
+
 
 public class Entity {
 
     //public int currTime = 0;
     public static ArrayList<Bullet> bossStorage = new ArrayList<>();
+    public static ArrayList<Enemy> EnemyStage_1 = new ArrayList<>();
+    public static ArrayList<Enemy> EnemyStage_2 = new ArrayList<>();
+    public static ArrayList<Enemy> EnemyStage_3_01 = new ArrayList<>();
+    public static ArrayList<Enemy> EnemyStage_3_02 = new ArrayList<>();
+    public static ArrayList<Bullet> enemyBullets = new ArrayList<>();
+    
+    
+    public void createEnemy(ArrayList<Enemy> enemyList,float x, float y)
+    {
+        Enemy enemy = new Enemy(x, y);
+        enemyList.add(enemy);
+ 
+    }
 
     public void destroy(Object obj) {
 
@@ -27,33 +39,51 @@ public class Entity {
         System.out.println("Bullet is Deleted");
     }
 
-    private void destroyEnemyFromList(Enemy enemy, ArrayList<Enemy> list) {
+    public void destroyEnemyFromList(Enemy enemy, ArrayList<Enemy> list) {
 
         list.remove(enemy);
         System.out.println("Enemy is Deleted");
     }
 
-    public void collision(Object obj1, Object obj2) {
-        if ((obj1 instanceof Enemy enemy && obj2 instanceof Player player)) {
-            if (detectCollision(enemy.c, player.c)) {
-                destroyEnemyFromList(enemy, MainCode.enemyList);
-            }
-
-        } else if ((obj2 instanceof Enemy enemy && obj1 instanceof Player player)) {
-            if (detectCollision(player.c, enemy.c)) {
-                destroyEnemyFromList(enemy, MainCode.enemyList);
-            }
-
+    
+    public void createStage1Enemys(int enemyNumber)
+    {
+        for (int i = 0; i < enemyNumber; i++) {
+            createEnemy(EnemyStage_1,-200, 210);
         }
-
     }
-
-    private boolean detectCollision(Collision c1, Collision c2) {
-        double offset = 0.01;
-        double r = (c1.getRadius() - offset) + (c2.getRadius() - offset);
-        return (Math.abs(c1.getX() - c2.getX()) <= r) && (Math.abs(c1.getY() - c2.getY()) <= r);
+    
+    
+    public void createStage2Enemys(int enemyNumber)
+    {
+        for (int i = 0; i < enemyNumber; i++) {
+            float startPosition;
+            if ((enemyNumber - 1) / 4 >= i) {
+                startPosition = 20f;
+            } else if (2 * (enemyNumber - 1) / 4 >= i) {
+                startPosition = 70f;
+            } else if (3 * (enemyNumber - 1) / 4 >= i) {
+                startPosition = 120f;
+            } else {
+                startPosition = 170f;
+            }
+            createEnemy(EnemyStage_2, -200 - (i * 50), startPosition);
+        }
     }
-
+    
+    
+    public void createStage3Enemys(int enemyNumber)
+    {
+         for(int i = 0;i<enemyNumber;i++){
+            if(i<enemyNumber/2){
+                createEnemy(EnemyStage_3_01,-i*50,220);                
+            }else{
+                createEnemy(EnemyStage_3_02,i*50,220);
+            }
+        }
+    }
+    
+    
     //Set the texture and read it 
     public void readTexture(GL gl, String[] textureNames,
             int[] textureContainer, TextureReader.Texture texture[]) {
@@ -91,47 +121,5 @@ public class Entity {
             }
         }
     }
-
-    public void collision(Object obj1, Object obj2,ArrayList<Enemy> eList)
-    {
-        if ((obj1 instanceof Enemy enemy && obj2 instanceof Player player) )
-        {
-            if(detectCollision(enemy.c , player.c)){
-                destroyEnemyFromList(enemy, eList);
-            }
-            
-        }
-        else if ((obj2 instanceof Enemy enemy && obj1 instanceof Player player))
-        {
-            if(detectCollision(player.c , enemy.c ))
-                destroyEnemyFromList(enemy, eList);
-   
-        }
-        if ((obj2 instanceof Bullet bullet && obj1 instanceof Enemy enemy)) {
-            if (detectCollision(bullet.bullet_collision, enemy.c)) {
-               destroyEnemyFromList(enemy, eList);
-               bullet.isDestroyed=true;
-               //destroyBulletFromList(bullet, Player.bullets);
-           
-            }
-            
-        }
-        else if ((obj2 instanceof Enemy enemy && obj1 instanceof Bullet bullet)) {
-            if (detectCollision(enemy.c,bullet.bullet_collision)) {
-                enemy.health--;
-                if(enemy.health<=0){
-                    destroyEnemyFromList(enemy, eList);
-                }
-                bullet.isDestroyed=true;
-                //destroyBulletFromList(bullet, Player.bullets);
-             
-            }
-            
-        }
-     
-    }
-    
-    
-    
 
 }
