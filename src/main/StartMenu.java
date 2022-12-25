@@ -88,9 +88,9 @@ public class StartMenu extends JFrame implements ActionListener, MouseListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == easyBtu || e.getSource()==hardBtu) {
             level = e.getSource() == easyBtu?"easy":"hard";
-            //gameManager.sound.stopSound();
+            
             gameManager = new GameManager(false, true , gameManager.userName);
-
+            
             //gameManager.time.start();
             this.dispose();
 

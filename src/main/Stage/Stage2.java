@@ -3,10 +3,9 @@ package main.Stage;
 import Textures.TextureReader;
 import java.util.ArrayList;
 import main.Enemys.Enemy;
-import static main.Entity.EnemyStage_2_01;
-import static main.Entity.EnemyStage_2_02;
-import static main.Entity.EnemyStage_2_03;
-import static main.Entity.EnemyStage_2_04;
+import static main.Entity.EnemyStage_2;
+
+
 
 import main.ReadImages;
 /**
@@ -26,15 +25,21 @@ public class Stage2 extends Stage {
         read.readTexture(enemyTextureName, enemyTextures, enemyTexture, "/enemy/stage2/");
     }
     public void createStage2Enemys(int enemyNumber) {
-            separetedEnemy(20,EnemyStage_2_01);
-            separetedEnemy(70,EnemyStage_2_02);
-            separetedEnemy(120,EnemyStage_2_03);
-            separetedEnemy(170,EnemyStage_2_04);
+            separetedEnemy(enemyNumber,20,EnemyStage_2);
+
     }
-    public void separetedEnemy(float startPosition, ArrayList<Enemy> list){
-        for(int i =0 ;i<10 ;i++){
-            
-        createEnemy(list, -200 - (i * 50), startPosition);
+    public void separetedEnemy(int enemyNumber, float startPosition, ArrayList<Enemy> list){
+        for(int i =0 ;i<enemyNumber ;i++){
+            if((enemyNumber - 1) / 4 >= i) {
+                startPosition = 20f;
+            } else if (2 * (enemyNumber - 1) / 4 >= i) {
+                startPosition = 70f;
+            } else if (3 * (enemyNumber - 1) / 4 >= i) {
+                startPosition = 120f;
+            } else {
+                startPosition = 170f;
+            }
+            createEnemy(list, -200 - (i%10 * 50), startPosition);
 
         }
     }
