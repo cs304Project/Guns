@@ -27,7 +27,7 @@ public class EnemyBoss extends Enemy {
 
     public EnemyBoss(float x, float y) {
 
-        super( x, y,50);
+        super(gl, x, y,50,200);
 
         scale = .5f;
         collidingRaduis = .28f;

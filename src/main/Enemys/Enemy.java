@@ -26,7 +26,8 @@ public class Enemy {
     float accumelation = 0.1f;
     protected float collidingRaduis = 0.09f;
     float bulletScale = 0.02f;
-    public int health = 1;
+    public int health=1;
+    int bonusScore =1;
 
     //Keyboard orders
     int fireRate = 500 + (int) (Math.random() * 20000000);
@@ -62,7 +63,17 @@ public class Enemy {
         this.health = health;
         c = new Collision(xWorld * speed * scale, yWorld * speed * scale, collidingRaduis);
     }
-
+    public Enemy(GL gl,float x, float y,int health,int bonusScore){
+        this.gl = gl;
+        xWorld = x;
+        yWorld = y;
+        speed = 0.05f;
+        angle = 0;
+        this.health = health;
+        this.bonusScore = bonusScore;
+        c = new Collision(xWorld * speed * scale, yWorld * speed * scale, collidingRaduis);
+    }
+    
     public void setXWorld(float x) {
         xWorld = x;
     }
@@ -77,6 +88,10 @@ public class Enemy {
 
     public float getYWorld() {
         return this.yWorld;
+    }
+    
+    public int getBonusScore() {
+        return this.bonusScore;
     }
 
     public void drawEnemy(GL gl, int stage) {

@@ -69,4 +69,85 @@ public class Entity {
 
         gl.glDisable(GL.GL_BLEND);
     }
+
+    //Set the texture and read it 
+    public void readTexture(GL gl, String[] textureNames,
+            int[] textureContainer, TextureReader.Texture texture[]) {
+
+        gl.glGenTextures(textureNames.length, textureContainer, 0);
+
+        for (int i = 0; i < textureNames.length; i++) {
+            try {
+
+                if ("back1.jpg".equals(textureNames[i]) || "24.png".equals(textureNames[i])) {
+                    String pathName = "src/Assets/Photos/";
+                    texture[i] = TextureReader.readTexture(pathName + textureNames[i], true);
+
+                } else {
+                    String pathName = "src/PlayerAssets/man/";
+                    texture[i] = TextureReader.readTexture(pathName + textureNames[i], true);
+
+                }
+
+                gl.glBindTexture(GL.GL_TEXTURE_2D, textureContainer[i]);
+
+//                mipmapsFromPNG(gl, new GLU(), texture[i]);
+                new GLU().gluBuild2DMipmaps(
+                        GL.GL_TEXTURE_2D,
+                        GL.GL_RGBA, // Internal Texel Format,
+                        texture[i].getWidth(), texture[i].getHeight(),
+                        GL.GL_RGBA, // External format from image,
+                        GL.GL_UNSIGNED_BYTE,
+                        texture[i].getPixels() // Imagedata
+                );
+
+            } catch (IOException e) {
+                System.out.println(e);
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void collision(Object obj1, Object obj2,ArrayList<Enemy> eList)
+    {
+        if ((obj1 instanceof Enemy enemy && obj2 instanceof Player player) )
+        {
+            if(detectCollision(enemy.c , player.c)){
+                destroyEnemyFromList(enemy, eList);
+            }
+            
+        }
+        else if ((obj2 instanceof Enemy enemy && obj1 instanceof Player player))
+        {
+            if(detectCollision(player.c , enemy.c ))
+                destroyEnemyFromList(enemy, eList);
+   
+        }
+        if ((obj2 instanceof Bullet bullet && obj1 instanceof Enemy enemy)) {
+            if (detectCollision(bullet.bullet_collision, enemy.c)) {
+               destroyEnemyFromList(enemy, eList);
+               Player.score += enemy.getBonusScore();
+               bullet.isDestroyed=true;
+               //destroyBulletFromList(bullet, Player.bullets);
+           
+            }
+            
+        }
+        else if ((obj2 instanceof Enemy enemy && obj1 instanceof Bullet bullet)) {
+            if (detectCollision(enemy.c,bullet.bullet_collision)) {
+                enemy.health--;
+                if(enemy.health<=0){
+                    destroyEnemyFromList(enemy, eList);
+                    Player.score += enemy.getBonusScore();
+                }
+                bullet.isDestroyed=true;
+                //destroyBulletFromList(bullet, Player.bullets);
+             
+            }
+            
+        }
+     
+    }
+    
+
 }
