@@ -1,15 +1,15 @@
 package main.Enemys;
 
 import main.Entity;
-
 import java.util.ArrayList;
 import javax.media.opengl.GL;
-import main.MainCode;
 import static main.MainCode.gl;
 import main.Players.Bullet;
 import main.Players.Collision;
 import main.Stage.Stage1;
 import main.Stage.Stage2;
+import main.Stage.Stage3;
+import main.Stage.Stage4;
 
 public class Enemy {
 
@@ -32,7 +32,7 @@ public class Enemy {
     int fireRate = 500 + (int) (Math.random() * 20000000);
     Bullet bullet = new Bullet(gl, xWorld, yWorld, speed, "enemy", angle, scale);
     public Collision c;
-    int index = 0;
+    public int index = 0;
     int time = 0;
 
     public Enemy(float x, float y) {
@@ -83,18 +83,31 @@ public class Enemy {
 
         gl.glEnable(GL.GL_BLEND);
         time++;
-        if (time % 5 == 0) {
-            index = (index + 1) % 14;
-        }
+
         switch (stage) {
             case 1:
+                if (time % 5 == 0) {
+                    index = (index + 1) % 7;
+                }
                 gl.glBindTexture(GL.GL_TEXTURE_2D, Stage1.enemyTextures[index]); // Turn Blending On
                 break;
             case 2:
+                if (time % 5 == 0) {
+                    index = (index + 1) % 14;
+                }
                 gl.glBindTexture(GL.GL_TEXTURE_2D, Stage2.enemyTextures[index]); // Turn Blending On
                 break;
             case 3:
-                gl.glBindTexture(GL.GL_TEXTURE_2D, Stage1.enemyTextures[index]); // Turn Blending On
+                if (time % 5 == 0) {
+                    index = (index + 1) % 4;
+                }
+                gl.glBindTexture(GL.GL_TEXTURE_2D, Stage3.enemyTextures[index]); // Turn Blending On
+                break;
+            case 4:
+                if (time % 5 == 0) {
+                    index = (index + 1) % 6;
+                }
+                gl.glBindTexture(GL.GL_TEXTURE_2D, Stage4.enemyTextures[index]); // Turn Blending On
                 break;
 
         }
@@ -116,30 +129,48 @@ public class Enemy {
         gl.glPopMatrix();
 
         gl.glDisable(GL.GL_BLEND);
-        drawenemyBullets(gl,bullet);
+        //drawenemyBullets(gl, bullet);
 
         c.drawCirclie(gl, xWorld * speed * scale, yWorld * speed * scale);
 
     }
+
     private void drawenemyBullets(GL gl, Bullet bullet) {
-            bullet.drawBullet(gl);    
+        bullet.drawBullet(gl);
     }
+
     public void drawEnemy_AnimationAI(GL gl, float x, float y, String AIName, int stage) {
         gl.glEnable(GL.GL_BLEND);
         time++;
-        if (time % 7 == 0) {
-            index = (index + 1) % 14;
 
-        }
         switch (stage) {
             case 1:
+                if (time % 7 == 0) {
+                    index = (index + 1) % 7;
+
+                }
                 gl.glBindTexture(GL.GL_TEXTURE_2D, Stage1.enemyTextures[index]); // Turn Blending On
                 break;
             case 2:
+                if (time % 7 == 0) {
+                    index = (index + 1) % 14;
+
+                }
                 gl.glBindTexture(GL.GL_TEXTURE_2D, Stage2.enemyTextures[index]); // Turn Blending On
                 break;
             case 3:
-                gl.glBindTexture(GL.GL_TEXTURE_2D, Stage1.enemyTextures[index]); // Turn Blending On
+                if (time % 7 == 0) {
+                    index = (index + 1) % 4;
+
+                }
+                gl.glBindTexture(GL.GL_TEXTURE_2D, Stage3.enemyTextures[index]); // Turn Blending On
+                break;
+                case 4:
+                if (time % 7 == 0) {
+                    index = (index + 1) % 6;
+
+                }
+                gl.glBindTexture(GL.GL_TEXTURE_2D, Stage3.enemyTextures[index]); // Turn Blending On
                 break;
         }
         //gl.glColor3f(1, 1, 0);
@@ -171,7 +202,7 @@ public class Enemy {
         gl.glEnd();
         gl.glPopMatrix();
         gl.glDisable(GL.GL_BLEND);
-         drawenemyBullets(gl,bullet);
+       //drawenemyBullets(gl, bullet);
         c.drawCirclie(gl, x * speed * scale, y * speed * scale + (speed * scale * verticalAnimation));
     }
 
@@ -185,7 +216,6 @@ public class Enemy {
             Bullet bullet = new Bullet(gl, xWorld * scale * speed, yWorld * scale * speed, 0.005f, "EnemyBullet", 270, bulletScale);
             bullets.add(bullet);
         }
-
         fireRate = (fireRate + 1) % 501;
 
     }

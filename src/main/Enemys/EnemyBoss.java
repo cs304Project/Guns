@@ -47,7 +47,7 @@ public class EnemyBoss extends Enemy {
 
         HandleBorders();
 
-        super.drawEnemy(gl,4);
+        super.drawEnemy(gl,stage);
         if (normalAttackTimer % 5 == 0 && normalAttackTimer != 0 && specialAttackTimer <= 5) {
             bulletScale = 0.02f;
             createBullet(gl, Entity.bossStorage, 270, "BossBullet", bulletScale);
