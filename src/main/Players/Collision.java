@@ -59,11 +59,13 @@ public class Collision {
         if ((obj1 instanceof Enemy enemy && obj2 instanceof Player player)) {
             if (detectCollision(enemy.c, player.c)) {
                 e.destroyEnemyFromList(enemy, Entity.EnemyStage_1);
+                Player.score+=enemy.bonusScore;
             }
 
         } else if ((obj2 instanceof Enemy enemy && obj1 instanceof Player player)) {
             if (detectCollision(player.c, enemy.c)) {
                 e.destroyEnemyFromList(enemy, Entity.EnemyStage_1);
+                Player.score+=enemy.bonusScore;
             }
 
         }
@@ -82,18 +84,20 @@ public class Collision {
         if ((obj1 instanceof Enemy enemy && obj2 instanceof Player player)) {
             if (detectCollision(enemy.c, player.c)) {
                 e.destroyEnemyFromList(enemy, eList);
+                Player.score+=enemy.bonusScore;
             }
         } else if ((obj2 instanceof Enemy enemy && obj1 instanceof Player player)) {
             if (detectCollision(player.c, enemy.c)) {
                 e.destroyEnemyFromList(enemy, eList);
+                Player.score+=enemy.bonusScore;
             }
 
         }
         if ((obj2 instanceof Bullet bullet && obj1 instanceof Enemy enemy)) {
             if (detectCollision(bullet.bullet_collision, enemy.c)) {
                 e.destroyEnemyFromList(enemy, eList);
+                Player.score+=enemy.bonusScore;
                 bullet.isDestroyed = true;
-
             }
 
         } else if ((obj2 instanceof Enemy enemy && obj1 instanceof Bullet bullet)) {
@@ -101,6 +105,7 @@ public class Collision {
                 enemy.health--;
                 if (enemy.health <= 0) {
                     e.destroyEnemyFromList(enemy, eList);
+                    Player.score+=enemy.bonusScore;
                 }
                 bullet.isDestroyed = true;
             }

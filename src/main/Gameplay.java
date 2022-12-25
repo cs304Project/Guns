@@ -14,6 +14,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import main.Players.Player;
 
 /**
  *
@@ -86,7 +87,10 @@ public class Gameplay extends JFrame implements ActionListener {
 
             Entity.EnemyStage_3_01 = new ArrayList<Enemy>();
             Entity.EnemyStage_3_02= new ArrayList<Enemy>();
-
+            ScoreBoard scoreboard = new ScoreBoard();
+            scoreboard.addScore("yousef",Player.score);
+            scoreboard.sortScores();
+            Player.score=0;
             //gameManager.sound.stopSound();
             gameManager = new GameManager(true, false);
             //gameManager.time.stop();
