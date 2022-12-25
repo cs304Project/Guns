@@ -4,18 +4,22 @@ import java.util.ArrayList;
 import javax.media.opengl.GL;
 import main.Players.Bullet;
 
-
 public class Entity {
 
     //public int currTime = 0;
     public static ArrayList<Bullet> bossStorage = new ArrayList<>();
     public static ArrayList<Enemy> EnemyStage_1 = new ArrayList<>();
-    public static ArrayList<Enemy> EnemyStage_2 = new ArrayList<>();
+    public static ArrayList<Enemy> EnemyStage_2_01 = new ArrayList<>();
+    public static ArrayList<Enemy> EnemyStage_2_02 = new ArrayList<>();
+    public static ArrayList<Enemy> EnemyStage_2_03 = new ArrayList<>();
+    public static ArrayList<Enemy> EnemyStage_2_04 = new ArrayList<>();
     public static ArrayList<Enemy> EnemyStage_3_01 = new ArrayList<>();
     public static ArrayList<Enemy> EnemyStage_3_02 = new ArrayList<>();
+    public static ArrayList<Enemy> EnemyStage_4 = new ArrayList<>();
     public static ArrayList<Bullet> enemyBullets = new ArrayList<>();
     //texture setting
-    public String textureNames[] = {"background.jpeg","player.png","playerBullet.png","stage1.png","stage2.png","stage3.png"};  
+    public String textureNames[] = {"background.jpeg","player.png","playerBullet.png","stage1.png",
+        "stage2.png","stage3.png","stage4.png","gameover.png","won.png"};  
     public void destroy(Object obj) {
 
         obj = null;

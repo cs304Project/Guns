@@ -83,8 +83,10 @@ public class Gameplay extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menuBtu) {
             Entity.EnemyStage_1 = new ArrayList<Enemy>();
-            Entity.EnemyStage_2 = new ArrayList<Enemy>();
-
+            Entity.EnemyStage_2_01 = new ArrayList<Enemy>();
+            Entity.EnemyStage_2_02 = new ArrayList<Enemy>();
+            Entity.EnemyStage_2_03 = new ArrayList<Enemy>();
+            Entity.EnemyStage_2_04 = new ArrayList<Enemy>();
             Entity.EnemyStage_3_01 = new ArrayList<Enemy>();
             Entity.EnemyStage_3_02= new ArrayList<Enemy>();
             ScoreBoard scoreboard = new ScoreBoard();
@@ -92,7 +94,7 @@ public class Gameplay extends JFrame implements ActionListener {
             scoreboard.sortScores();
             Player.score=0;
             //gameManager.sound.stopSound();
-            gameManager = new GameManager(true, false);
+            gameManager = new GameManager(true, false, gameManager.userName);
             //gameManager.time.stop();
             this.dispose();
         }

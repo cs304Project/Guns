@@ -5,7 +5,6 @@ import main.Keys.HandleKeys;
 import java.util.ArrayList;
 import javax.media.opengl.GL;
 import main.Enemys.Enemy;
-import main.MainCode;
 
 
 public class Player {
@@ -103,7 +102,7 @@ public class Player {
         gl.glEnd();
         gl.glPopMatrix();
         gl.glDisable(GL.GL_BLEND);
-        //c.drawCirclie(gl, xWorld * scale * speed, yWorld * scale * speed);
+        c.drawCirclie(gl, xWorld * scale * speed, yWorld * scale * speed);
 
     }
 
@@ -156,22 +155,26 @@ public class Player {
                 CheckEnemyColisionWithBullet( Entity.EnemyStage_1 , i);
 
             }
-            if("stage2".equals(name))
+            else if("stage2".equals(name))
             {
-                CheckEnemyColisionWithBullet( Entity.EnemyStage_2 , i);
+                CheckEnemyColisionWithBullet( Entity.EnemyStage_2_01 , i);
+                CheckEnemyColisionWithBullet( Entity.EnemyStage_2_02 , i);
+                CheckEnemyColisionWithBullet( Entity.EnemyStage_2_03 , i);
+                CheckEnemyColisionWithBullet( Entity.EnemyStage_2_04 , i);
+
             }
-            if("stage3".equals(name))
+            else if("stage3".equals(name))
             {
                 CheckEnemyColisionWithBullet( Entity.EnemyStage_3_01, i);
                 CheckEnemyColisionWithBullet( Entity.EnemyStage_3_02, i);
             }
-//            if("BossFight".equals(name))
-//            {
-//                
-//                CheckEnemyColisionWithBullet( MainCode.enemyList , i);
-//            }
+            else if("stage4".equals(name))
+            {
+                
+                CheckEnemyColisionWithBullet( Entity.EnemyStage_4 , i);
+            }
             
-            if (bullets.get(i).isDestroyed == true) {
+            else if (bullets.get(i).isDestroyed == true) {
                 e.destroyBulletFromList(Player.bullets.get(i), Player.bullets);
 
             } else if (Player.bullets.get(i).getYWorld() > 1) {
@@ -190,9 +193,8 @@ public class Player {
                 bullets.get(bulletNum).isDestroyed == false; j++) 
                 c.collision(bullets.get(bulletNum), list.get(j), list);
     }
-
+    
     public void createBullet() {
-
         Bullet bullet = new Bullet(gl, getScaledXWorld(), getScaledYWorld(),
                 0.009f, "PlayerBullet", 90, 0.02f);
         bullets.add(bullet);
