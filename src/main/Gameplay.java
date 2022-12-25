@@ -92,7 +92,7 @@ public class Gameplay extends JFrame implements ActionListener {
             Entity.EnemyStage_3_01 = new ArrayList<Enemy>();
             Entity.EnemyStage_3_02= new ArrayList<Enemy>();
             ScoreBoard scoreboard = new ScoreBoard();
-            scoreboard.addScore("yousef",Player.score);
+            scoreboard.addScore(gameManager.userName,Player.score);
             scoreboard.sortScores();
             Player.score=0;
             //gameManager.sound.stopSound();
