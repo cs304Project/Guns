@@ -60,7 +60,8 @@ public class Timing  extends JFrame{
     
     public void stop()
     {
-        
+        consumingTime = 0;
+        seconds =0;
         this.secondsTime.stop();
         Println("GAME IS STOPPING");
         

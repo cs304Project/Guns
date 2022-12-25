@@ -43,11 +43,11 @@ public class EnemyBoss extends Enemy {
     }
 
     @Override
-    public void drawEnemy(GL gl) {
+    public void drawEnemy(GL gl,int stage) {
 
         HandleBorders();
 
-        super.drawEnemy(gl);
+        super.drawEnemy(gl,4);
         if (normalAttackTimer % 5 == 0 && normalAttackTimer != 0 && specialAttackTimer <= 5) {
             bulletScale = 0.02f;
             createBullet(gl, Entity.bossStorage, 270, "BossBullet", bulletScale);

@@ -30,7 +30,7 @@ public class Player {
 
     GL gl;
 
-    int textureIndex = 1;
+    int textureIndex = 2;
 
     public Player(GL gl, HandleKeys key, float x, float y) {
         this.key = key;
@@ -102,7 +102,7 @@ public class Player {
         gl.glEnd();
         gl.glPopMatrix();
         gl.glDisable(GL.GL_BLEND);
-        c.drawCirclie(gl, xWorld * scale * speed, yWorld * scale * speed);
+        //c.drawCirclie(gl, xWorld * scale * speed, yWorld * scale * speed);
 
     }
 
@@ -112,28 +112,28 @@ public class Player {
             if (yWorld < 100) {
 
                 yWorld++;
-                textureIndex++;
-                textureIndex = (textureIndex % 4) + 1;
+                //textureIndex++;
+                //textureIndex = (textureIndex % 4) + 1;
 
             }
         } else if (key.isKeyPressed(key.DOWN)) {
             if (yWorld > -100) {
 
                 yWorld--;
-                textureIndex++;
-                textureIndex = (textureIndex % 4) + 1;
+                //textureIndex++;
+                ///textureIndex = (textureIndex % 4) + 1;
             }
         } else if (key.isKeyPressed(key.LEFT)) {
             if (xWorld + 5 > -100) {
 
                 xWorld--;
-                textureIndex = (textureIndex % 4) + 1;
+                //textureIndex = (textureIndex % 4) + 1;
             }
         } else if (key.isKeyPressed(key.RIGHT)) {
             if (xWorld < 100) {
 
                 xWorld++;
-                textureIndex = (textureIndex % 4) + 1;
+               // textureIndex = (textureIndex % 4) + 1;
             }
         }
         
@@ -153,6 +153,7 @@ public class Player {
             if("stage1".equals(name))
             {
                 CheckEnemyColisionWithBullet( Entity.EnemyStage_1 , i);
+
             }
             if("stage2".equals(name))
             {
@@ -168,7 +169,6 @@ public class Player {
 //                
 //                CheckEnemyColisionWithBullet( MainCode.enemyList , i);
 //            }
-            
             
             if (bullets.get(i).isDestroyed == true) {
                 e.destroyBulletFromList(Player.bullets.get(i), Player.bullets);
