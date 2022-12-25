@@ -3,6 +3,7 @@ package main.Enemys;
 import main.Entity;
 import main.Timing;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.media.opengl.GL;
 import main.Players.Bullet;
 import main.Players.Collision;
@@ -69,54 +70,30 @@ public class EnemyAI {
                 float a1 = 0 * (float) Math.cos(Math.toRadians(angle));
                 float a2 = 0 * (float) Math.sin(Math.toRadians(angle));
                 eList.get(i).drawEnemy_AnimationAI(gl, x + a1, y + a2, "AI01", 1);
-                eList.get(i).AutoAttack(gl, enemyBullets);
             }
 
             collision.collision(eList.get(i), player, Entity.EnemyStage_1);
+            
+            
+           
+           
+     
 
         }
 
     }
 
-    public void createAI02(ArrayList<Enemy> eList1, ArrayList<Enemy> eList2,ArrayList<Enemy> eList3,ArrayList<Enemy> eList4,GL gl, Player player,
+    public void createAI02(ArrayList<Enemy> eList1,GL gl, Player player,
             ArrayList<Bullet> enemyBullets) {
 
         for (int i = 0; i < eList1.size(); i++) {
 
             AI02(eList1, gl, i);
 
-            eList1.get(i).AutoAttack(gl, enemyBullets);
-
-            collision.collision(eList1.get(i), player, Entity.EnemyStage_2_01);
+            collision.collision(eList1.get(i), player, Entity.EnemyStage_2);
 
         }
-        for (int i = 0; i < eList2.size(); i++) {
 
-            AI02(eList2, gl, i);
-
-            eList2.get(i).AutoAttack(gl, enemyBullets);
-
-            collision.collision(eList2.get(i), player, Entity.EnemyStage_2_02);
-
-        }
-        for (int i = 0; i < eList3.size(); i++) {
-
-            AI02(eList3, gl, i);
-
-            eList3.get(i).AutoAttack(gl, enemyBullets);
-
-            collision.collision(eList3.get(i), player, Entity.EnemyStage_2_03);
-
-        }
-        for (int i = 0; i < eList4.size(); i++) {
-
-            AI02(eList4, gl, i);
-
-            eList4.get(i).AutoAttack(gl, enemyBullets);
-
-            collision.collision(eList4.get(i), player, Entity.EnemyStage_2_04);
-
-        }
     }
 
     private void AI02(ArrayList<Enemy> eList, GL gl, int index) {
@@ -134,13 +111,10 @@ public class EnemyAI {
         for (int i = 0; i < eList.size(); i++) {
             AI03_01(eList, gl, i, eList.size());
 
-            eList.get(i).AutoAttack(gl, enemyBullets);
             collision.collision(eList.get(i), player, Entity.EnemyStage_3_01);
         }
         for (int i = 0; i < eList2.size(); i++) {
             AI03_02(eList2, gl, i, eList2.size()*2);
-
-            eList2.get(i).AutoAttack(gl, enemyBullets);
             collision.collision(eList2.get(i), player, Entity.EnemyStage_3_02);
 
         }

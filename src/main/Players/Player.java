@@ -156,11 +156,7 @@ public class Player {
             }
             else if("stage2".equals(name))
             {
-                CheckEnemyColisionWithBullet( Entity.EnemyStage_2_01 , i);
-                CheckEnemyColisionWithBullet( Entity.EnemyStage_2_02 , i);
-                CheckEnemyColisionWithBullet( Entity.EnemyStage_2_03 , i);
-                CheckEnemyColisionWithBullet( Entity.EnemyStage_2_04 , i);
-
+                CheckEnemyColisionWithBullet( Entity.EnemyStage_2 , i);
             }
             else if("stage3".equals(name))
             {

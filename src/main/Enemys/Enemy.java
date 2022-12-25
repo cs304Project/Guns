@@ -2,6 +2,7 @@ package main.Enemys;
 
 import main.Entity;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.media.opengl.GL;
 import static main.MainCode.gl;
 import main.Players.Bullet;
@@ -15,12 +16,12 @@ public class Enemy {
 
     //default object to attach the class with the maincode class
     Entity e = new Entity();
-    boolean isFire = false;
+    public boolean isFire = true;
     //Enemy setting
     protected float xWorld;
     protected float yWorld;
-    protected float scale = 0.1f;
-    protected float speed = 0.05f;
+    public float scale = 0.1f;
+    public float speed = 0.05f;
     float angle = 0f;
     float verticalAnimation = 0;
     float accumelation = 0.1f;
@@ -30,7 +31,7 @@ public class Enemy {
 
     //Keyboard orders
     int fireRate = 500 + (int) (Math.random() * 20000000);
-    Bullet bullet = new Bullet(gl, xWorld, yWorld, speed, "enemy", angle, scale);
+    //Bullet bullet = new Bullet(gl, xWorld, yWorld, speed, "enemy", angle, scale);
     public Collision c;
     public int index = 0;
     int time = 0;
@@ -77,6 +78,16 @@ public class Enemy {
 
     public float getYWorld() {
         return this.yWorld;
+    }
+    
+    public float getScaledXWorld()
+    {
+        return getXWorld() * scale * speed;
+    }
+    
+    public float getScaledYWorld()
+    {
+        return getYWorld() * scale * speed;
     }
 
     public void drawEnemy(GL gl, int stage) {
@@ -132,12 +143,10 @@ public class Enemy {
         //drawenemyBullets(gl, bullet);
 
         c.drawCirclie(gl, xWorld * speed * scale, yWorld * speed * scale);
-
+        
+       
     }
 
-    private void drawenemyBullets(GL gl, Bullet bullet) {
-        bullet.drawBullet(gl);
-    }
 
     public void drawEnemy_AnimationAI(GL gl, float x, float y, String AIName, int stage) {
         gl.glEnable(GL.GL_BLEND);
@@ -204,26 +213,34 @@ public class Enemy {
         gl.glDisable(GL.GL_BLEND);
        //drawenemyBullets(gl, bullet);
         c.drawCirclie(gl, x * speed * scale, y * speed * scale + (speed * scale * verticalAnimation));
+        
+        if(isFire)
+        {
+           createBullet(gl , Entity.enemyBullets, 270, "EnemyBullet", .03f); 
+           isFire = false;
+      
+        }
     }
 
     private void translateEnemy(GL gl, float x, float y) {
         gl.glTranslated(x * speed * scale, y * speed * scale, 1);
     }
 
-    public void AutoAttack(GL gl, ArrayList<Bullet> bullets) {
-
-        if (fireRate == 500) {
-            Bullet bullet = new Bullet(gl, xWorld * scale * speed, yWorld * scale * speed, 0.005f, "EnemyBullet", 270, bulletScale);
-            bullets.add(bullet);
-        }
-        fireRate = (fireRate + 1) % 501;
-
-    }
+//    public void AutoAttack(GL gl, ArrayList<Bullet> bullets) {
+//
+//        if (fireRate == 500) {
+//            Bullet bullet = new Bullet(gl, xWorld * scale * speed, yWorld * scale * speed, 0.005f, "EnemyBullet", 270, bulletScale);
+//            bullets.add(bullet);
+//        }
+//        fireRate = (fireRate + 1) % 501;
+//
+//    }
 
     public void createBullet(GL gl, ArrayList<Bullet> bullets, float angle, String typBullet, float bulletScale) {
 
-        Bullet bullet = new Bullet(gl, xWorld * scale * speed, (yWorld - 10) * scale * speed, 0.005f, typBullet, angle, bulletScale);
+        Bullet bullet = new Bullet(gl, getScaledXWorld(), (yWorld - 10) * scale * speed, 0.005f, typBullet, angle, bulletScale);
         bullets.add(bullet);
+        
     }
 
 }

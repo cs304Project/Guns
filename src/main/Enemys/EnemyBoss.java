@@ -50,12 +50,12 @@ public class EnemyBoss extends Enemy {
         super.drawEnemy(gl,stage);
         if (normalAttackTimer % 5 == 0 && normalAttackTimer != 0 && specialAttackTimer <= 5) {
             bulletScale = 0.02f;
-            createBullet(gl, Entity.bossStorage, 270, "BossBullet", bulletScale);
+            createBullet(gl, Entity.bossBullets, 270, "BossBullet", bulletScale);
             normalAttackTimer = 0;
 
         } else if (specialAttackTimer % 5 == 0 && specialAttackTimer > 5) {
             bulletScale = 0.03f;
-            super.createBullet(gl, Entity.bossStorage, angle, "SpecilEnemyBullet", bulletScale);
+            super.createBullet(gl, Entity.bossBullets, angle, "SpecilEnemyBullet", bulletScale);
             specialAttackTimer = 0;
             normalAttackTimer = 0;
         }

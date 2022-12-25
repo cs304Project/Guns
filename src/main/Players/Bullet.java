@@ -17,7 +17,7 @@ public class Bullet {
     //default object to attach the class with the maincode class
     GL gl;
 
-    final int textureIndex = 2;
+    int textureIndex = 2;
 
 
     public Bullet(GL gl, float x, float y, float speed, String typeBullet, float angle, float scale) {
@@ -31,7 +31,10 @@ public class Bullet {
         r = 0.03f;
         
         bullet_collision = new Collision( xWorld * scale * speed, yWorld * scale * speed ,r);
-
+        if(typeBullet.equals("EnemyBullet"))
+        {
+            textureIndex = 10;
+        }
     }
 
     public float getXWorld() {

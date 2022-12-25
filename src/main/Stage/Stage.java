@@ -2,6 +2,7 @@
 package main.Stage;
 
 import java.util.ArrayList;
+import java.util.Random;
 import javax.media.opengl.GL;
 import main.Enemys.Enemy;
 import main.Enemys.EnemyAI;
@@ -30,7 +31,7 @@ public class Stage {
                 ai.createAI01(Entity.EnemyStage_1 , gl , player , Entity.enemyBullets);
                 break;
             case 2:
-                ai.createAI02(Entity.EnemyStage_2_01,Entity.EnemyStage_2_02,Entity.EnemyStage_2_03,Entity.EnemyStage_2_04,
+                ai.createAI02(Entity.EnemyStage_2,
                         gl, player, Entity.enemyBullets);
                 break;
             case 3:
@@ -60,5 +61,79 @@ public class Stage {
         enemyList.add(enemy);
  
     }
-    //Draw enemy bullets;    //Draw enemy bullets;
+    
+   public void drawEnemyBullet(GL gl , int stage)
+   {
+       for(int i = 0; i < Entity.enemyBullets.size(); i++)
+       {
+           Entity.enemyBullets.get(i).drawBullet(gl);
+           if (Entity.enemyBullets.get(i).getYWorld() < -1) {
+
+                Entity.enemyBullets.get(i).drawBullet(gl);
+                if (Entity.enemyBullets.get(i).getYWorld() < -1 || Entity.enemyBullets.get(i).getYWorld() > 1) {
+
+                    e.destroyBulletFromList(Entity.enemyBullets.get(i), Entity.enemyBullets);
+                }
+
+            }
+       }
+       
+       
+       if(Entity.enemyBullets.size() <= 0)
+       {
+           switch (stage) {
+               case 1:
+                   detectTheEnemy(Entity.EnemyStage_1,1);
+                   break;
+               case 2:
+                   detectTheEnemy(Entity.EnemyStage_2, 2);
+
+                   break;
+               case 3:
+
+                   break;
+
+               default:
+                   System.out.println("draw enemy bullet has a problem");
+                   break;
+
+           }
+       }
+       
+       
+   }
+   
+   
+   
+   private void detectTheEnemy(ArrayList<Enemy> list, int stage)
+   {
+       int tmp = 0;
+       switch(stage)
+       {
+           case 1:
+                tmp = 4;
+           break;
+           case 2:
+                tmp = 5;
+           break;
+           case 3:
+               tmp = 4;
+           break;
+           
+       }
+       for(int i = 0; i < tmp; i++)
+           {
+               Random r = new Random();
+               System.out.println (list.size());
+               Entity.randmicList[i] = r.nextInt(list.size());
+           }
+       
+       for(int i = 0; i < Entity.randmicList.length; i++) {
+           
+           if(list.get(Entity.randmicList[i]) != null)
+          list.get(Entity.randmicList[i]).isFire = true;
+       }
+       
+       
+   }
 }
