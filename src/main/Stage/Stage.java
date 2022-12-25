@@ -1,9 +1,15 @@
 
 package main.Stage;
 
+import java.util.ArrayList;
 import javax.media.opengl.GL;
+import main.Enemys.Enemy;
 import main.Enemys.EnemyAI;
 import main.Entity;
+import static main.Entity.EnemyStage_1;
+import static main.Entity.EnemyStage_2;
+import static main.Entity.EnemyStage_3_01;
+import static main.Entity.EnemyStage_3_02;
 import main.Players.Player;
 
 /**
@@ -44,5 +50,12 @@ public class Stage {
                     
         }
     }
+    public void createEnemy(ArrayList<Enemy> enemyList,float x, float y)
+    {
+        Enemy enemy = new Enemy(x, y);
+        enemyList.add(enemy);
+ 
+    }
+   
     //Draw enemy bullets;    //Draw enemy bullets;
 }

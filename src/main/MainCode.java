@@ -12,47 +12,42 @@ import javax.media.opengl.GLCanvas;
 import main.Players.Bullet;
 import main.Players.Player;
 import main.Stage.Stage;
+import main.Stage.Stage1;
+import main.Stage.Stage2;
+import main.Stage.Stage3;
 
 //this calss is used to run the game in infinite loop using AnimListener
 //display, init, reshape and displayChanged  are abtract method from GLeventLisener into AnimListener class
 // this class is attached with Gameplay to run the code
 public class MainCode extends AnimListener {
-
+    float textScale = 0.1f;
     //deault Objects
-    GL gl;
+    public static GL gl;
     GLCanvas canvas;
     Entity e = new Entity();
     Stage stage = new Stage();
+
     Timing time = new Timing();
+    String playerStage = "stage1";
 
-    //texture setting
-    String textureNames[] = {
-        "Man1.png", "Man2.png", "Man3.png", "Man4.png",
-        "back1.jpg", "24.png",
-        "bullet.png"};
-
-    TextureReader.Texture texture[] = new TextureReader.Texture[textureNames.length];
-    int textures[] = new int[textureNames.length];
-
+    ReadImages read = new ReadImages();
     //Key setting
     HandleKeys key = new HandleKeys();
+
+    public TextureReader.Texture texture[] = new TextureReader.Texture[e.textureNames.length];
+    public int textures[] = new int[e.textureNames.length];
 
     //player setting
     Player player = new Player(gl, key);
 
-   
-
-    
     //EnemyAI ai = new EnemyAI();
     public static int stage1 = 24;
     public static int stage2 = 40;
     public static int stage3 = 15;
     boolean StageOneOn = true;
-    boolean StageAnimation = true;
+    boolean enemyKey = true;
     boolean StageTwoOn = false;
     boolean StageThreeOn = false;
-    
-
 
     public void setCanvas(GLCanvas canvas) {
         canvas.addKeyListener(key);
@@ -63,68 +58,89 @@ public class MainCode extends AnimListener {
         return this.canvas;
     }
 
-        
     @Override
     public void init(GLAutoDrawable glad) {
-       
+
         initDefaultValues(glad);
         gl.glLoadIdentity();
- 
+        time.start();
     }
 
     //Run the code in this method
     @Override
     public void display(GLAutoDrawable glad) {
-        
         gl = glad.getGL();
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
-        
+
         //Draw the background
-        drawBackground(gl);
+        e.drawBackground(gl, textures);
 
         //Draw the player
         playerActions(gl);
 
-        
-        
         //-------------------------NewClearCode-------------------------------//
-        if(StageOneOn)
-        {
-            if (StageAnimation) {
-                
-                
-                e.createStage1Enemys(stage1);
-                
-                //if(time < 2)
-                //drawText(jlabel) 1 --> 2
-                //else if(time > 2
-                StageAnimation = !StageAnimation;
-                
+        if (StageOneOn) {
+            if (time.seconds < 2) {
+                e.drawText(gl, textScale, 3, textures);
+                textScale = (textScale + 0.002f) % 1f;
+            } else if (time.seconds < 5) {
+                e.drawText(gl, 0.3f, 3, textures);
             }
-            
+            if (enemyKey) {
+                Stage1 s1 = new Stage1(stage1);
+                enemyKey = false;
+            }
             stage.drawEnemy(gl, player, 1);
-            
-        }
-        else if(StageTwoOn)
-        {
-            if (StageAnimation) {
-                e.createStage1Enemys(stage2);
-                StageAnimation = !StageAnimation;   
-            }else
-            {
-                stage.drawEnemy(gl, player, 2);
+            if (Entity.EnemyStage_1.size() <= 0) {
+                StageOneOn = false;
+                StageTwoOn = true;
+                enemyKey = true;
+                time.stop();
+                textScale = 0.1f;
+
             }
-            
-            
-        }
-        else if(StageThreeOn)
-        {
-            if (StageAnimation) {
-                e.createStage1Enemys(stage3);
-                StageAnimation = !StageAnimation;   
+        } else if (StageTwoOn) {
+            time.start();
+            playerStage = "stage2";
+            if (time.seconds < 2) {
+                e.drawText(gl, textScale, 4, textures);
+                textScale = (textScale + 0.002f) % 1f;
+            } else if (time.seconds < 5) {
+                e.drawText(gl, 0.3f, 4, textures);
             }
-            
+            if (enemyKey) {
+                Stage2 s2 = new Stage2(stage2);
+                enemyKey = false;
+            }
+            stage.drawEnemy(gl, player, 2);
+            if (Entity.EnemyStage_2.size() <= 0) {
+                StageTwoOn = false;
+                StageThreeOn = true;
+                enemyKey = true;
+                time.stop();
+                textScale = 0.1f;
+            }
+
+        } else if (StageThreeOn) {
+            time.start();
+            playerStage = "stage3";
+
+            System.out.println("in Stage 3");
+            if (time.seconds < 2) {
+                e.drawText(gl, textScale, 5, textures);
+                textScale = (textScale + 0.002f) % 1f;
+            } else if (time.seconds < 5) {
+                e.drawText(gl, 0.3f, 5, textures);
+            }
+            if (enemyKey) {
+                Stage3 s3 = new Stage3(stage3);
+                enemyKey = false;
+            }
             stage.drawEnemy(gl, player, 3);
+            if (Entity.EnemyStage_3_01.size() <= 0) {
+                StageThreeOn = false;
+                enemyKey = true;
+            }
         }
 //        else if(StageFourOn)
 //        {
@@ -135,92 +151,46 @@ public class MainCode extends AnimListener {
 //            
 //            stage.drawEnemy(gl, player, 4);
 //        }
-        
-            
+
         //Draw enemies
-        //drawEnemy(gl);
-        //drawenemyBullets(gl, enemyBullets);
-        
-        
+      
+       // drawenemyBullets(gl, enemyBullets);
         //drawBossBullets(gl, Entity.bossStorage);
         
-        
     }
-
     private void playerActions(GL gl) {
         player.drawPlayer(gl);
         player.move();
-        player.drawPlayerBullet(gl , "BossFight");
-    }
-
-    public void drawBackground(GL gl) {
-        gl.glEnable(GL.GL_BLEND);
-        gl.glBindTexture(GL.GL_TEXTURE_2D, textures[4]);	// Turn Blending On
-
-        //gl.glColor3f(0, 0f, 0f);
-        gl.glPushMatrix();
-        gl.glBegin(GL.GL_QUADS);
-        // Front Face
-        gl.glTexCoord2f(0.0f, 0.0f);
-        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
-        gl.glTexCoord2f(1.0f, 0.0f);
-        gl.glVertex3f(1.0f, -1.0f, -1.0f);
-        gl.glTexCoord2f(1.0f, 1.0f);
-        gl.glVertex3f(1.0f, 1.0f, -1.0f);
-        gl.glTexCoord2f(0.0f, 1.0f);
-        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
-        gl.glEnd();
-        gl.glPopMatrix();
-
-        gl.glDisable(GL.GL_BLEND);
-    }
-
-  
-
-    private void drawenemyBullets(GL gl, ArrayList<Bullet> bullets) {
-        for (int i = 0; i < bullets.size(); i++) {
-
-            bullets.get(i).drawBullet(gl);
-            if (bullets.get(i).getYWorld() < -1 || bullets.get(i).getYWorld() > 1) {
-                e.destroyBulletFromList(bullets.get(i), bullets);
-            }
-
-        }
+        player.drawPlayerBullet(gl, playerStage);
     }
     
-    private void drawBossBullets(GL gl,  ArrayList<Bullet> bullets)
-    {
+    private void drawBossBullets(GL gl, ArrayList<Bullet> bullets) {
         for (int i = 0; i < bullets.size(); i++) {
-            if("SpecilEnemyBullet".equals(bullets.get(i).typeBullet))
-            {
+            if ("SpecilEnemyBullet".equals(bullets.get(i).typeBullet)) {
                 bullets.get(i).drawFollowingBullet(gl,
-                        player.getScaledXWorld() 
-                        , player.getScaledYWorld() );
-                
-                
-            }
-            else
-            {
+                        player.getScaledXWorld(),
+                        player.getScaledYWorld());
+
+            } else {
                 bullets.get(i).drawBullet(gl);
             }
-            
+
             if (bullets.get(i).getYWorld() < -1) {
 
-            bullets.get(i).drawBullet(gl);
-            if (bullets.get(i).getYWorld() < -1 || bullets.get(i).getYWorld() > 1) {
+                bullets.get(i).drawBullet(gl);
+                if (bullets.get(i).getYWorld() < -1 || bullets.get(i).getYWorld() > 1) {
 
-                e.destroyBulletFromList(bullets.get(i), bullets);
+                    e.destroyBulletFromList(bullets.get(i), bullets);
+                }
+
             }
-
         }
     }
-}
-   
-    public void createEnemy(ArrayList<Enemy> enemyList, float x, float y ,int health) {
-        Enemy enemy = new Enemy( x, y,health);
+
+    public void createEnemy(ArrayList<Enemy> enemyList, float x, float y, int health) {
+        Enemy enemy = new Enemy(x, y, health);
         //EnemyBoss enemy = new EnemyBoss(gl, x, y);
         enemyList.add(enemy);
-        
     }
 
     private void initDefaultValues(GLAutoDrawable glad) {
@@ -229,16 +199,16 @@ public class MainCode extends AnimListener {
         //gl.glOrtho(1, , , , 0, 0);
         gl.glEnable(GL.GL_TEXTURE_2D);  // Enable Texture Mapping
         gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
-        e.readTexture(gl, textureNames, textures, texture);
+        read.readTexture(e.textureNames, textures, texture,"/player/" );
     }
 
     @Override
-    public void reshape(GLAutoDrawable glad, int i, int i1, int i2, int i3) {
+public void reshape(GLAutoDrawable glad, int i, int i1, int i2, int i3) {
         //useless method
     }
 
     @Override
-    public void displayChanged(GLAutoDrawable glad, boolean bln, boolean bln1) {
+public void displayChanged(GLAutoDrawable glad, boolean bln, boolean bln1) {
         //useless method
     }
 

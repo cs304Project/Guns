@@ -27,7 +27,7 @@ public class Bullet {
     //default object to attach the class with the maincode class
     GL gl;
 
-    final int textureIndex = 7;
+    final int textureIndex = 2;
 
 
     public Bullet(GL gl, float x, float y, float speed, String typeBullet, float angle, float scale) {
@@ -128,16 +128,4 @@ public class Bullet {
 
         bullet_collision.drawCirclie(gl, xWorld, yWorld);
     }
-    
-    
-    
-    
-private void detectCollision(ArrayList<Enemy> enemys){
-        for(int i=0;i<enemys.size();i++){
-             bullet_collision.collision(this,enemys.get(i),enemys);
-        }
-    }
-   
-    
-
 }

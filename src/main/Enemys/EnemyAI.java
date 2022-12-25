@@ -61,15 +61,14 @@ public class EnemyAI {
                     speed = (10f / (i + 1));
                     eList.get(i).setXWorld(x + timer.seconds * speed);
                 }
-                eList.get(i).drawEnemy(gl);
+                eList.get(i).drawEnemy(gl,1);
             } else if (timer.seconds >= 6) {
                 //r* angle
                 angle = angle + 1f;
                 angle = angle % 360;
-                float a1 = 20 * (float) Math.cos(Math.toRadians(angle));
-                float a2 = 20 * (float) Math.sin(Math.toRadians(angle));
-                System.out.println(a1);
-                eList.get(i).drawEnemy_AnimationAI(gl, x + a1, y + a2, "AI01");
+                float a1 = 0 * (float) Math.cos(Math.toRadians(angle));
+                float a2 = 0 * (float) Math.sin(Math.toRadians(angle));
+                eList.get(i).drawEnemy_AnimationAI(gl, x + a1, y + a2, "AI01" ,1);
                 eList.get(i).AutoAttack(gl, enemyBullets);
             }
 
@@ -94,11 +93,12 @@ public class EnemyAI {
     }
 
     private void AI02(ArrayList<Enemy> eList, GL gl, int index) {
+        
         float startPosition = eList.get(index).getYWorld();
         float curretX = eList.get(index).getXWorld() + 2f; //y = sin(x) // PI/180 Math.PI/ 3.14. 
         float omega = 2f;
         float currentY = startPosition + 20 * (float) Math.sin(omega * Math.toRadians(curretX));
-        eList.get(index).drawEnemy_AnimationAI(gl, curretX, currentY, "AI02");
+        eList.get(index).drawEnemy_AnimationAI(gl, curretX, currentY, "AI02",2);
         eList.get(index).setXWorld(curretX >= 200 ? -curretX : curretX);
     }
 
@@ -129,7 +129,7 @@ public class EnemyAI {
         eList.get(index).setXWorld(currentX);
         eList.get(index).setYWorld(currentY);
        
-        eList.get(index).drawEnemy_AnimationAI(gl, currentX  , currentY , "AI02" );
+        eList.get(index).drawEnemy_AnimationAI(gl, currentX  , currentY , "AI02" ,3);
         
         if (currentX>210 && eList.get(index).angle!=210){
             eList.get(index).angle=210;
@@ -146,7 +146,7 @@ public class EnemyAI {
         eList.get(index).setXWorld(currentX);
         eList.get(index).setYWorld(currentY);
        
-        eList.get(index).drawEnemy_AnimationAI(gl, currentX  , currentY , "AI02" );
+        eList.get(index).drawEnemy_AnimationAI(gl, currentX  , currentY , "AI02" ,3);
         
          if (currentX<-210 && eList.get(index).angle!=-30){
             eList.get(index).angle=-30;
