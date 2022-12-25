@@ -14,8 +14,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import main.Players.Player;
-import org.json.simple.JSONObject;
 
 /**
  *
@@ -90,11 +88,7 @@ public class Gameplay extends JFrame implements ActionListener {
             Entity.EnemyStage_3_02= new ArrayList<Enemy>();
 
             //gameManager.sound.stopSound();
-            gameManager =  new GameManager(true, false);
-            JSONObject file = new JSONObject();
-            file.put("score", Player.score);
-            Player.score = 0;
-            System.out.println(file);
+            gameManager = new GameManager(true, false);
             //gameManager.time.stop();
             this.dispose();
         }
