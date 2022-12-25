@@ -1,4 +1,4 @@
-
+    
 package main.Stage;
 
 import Textures.TextureReader;

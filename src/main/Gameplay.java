@@ -88,7 +88,7 @@ public class Gameplay extends JFrame implements ActionListener {
             Entity.EnemyStage_3_02= new ArrayList<Enemy>();
 
             //gameManager.sound.stopSound();
-            gameManager = new GameManager(true, false);
+            gameManager = new GameManager(true, false, gameManager.userName);
             //gameManager.time.stop();
             this.dispose();
         }
