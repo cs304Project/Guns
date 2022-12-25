@@ -5,11 +5,8 @@ import java.util.ArrayList;
 import javax.media.opengl.GL;
 import main.Enemys.Enemy;
 import main.Enemys.EnemyAI;
+import main.Enemys.EnemyBoss;
 import main.Entity;
-import static main.Entity.EnemyStage_1;
-import static main.Entity.EnemyStage_2;
-import static main.Entity.EnemyStage_3_01;
-import static main.Entity.EnemyStage_3_02;
 import main.Players.Player;
 
 /**
@@ -18,9 +15,7 @@ import main.Players.Player;
  */
 public class Stage {
     EnemyAI ai;
-    Entity e;
-
-    
+    Entity e;    
     public Stage()
     {
         this.ai = new EnemyAI();
@@ -35,14 +30,17 @@ public class Stage {
                 ai.createAI01(Entity.EnemyStage_1 , gl , player , Entity.enemyBullets);
                 break;
             case 2:
-                ai.createAI02(Entity.EnemyStage_2, gl, player, Entity.enemyBullets);
+                ai.createAI02(Entity.EnemyStage_2_01,Entity.EnemyStage_2_02,Entity.EnemyStage_2_03,Entity.EnemyStage_2_04,
+                        gl, player, Entity.enemyBullets);
                 break;
             case 3:
-                 ai.createAI03(Entity.EnemyStage_3_01,Entity.EnemyStage_3_02, gl, player, Entity.enemyBullets,stageNum);
+                 ai.createAI03(Entity.EnemyStage_3_01,Entity.EnemyStage_3_02, gl, player, Entity.enemyBullets);
                 break;
             case 4:
-//                if(!enemyList.isEmpty())
-//                    enemyList.get(0).drawEnemy(gl);
+                
+                //if(!enemyList.isEmpty())
+                // enemyList.get(0).
+                ai.createAI04(Entity.EnemyStage_4, gl,player);
                 break;
             default:
                 System.out.println("I am so sorry I cannot find you right Stage");
@@ -56,6 +54,11 @@ public class Stage {
         enemyList.add(enemy);
  
     }
-   
+   public void createEnemyBoss(ArrayList<Enemy> enemyList,float x, float y)
+    {
+        EnemyBoss enemy = new EnemyBoss(x, y);
+        enemyList.add(enemy);
+ 
+    }
     //Draw enemy bullets;    //Draw enemy bullets;
 }
