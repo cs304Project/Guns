@@ -22,6 +22,9 @@ import main.Stage.Stage4;
 // this class is attached with Gameplay to run the code
 public class MainCode extends AnimListener {
 
+    
+    public static int xMax;
+    public static int yMax;
     float textScale = 0.1f;
     //deault Objects
     public static GL gl;
@@ -52,6 +55,13 @@ public class MainCode extends AnimListener {
     boolean StageTwoOn = false;
     boolean StageThreeOn = false;
     boolean StageFourOn = false;
+    
+    
+    public MainCode(int xMax , int yMax)
+    {
+        this.xMax = xMax;
+        this.yMax = yMax;
+    }
 
     public void setCanvas(GLCanvas canvas) {
         canvas.addKeyListener(key);
@@ -78,7 +88,7 @@ public class MainCode extends AnimListener {
 
         //Draw the background
         e.drawBackground(gl, textures);
-
+        
         //Draw the player
         playerActions(gl);
 
@@ -95,6 +105,7 @@ public class MainCode extends AnimListener {
                 enemyKey = false;
             }
             stage.drawEnemy(gl, player, 1);
+            stage.drawEnemyBullet(gl , 1);
             if (Entity.EnemyStage_1.size() <= 0) {
                 StageOneOn = false;
                 StageTwoOn = true;
@@ -103,6 +114,9 @@ public class MainCode extends AnimListener {
                 textScale = 0.1f;
 
             }
+            
+            
+            
         } else if (StageTwoOn) {
             time.start();
             playerStage = "stage2";
@@ -117,8 +131,10 @@ public class MainCode extends AnimListener {
                 enemyKey = false;
             }
             stage.drawEnemy(gl, player, 2);
-            if (Entity.EnemyStage_2_01.size() <= 0&&Entity.EnemyStage_2_02.size() <= 0&&
-                Entity.EnemyStage_2_03.size() <= 0&&Entity.EnemyStage_2_04.size() <= 0) {
+            stage.drawEnemyBullet(gl , 2);
+
+             if (Entity.EnemyStage_2.size() <= 0){
+
                 StageTwoOn = false;
                 StageThreeOn = true;
                 enemyKey = true;
@@ -162,7 +178,7 @@ public class MainCode extends AnimListener {
                 enemyKey = false;
             }
             stage.drawEnemy(gl, player, 4);
-            drawBossBullets(gl, Entity.bossStorage);
+            drawBossBullets(gl, Entity.bossBullets);
             if (Entity.EnemyStage_4.size() <= 0) {
                 StageFourOn = false;
                 time.stop();
@@ -220,7 +236,7 @@ public class MainCode extends AnimListener {
     private void initDefaultValues(GLAutoDrawable glad) {
         gl = glad.getGL();
         gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);    //This Will Clear The Background Color To Black
-        //gl.glOrtho(1, , , , 0, 0);
+        gl.glOrtho(0, 1000 ,0 ,1000 , 0, 0);
         gl.glEnable(GL.GL_TEXTURE_2D);  // Enable Texture Mapping
         gl.glBlendFunc(GL.GL_SRC_ALPHA, GL.GL_ONE_MINUS_SRC_ALPHA);
         read.readTexture(e.textureNames, textures, texture, "/player/");

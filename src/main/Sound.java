@@ -20,6 +20,7 @@ public class Sound {
         String pathName = "src/Assets/Sounds/";
         soundFile[0] =  new File(pathName +"Catch_it.wav");
         soundFile[1] =  new File(pathName +"Taratata.wav");
+        soundFile[2] =  new File(pathName +"player_bullet_5.wav");
     }
     
     
@@ -71,8 +72,8 @@ public class Sound {
         this.stop();
     }
     
-    public void PlaySoundEffect()
-    {
+    public void PlaySoundEffect(int i)
+    {   this.setFile(i);
         this.start();
     }
 } 

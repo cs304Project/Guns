@@ -23,6 +23,8 @@ import main.Players.Player;
 public class Gameplay extends JFrame implements ActionListener {
 
     JButton menuBtu;
+    int maxX = 700;
+    int maxY = 700;
     GameManager gameManager;
     MainCode mc;
 
@@ -30,7 +32,7 @@ public class Gameplay extends JFrame implements ActionListener {
     public Gameplay(GameManager gameManager) {
 
         this.gameManager = gameManager;
-        mc = new MainCode();
+        mc = new MainCode(maxX, maxY);
 
         GLCanvas glcanvas;
         Animator animator;
@@ -38,6 +40,7 @@ public class Gameplay extends JFrame implements ActionListener {
         getContentPane().add(glcanvas, BorderLayout.CENTER);
         glcanvas.addGLEventListener(mc);
         mc.setCanvas(glcanvas);
+        
 
         animator = new FPSAnimator(60);
         animator.add(glcanvas);
@@ -58,10 +61,11 @@ public class Gameplay extends JFrame implements ActionListener {
 
         setTitle("Guns");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(700, 700);
+        setSize(maxX, maxY);
         setLocationRelativeTo(null);
         setVisible(true);
         setFocusable(true);
+        setResizable(false);
         glcanvas.requestFocus();
 
     }
@@ -83,10 +87,8 @@ public class Gameplay extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == menuBtu) {
             Entity.EnemyStage_1 = new ArrayList<Enemy>();
-            Entity.EnemyStage_2_01 = new ArrayList<Enemy>();
-            Entity.EnemyStage_2_02 = new ArrayList<Enemy>();
-            Entity.EnemyStage_2_03 = new ArrayList<Enemy>();
-            Entity.EnemyStage_2_04 = new ArrayList<Enemy>();
+            Entity.EnemyStage_2 = new ArrayList<Enemy>();
+
             Entity.EnemyStage_3_01 = new ArrayList<Enemy>();
             Entity.EnemyStage_3_02= new ArrayList<Enemy>();
             ScoreBoard scoreboard = new ScoreBoard();
