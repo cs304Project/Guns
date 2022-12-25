@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.media.opengl.GL;
 import main.Enemys.Enemy;
 import main.Entity;
-import main.MainCode;
 
 public class Collision {
 
@@ -32,14 +31,14 @@ public class Collision {
     public void drawCirclie(GL gl, float x, float y) {
         this.x = x;
         this.y = y;
-        gl.glBegin(GL.GL_LINE_LOOP);
-
-        for (int i = 0; i < 360; i++) {
-            gl.glVertex2d(r * Math.cos(Math.toRadians(i)) + x, r * Math.sin(Math.toRadians(i)) + y);
-
-        }
-        gl.glEnd();
-
+//        gl.glBegin(GL.GL_LINE_LOOP);
+//
+//        for (int i = 0; i < 360; i++) {
+//            gl.glVertex2d(r * Math.cos(Math.toRadians(i)) + x, r * Math.sin(Math.toRadians(i)) + y);
+//
+//        }
+//        gl.glEnd();
+//
     }
 
     public float getRadius() {
@@ -75,9 +74,6 @@ public class Collision {
         double r = (c1.getRadius() - offset) + (c2.getRadius() - offset);
         return (Math.abs(c1.getX() - c2.getX()) <= r) && (Math.abs(c1.getY() - c2.getY()) <= r);
     }
-
-    
-
     public void collision(Object obj1, Object obj2, ArrayList<Enemy> eList) {
         if ((obj1 instanceof Enemy enemy && obj2 instanceof Player player)) {
             if (detectCollision(enemy.c, player.c)) {
@@ -93,7 +89,6 @@ public class Collision {
             if (detectCollision(bullet.bullet_collision, enemy.c)) {
                 e.destroyEnemyFromList(enemy, eList);
                 bullet.isDestroyed = true;
-
             }
 
         } else if ((obj2 instanceof Enemy enemy && obj1 instanceof Bullet bullet)) {
@@ -104,10 +99,6 @@ public class Collision {
                 }
                 bullet.isDestroyed = true;
             }
-
         }
-
     }
-    
-    
 }

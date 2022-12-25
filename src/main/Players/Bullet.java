@@ -1,27 +1,17 @@
 
 package main.Players;
-
-import java.util.ArrayList;
-import main.Keys.HandleKeys;
-import main.Enemys.Enemy;
-import main.Entity;
-
-
 import javax.media.opengl.GL;
 
 public class Bullet {
-
     float xWorld;
     float yWorld;
     float scale = 0.02f;
-
     float angle;
     public final String typeBullet;
     final float speed;
     float r;
-    HandleKeys key ;
     public Collision bullet_collision;
-   public boolean isDestroyed=false;
+    public boolean isDestroyed=false;
     
 
     //default object to attach the class with the maincode class
@@ -124,8 +114,6 @@ public class Bullet {
         gl.glPopMatrix();
 
         gl.glDisable(GL.GL_BLEND);
-
-
         bullet_collision.drawCirclie(gl, xWorld, yWorld);
     }
 }
