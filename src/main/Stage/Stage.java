@@ -115,9 +115,9 @@ public class Stage {
                    detectTheEnemy(Entity.EnemyStage_2, stage);
 
                    break;
-               case 3:
-                   detectTheEnemy(Entity.EnemyStage_2, stage);
-                   break;
+//               case 3:
+//                   detectTheEnemy(Entity.EnemyStage_2, stage);
+//                   break;
 
                default:
                    System.out.println("draw enemy bullet has a problem");
@@ -140,11 +140,11 @@ public class Stage {
                 tmp = 4;
            break;
            case 2:
-                tmp = 5;
+                tmp = 4;
            break;
-           case 3:
-               tmp = 2;
-           break;
+//           case 3:
+//               //tmp = 2;
+//           break;
            
        }
        for(int i = 0; i < tmp; i++)
@@ -153,15 +153,15 @@ public class Stage {
 
                if(list.size() >= 1)
                {
-                   Entity.randmicList[i] = r.nextInt(list.size());
+                    Entity.randmicList.set(i, r.nextInt(list.size()));
                }
   
            }
        
-       for(int i = 0; i < Entity.randmicList.length; i++) {
+       for(int i = 0; i < Entity.randmicList.size(); i++) {
            
-           if(list.get(Entity.randmicList[i]) != null)
-          list.get(Entity.randmicList[i]).isFire = true;
+           if(list.get(Entity.randmicList.get(i)) != null)
+          list.get(Entity.randmicList.get(i)).isFire = true;
        }
        
        

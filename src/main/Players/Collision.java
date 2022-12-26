@@ -88,6 +88,7 @@ public class Collision {
 
             if (detectCollision(enemy.c, player.c)) {
                 e.destroyEnemyFromList(enemy, eList);
+                
                 Player.score += enemy.bonusScore;
 
             }
