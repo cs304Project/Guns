@@ -94,17 +94,17 @@ public class StartMenu extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == easyBtu)
-            level = 1;
-        else if (e.getSource() == hardBtu)
+        if (e.getSource() == easyBtu){
+            level = 1; 
+            gameManager = new GameManager(false, true, gameManager.userName);
+        }
+        else if (e.getSource() == hardBtu){
             level = 2;
+            gameManager = new GameManager(false, true, gameManager.userName);
+        }
         else if(e.getSource () == exitBtu)
             System.exit(0);
 
-            
-        
-
-        }
         if(e.getSource() == LeaderBoard){
             try {
                 gameManager = new GameManager(false,false,true,gameManager.userName);
@@ -116,10 +116,7 @@ public class StartMenu extends JFrame implements ActionListener {
             this.dispose();
         }
 
-            
-    
-
-        gameManager = new GameManager(false, true, gameManager.userName, level);
+        gameManager.level=level;
  
         this.dispose();
 

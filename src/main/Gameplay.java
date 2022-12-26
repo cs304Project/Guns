@@ -100,23 +100,7 @@ public class Gameplay extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == pauseBtu) {          
-            Entity.EnemyStage_1 = new ArrayList<Enemy>();
-            Entity.EnemyStage_2 = new ArrayList<Enemy>();
-
-            Entity.EnemyStage_3_01 = new ArrayList<Enemy>();
-            Entity.EnemyStage_3_02= new ArrayList<Enemy>();
-            ScoreBoard scoreboard = new ScoreBoard();
-            try {
-                scoreboard.addScore(gameManager.userName,Player.score);
-            } catch (IOException ex) {
-                Logger.getLogger(Gameplay.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(Gameplay.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Player.score=0;
-
-            
+        if (e.getSource() == pauseBtu) {                      
             MainCode.isPause = true;
             pausePanel.setVisible(true);
         }

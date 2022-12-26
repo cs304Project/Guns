@@ -73,11 +73,6 @@ public class Stage {
                 float x = Entity.enemyBullets.get(i).getXWorld();
                 float y = Entity.enemyBullets.get(i).getYWorld();
                 Entity.enemyBullets.get(i).drawBullet(gl,x,y);
-                if (Entity.enemyBullets.get(i).getYWorld() < -1 || Entity.enemyBullets.get(i).getYWorld() > 1) {
-
-                       e.destroyBulletFromList(Entity.enemyBullets.get(i), Entity.enemyBullets);
-                   }
-
            }
        }
        else

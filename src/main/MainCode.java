@@ -38,7 +38,6 @@ public class MainCode extends AnimListener {
     ReadImages read = new ReadImages();
 
     //player and key setting
-    Timing time = new Timing();
     HandleKeys key = new HandleKeys();
     Player player = new Player(gl, key);
     public TextureReader.Texture texture[] = new TextureReader.Texture[e.textureNames.length];
@@ -135,11 +134,10 @@ public class MainCode extends AnimListener {
             else if(StageThreeOn)
             {
                 stage.drawEnemy(gl, player, 3);
-                stage.drawEnemyBullet(gl , 3 , isPause, player);   
             }
             else if(StageFourOn)
             {
-                stage.drawEnemyBullet(gl , 4 , isPause, player);
+//                stage.drawEnemyBullet(gl , 4 , isPause, player);
             }
             
             
@@ -223,7 +221,6 @@ public class MainCode extends AnimListener {
                 enemyKey = false;
             }
             stage.drawEnemy(gl, player, 3);
-            stage.drawEnemyBullet(gl , 3, isPause,player);
 
             drawEnemyEffects(Entity.EnemyEffects,3);
 
