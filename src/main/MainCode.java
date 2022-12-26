@@ -33,22 +33,22 @@ public class MainCode extends AnimListener {
     GLCanvas canvas;
     Entity e = new Entity();
     Stage stage = new Stage();
-
     Timing time = new Timing();
 
+
     String playerStage = "stage1";
-
     ReadImages read = new ReadImages();
-    //Key setting
-    HandleKeys key = new HandleKeys();
 
+    //player and key setting
+    HandleKeys key = new HandleKeys();
+    Player player = new Player(gl, key);
     public TextureReader.Texture texture[] = new TextureReader.Texture[e.textureNames.length];
     public int textures[] = new int[e.textureNames.length];
 
     //player setting
     public Player player;
 
-    //EnemyAI ai = new EnemyAI();
+    public int level = 0;
     public static int stage1 = 24;
     public static int stage2 = 40;
     public static int stage3 = 30;
@@ -59,9 +59,27 @@ public class MainCode extends AnimListener {
     boolean StageThreeOn = false;
     boolean StageFourOn = false;
 
-    public MainCode(int xMax, int yMax) {
+    public static boolean isPause = false;
+    
+    public MainCode(int level)
+    {
+        this.level = level;
+        
+        switch (this.level) {
+            case 1:
+                System.out.println("MY LEVEL : " + this.level);
+                break;
+            case 2:
+                System.out.println("MY LEVEL : " + this.level);
+                break;
+            default:
+                System.out.println("NO LEVELS : ");
+                break;
+        } 
+     
         this.xMax = xMax;
         this.yMax = yMax;
+
     }
 
     public void setCanvas(GLCanvas canvas) {
@@ -89,11 +107,50 @@ public class MainCode extends AnimListener {
         gl = glad.getGL();
         gl.glClear(GL.GL_COLOR_BUFFER_BIT);
 
-        //Draw the background
         e.drawBackground(gl, textures);
 
-        //Draw the player
-        playerActions(gl);
+        if(!isPause)
+        {
+            
+        
+            //Draw the player
+            playerActions(gl);
+        
+            //Draw stage
+            stageLogic();
+        }else 
+        {
+            float x = player.getScaledXWorld();
+            float y = player.getScaledYWorld();
+            
+            player.drawPlayer(gl, x, y);
+            
+            if(StageOneOn)
+            {
+                stage.drawEnemy(gl, player, 1);
+                stage.drawEnemyBullet(gl , 1 , isPause, player);
+                
+            }
+            else if(StageTwoOn)
+            {
+               stage.drawEnemy(gl, player, 2);
+               stage.drawEnemyBullet(gl , 2, isPause , player);
+            }
+            else if(StageThreeOn)
+            {
+                stage.drawEnemy(gl, player, 3);
+            }
+            else if(StageFourOn)
+            {
+//                stage.drawEnemyBullet(gl , 4 , isPause, player);
+            }
+            
+            
+        }
+        
+        
+        
+
 
         //-------------------------NewClearCode-------------------------------//
         if (player != null) {
@@ -121,6 +178,56 @@ public class MainCode extends AnimListener {
                     enemyKey = true;
                     time.stop();
                     textScale = 0.1f;
+                }
+    }
+    
+    private void stageLogic()
+    {
+        if (StageOneOn) {
+            if (time.seconds < 2) {
+                e.drawText(gl, textScale, 3, textures);
+                textScale = (textScale + 0.002f) % 1f;
+            } else if (time.seconds < 5) {
+                e.drawText(gl, 0.3f, 3, textures);
+            }
+            if (enemyKey) {
+                Stage1 s1 = new Stage1(stage1);
+                enemyKey = false;
+            }
+            stage.drawEnemy(gl, player, 1);
+
+            stage.drawEnemyBullet(gl , 1 , isPause, player);
+            drawEnemyEffects(Entity.EnemyEffects,1);
+
+
+            if (Entity.EnemyStage_1.size() <= 0) {
+                StageOneOn = false;
+                StageTwoOn = true;
+                enemyKey = true;
+                time.stop();
+                textScale = 0.1f;
+
+
+            }  
+
+        } else if (StageTwoOn) {
+            time.start();
+            playerStage = "stage2";
+            if (time.seconds < 2) {
+                e.drawText(gl, textScale, 4, textures);
+                textScale = (textScale + 0.002f) % 1f;
+            } else if (time.seconds < 5) {
+                e.drawText(gl, 0.3f, 4, textures);
+            }
+            if (enemyKey) {
+                Stage2 s2 = new Stage2(stage2);
+                enemyKey = false;
+            }
+            stage.drawEnemy(gl, player, 2);
+
+            stage.drawEnemyBullet(gl , 2, isPause, player);
+      
+            drawEnemyEffects(Entity.EnemyEffects,2);
 
                 }
 
@@ -171,6 +278,30 @@ public class MainCode extends AnimListener {
                 stage.drawEnemy(gl, player, 3);
                 drawEnemyEffects(Entity.EnemyEffects, 3);
                 drawPlayerEffects(Entity.PlayerEffects, 3);
+        } else if (StageThreeOn) {
+            time.start();
+            playerStage = "stage3";
+            if (time.seconds < 2) {
+                e.drawText(gl, textScale, 5, textures);
+                textScale = (textScale + 0.002f) % 1f;
+            } else if (time.seconds < 5) {
+                e.drawText(gl, 0.3f, 5, textures);
+            }
+            if (enemyKey) {
+                Stage3 s3 = new Stage3(stage3);
+                enemyKey = false;
+            }
+            stage.drawEnemy(gl, player, 3);
+
+            drawEnemyEffects(Entity.EnemyEffects,3);
+
+
+            if (Entity.EnemyStage_3_01.size() <= 0 && Entity.EnemyStage_3_02.size() <= 0) {
+                StageThreeOn = false;
+                StageFourOn = true;
+                enemyKey = true;
+                time.stop();
+                textScale = 0.1f;
 
                 if (Entity.EnemyStage_3_01.size() <= 0 && Entity.EnemyStage_3_02.size() <= 0) {
                     StageThreeOn = false;
@@ -214,7 +345,7 @@ public class MainCode extends AnimListener {
             }
         }
     }
-
+   
     private void playerActions(GL gl) {
         if (player != null) {
             player.drawPlayer(gl);
@@ -254,10 +385,9 @@ public class MainCode extends AnimListener {
     }
 
     public void drawPlayerEffects(ArrayList<PlayerEffect> list, int stage) {
-        for (int i = 0; i < list.size(); i++) {
+       for (int i = 0; i < list.size(); i++) {
             list.get(i).drawPlayerEffects(gl, stage);
         }
-
     }
 
     public void createEnemy(ArrayList<Enemy> enemyList, float x, float y, int health) {
@@ -265,6 +395,7 @@ public class MainCode extends AnimListener {
         //EnemyBoss enemy = new EnemyBoss(gl, x, y);
         enemyList.add(enemy);
     }
+
 
     private void initDefaultValues(GLAutoDrawable glad) {
         gl = glad.getGL();

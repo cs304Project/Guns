@@ -22,7 +22,7 @@ import org.json.simple.parser.ParseException;
  * @author youse
  */
 public class LeaderBoard extends JFrame implements ActionListener{
-    JButton menuBtu;
+    JButton menuButton;
     JLabel [] scores = new JLabel[10];
     ScoreBoard scoreboard;
     int screenWidth = 700;
@@ -38,11 +38,11 @@ public class LeaderBoard extends JFrame implements ActionListener{
         scoreboard = new ScoreBoard();
         ArrayList<Score> scoresList =  scoreboard.getScores();
         
-        menuBtu = new JButton();
-        menuBtu.setBounds(xWorld-330, yWorld-180, 100, 40);
+        menuButton = new JButton();
+        menuButton.setBounds(xWorld-330, yWorld-180, 100, 40);
         
-        createBtu(menuBtu, "menu", new Color(0f, 0f, 0f, 0.5f));
-        this.add(menuBtu);
+        createBtu(menuButton, "menu", new Color(0f, 0f, 0f, 0.5f));
+        this.add(menuButton);
         
         for(int i=0;i<scoresList.size();i++){
             scores[i]=new JLabel();
@@ -90,7 +90,7 @@ public class LeaderBoard extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == menuBtu){
+        if(e.getSource() == menuButton){
             gameManager = new GameManager(true, false, gameManager.userName);
             this.dispose();
         }

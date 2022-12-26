@@ -1,6 +1,5 @@
 package main;
 
-import main.Enemys.Enemy;
 import com.sun.opengl.util.Animator;
 import com.sun.opengl.util.FPSAnimator;
 import java.awt.BorderLayout;
@@ -12,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.media.opengl.GLCanvas;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -26,18 +26,23 @@ import org.json.simple.parser.ParseException;
  */
 public class Gameplay extends JFrame implements ActionListener {
 
-    JButton menuBtu;
+    PauseMenu pausePanel;
+    JButton pauseBtu;
+    
     int maxX = 700;
     int maxY = 700;
     GameManager gameManager;
     MainCode mc;
+    
 
     //public Gameplay(JLabel textTime , GameManager gameManager)
-    public Gameplay(GameManager gameManager) {
+    public Gameplay(GameManager gameManager, int level) {
 
         this.gameManager = gameManager;
-        mc = new MainCode(maxX, maxY);
-
+        mc = new MainCode(level);
+        pausePanel = new PauseMenu(this.gameManager , this);
+        pausePanel.setVisible(false);
+        
         GLCanvas glcanvas;
         Animator animator;
         glcanvas = new GLCanvas();
@@ -45,21 +50,26 @@ public class Gameplay extends JFrame implements ActionListener {
         glcanvas.addGLEventListener(mc);
         mc.setCanvas(glcanvas);
         
+        
+        
+        pauseBtu = new JButton();
+        pauseBtu.setBounds(5, 5, 60, 40);
+        pauseBtu = createBtu(this.pauseBtu, "Pause");
+        
 
         animator = new FPSAnimator(60);
         animator.add(glcanvas);
         animator.start();
-
-        menuBtu = new JButton();
-        menuBtu.setBounds(5, 5, 40, 20);
-        menuBtu = createBtu(this.menuBtu, "MENU");
+        
+        
 
         JLabel title = new JLabel("DROP YOUR CODE");
         title.setBounds(140, 200, 400, 40);
         title.setFont(new Font("", Font.BOLD, 20));
-
+        
+        add(pausePanel);
         //add(textTime);
-        add(menuBtu);
+        add(pauseBtu);
         //add(title);
         add(glcanvas);
 
@@ -78,7 +88,7 @@ public class Gameplay extends JFrame implements ActionListener {
 
         btu.setText(text);
         btu.setFocusable(false);
-        btu.setFont(new Font("", Font.BOLD, 8));
+        btu.setFont(new Font("", Font.BOLD, 16));
         btu.setBackground(Color.lightGray);
         btu.setForeground(Color.black);
         btu.addActionListener(this);
@@ -89,25 +99,10 @@ public class Gameplay extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == menuBtu) {
-            Entity.EnemyStage_1 = new ArrayList<Enemy>();
-            Entity.EnemyStage_2 = new ArrayList<Enemy>();
 
-            Entity.EnemyStage_3_01 = new ArrayList<Enemy>();
-            Entity.EnemyStage_3_02= new ArrayList<Enemy>();
-            ScoreBoard scoreboard = new ScoreBoard();
-            try {
-                scoreboard.addScore(gameManager.userName,Player.score);
-            } catch (IOException ex) {
-                Logger.getLogger(Gameplay.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (ParseException ex) {
-                Logger.getLogger(Gameplay.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Player.score=0;
-            //gameManager.sound.stopSound();
-            gameManager = new GameManager(true, false, gameManager.userName);
-            //gameManager.time.stop();
-            this.dispose();
+        if (e.getSource() == pauseBtu) {                      
+            MainCode.isPause = true;
+            pausePanel.setVisible(true);
         }
 
     }

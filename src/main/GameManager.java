@@ -14,7 +14,7 @@ public class GameManager {
     //public  Timing time;
     public Sound sound = new Sound();
     public String userName = "";
- 
+    public int level;
     
     public GameManager(boolean menuOn , boolean gameplayOn ,String userName)
     {
@@ -38,7 +38,7 @@ public class GameManager {
         if(this.gameplayOn)
         {
             //Gameplay gameplay = new Gameplay(time.timeText , this);
-            Gameplay gameplay = new Gameplay( this);
+            Gameplay gameplay = new Gameplay( this ,level);
             //sound.playSound(1);
             sound.PlaySoundEffect(2);
         }
@@ -63,13 +63,7 @@ public class GameManager {
         }
         
         // Active the gameplay windows
-        if(this.gameplayOn)
-        {
-            //Gameplay gameplay = new Gameplay(time.timeText , this);
-            Gameplay gameplay = new Gameplay( this);
-            //sound.playSound(1);
-            sound.PlaySoundEffect(2);
-        }
+        
         if(this.leaderBoardOn){
             LeaderBoard leaderBoard = new LeaderBoard(this);
         }
@@ -80,10 +74,6 @@ public class GameManager {
     {
         menuOn = true;
         gameplayOn = false;
-        //time = new Timing();
-        //sound.playSound(0);
-        
-        
         StartMenu  menu = new StartMenu(this, userName);
         
     }

@@ -107,6 +107,36 @@ public class Player {
         c.drawCirclie(gl, xWorld * scale * speed, yWorld * scale * speed);
 
     }
+    
+    
+    public void drawPlayer(GL gl , float x, float y) {
+
+        gl.glEnable(GL.GL_BLEND);
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex);	// Turn Blending On
+
+        //gl.glColor3f(1, 1, 0);
+        gl.glPushMatrix();
+
+        gl.glTranslated(x, y, 1);
+        //System.out.println("xWorld: " + xWorld +  ", yWorld: " + yWorld );
+        gl.glScaled(scale, scale, 1);
+        gl.glBegin(GL.GL_QUADS);
+        // Front Face
+
+        gl.glTexCoord2f(0.0f, 0.0f);
+        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 0.0f);
+        gl.glVertex3f(1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 1.0f);
+        gl.glVertex3f(1.0f, 1.0f, -1.0f);
+        gl.glTexCoord2f(0.0f, 1.0f);
+        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
+        gl.glEnd();
+        gl.glPopMatrix();
+        gl.glDisable(GL.GL_BLEND);
+        c.drawCirclie(gl, xWorld * scale * speed, yWorld * scale * speed);
+
+    }
 
     public void move() {
 
@@ -172,10 +202,10 @@ public class Player {
                 CheckEnemyColisionWithBullet( Entity.EnemyStage_4 , i);
             }
             
-            else if (bullets.get(i).isDestroyed == true) {
+            if (bullets.get(i).isDestroyed == true) {
                 e.destroyBulletFromList(Player.bullets.get(i), Player.bullets);
 
-            } else if (Player.bullets.get(i).getYWorld() > 1) {
+            } else if (Player.bullets.get(i).getYWorld() > .95f) {
                 e.destroyBulletFromList(Player.bullets.get(i), Player.bullets);
 
             }

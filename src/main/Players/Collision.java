@@ -6,8 +6,10 @@ import main.Enemys.Enemy;
 import main.Enemys.EnemyEffect;
 import main.Entity;
 import main.MainCode;
+import main.Sound;
 import static main.MainCode.gl;
 import main.Timing;
+
 
 public class Collision {
 
@@ -15,6 +17,7 @@ public class Collision {
     float y;
     float r;
     Entity e;
+    Sound s = new Sound();
     Timing time = new Timing();
 
     public Collision(float x, float y, float radius) {
@@ -35,14 +38,14 @@ public class Collision {
     public void drawCirclie(GL gl, float x, float y) {
         this.x = x;
         this.y = y;
-//        gl.glBegin(GL.GL_LINE_LOOP);
-//
-//        for (int i = 0; i < 360; i++) {
-//            gl.glVertex2d(r * Math.cos(Math.toRadians(i)) + x, r * Math.sin(Math.toRadians(i)) + y);
-//
-//        }
-//        gl.glEnd();
-//
+        gl.glBegin(GL.GL_LINE_LOOP);
+
+        for (int i = 0; i < 360; i++) {
+            gl.glVertex2d(r * Math.cos(Math.toRadians(i)) + x, r * Math.sin(Math.toRadians(i)) + y);
+
+        }
+        gl.glEnd();
+
     }
 
     public float getRadius() {
@@ -74,6 +77,7 @@ public class Collision {
 
     }
 
+
     private boolean detectCollision(Collision c1, Collision c2) {
         double offset = 0.01;
         double r = (c1.getRadius() - offset) + (c2.getRadius() - offset);
@@ -99,12 +103,15 @@ public class Collision {
             if (detectCollision(bullet.bullet_collision, enemy.c)) {
                 Player.score += enemy.bonusScore;
                 bullet.isDestroyed = true;
-                EnemyEffect enemyeffect = new EnemyEffect(enemy.getXWorld(), enemy.getYWorld());
+                s.PlaySoundEffect(2);
+               
+                EnemyEffect enemyeffect =new EnemyEffect(enemy.getXWorld(),enemy.getYWorld());
                 e.destroyEnemyFromList(enemy, eList);
                 Entity.EnemyEffects.add(enemyeffect);
+
             }
 
-        } else if ((obj2 instanceof Enemy enemy && obj1 instanceof Bullet bullet)) {
+        } else if ((obj1 instanceof Enemy enemy && obj2 instanceof Bullet bullet)) {
             if (detectCollision(enemy.c, bullet.bullet_collision)) {
                 enemy.health--;
                 if (enemy.health <= 0) {

@@ -6,6 +6,7 @@ import main.Enemys.EnemyEffect;
 import main.Players.Bullet;
 import main.Players.PlayerEffect;
 
+
 public class Entity {
 
     //public int currTime = 0;
@@ -78,11 +79,7 @@ public class Entity {
         gl.glPopMatrix();
 
         gl.glDisable(GL.GL_BLEND);
+
     }
 
-    static class EnemyEffects {
-
-        public EnemyEffects() {
-        }
-    }
 }
