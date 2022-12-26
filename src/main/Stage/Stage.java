@@ -151,11 +151,12 @@ public class Stage {
        for(int i = 0; i < tmp; i++)
            {
                Random r = new Random();
+
                if(list.size() >= 1)
                {
                    Entity.randmicList[i] = r.nextInt(list.size());
                }
-               
+  
            }
        
        for(int i = 0; i < Entity.randmicList.length; i++) {

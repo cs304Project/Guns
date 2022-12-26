@@ -13,10 +13,17 @@ public class Stage3 extends Stage {
     String[] enemyTextureName = {"enemy1.png", "enemy2.png", "enemy3.png", "enemy4.png"};
     public static TextureReader.Texture enemyTexture[] = new TextureReader.Texture[4];
     public static int enemyTextures[] = new int[4];
+    public String[] enemyTextureEffectName={ "enemy-effect1.png","enemy-effect2.png","enemy-effect3.png","enemy-effect4.png"
+       };
+    public static TextureReader.Texture enemyTextureEffect[] = new TextureReader.Texture[4];
+    public static int enemyTextureEffects[] = new int[4];
+    
     ReadImages read = new ReadImages();
     public Stage3(int enemyNumber) {
         createStage3Enemys(enemyNumber);
         read.readTexture(enemyTextureName, enemyTextures, enemyTexture, "/enemy/stage3/");
+        read.readTexture( enemyTextureEffectName, enemyTextureEffects,enemyTextureEffect, "/enemy/stage3/");
+
     }
 
     public void createStage3Enemys(int enemyNumber) {

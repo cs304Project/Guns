@@ -19,6 +19,7 @@ public class Player {
     public boolean damege = false;
     public int powerUp = 3;
     public static int fireRate;
+    public static int score=0;
 
     //projectile 
     public static ArrayList<Bullet> bullets = new ArrayList<>();

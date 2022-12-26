@@ -4,16 +4,23 @@ package main.Players;
 import java.util.ArrayList;
 import javax.media.opengl.GL;
 import main.Enemys.Enemy;
+import main.Enemys.EnemyEffect;
 import main.Entity;
+
 import main.Sound;
+import static main.MainCode.gl;
+import main.Timing;
+
 
 public class Collision {
 
     float x;
     float y;
     float r;
+
     Entity e;
     Sound s = new Sound();
+    Timing time = new Timing();
 
     public Collision(float x, float y, float radius) {
         this.x = x;
@@ -56,7 +63,24 @@ public class Collision {
     }
     
     
-    
+
+    public void collision(Object obj1, Object obj2) {
+        if ((obj1 instanceof Enemy enemy && obj2 instanceof Player player)) {
+            if (detectCollision(enemy.c, player.c)) {
+                e.destroyEnemyFromList(enemy, Entity.EnemyStage_1);
+                Player.score+=enemy.bonusScore;
+            }
+
+        } else if ((obj2 instanceof Enemy enemy && obj1 instanceof Player player)) {
+            if (detectCollision(player.c, enemy.c)) {
+                e.destroyEnemyFromList(enemy, Entity.EnemyStage_1);
+                Player.score+=enemy.bonusScore;
+            }
+
+        }
+
+    }
+
 
     private boolean detectCollision(Collision c1, Collision c2) {
         double offset = 0.01;
@@ -67,20 +91,25 @@ public class Collision {
         if ((obj1 instanceof Enemy enemy && obj2 instanceof Player player)) {
             if (detectCollision(enemy.c, player.c)) {
                 e.destroyEnemyFromList(enemy, eList);
+                Player.score+=enemy.bonusScore;
             }
         } else if ((obj2 instanceof Enemy enemy && obj1 instanceof Player player)) {
             if (detectCollision(player.c, enemy.c)) {
                 e.destroyEnemyFromList(enemy, eList);
+                Player.score+=enemy.bonusScore;
             }
 
         }
         if ((obj1 instanceof Bullet bullet && obj2 instanceof Enemy enemy)) {
             if (detectCollision(bullet.bullet_collision, enemy.c)) {
-                e.destroyEnemyFromList(enemy, eList);
+                Player.score+=enemy.bonusScore;
                 bullet.isDestroyed = true;
-                
                 s.PlaySoundEffect(2);
-                
+               
+                EnemyEffect enemyeffect =new EnemyEffect(enemy.getXWorld(),enemy.getYWorld());
+                e.destroyEnemyFromList(enemy, eList);
+                Entity.EnemyEffects.add(enemyeffect);
+
             }
 
         } else if ((obj1 instanceof Enemy enemy && obj2 instanceof Bullet bullet)) {
@@ -88,6 +117,7 @@ public class Collision {
                 enemy.health--;
                 if (enemy.health <= 0) {
                     e.destroyEnemyFromList(enemy, eList);
+                    Player.score+=enemy.bonusScore;
                 }
                 bullet.isDestroyed = true;
             }

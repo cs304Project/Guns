@@ -28,6 +28,7 @@ public class Enemy {
     protected float collidingRaduis = 0.09f;
     float bulletScale = 0.02f;
     public int health = 1;
+    public int bonusScore=1;
 
     //Keyboard orders
     int fireRate = 500 + (int) (Math.random() * 20000000);
@@ -61,6 +62,16 @@ public class Enemy {
         speed = 0.05f;
         angle = 0;
         this.health = health;
+        c = new Collision(xWorld * speed * scale, yWorld * speed * scale, collidingRaduis);
+    }
+     public Enemy(float x, float y, int health,int bonusScore) {
+
+        xWorld = x;
+        yWorld = y;
+        speed = 0.05f;
+        angle = 0;
+        this.health = health;
+        this.bonusScore = bonusScore;
         c = new Collision(xWorld * speed * scale, yWorld * speed * scale, collidingRaduis);
     }
 
