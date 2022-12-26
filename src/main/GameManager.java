@@ -16,7 +16,7 @@ public class GameManager {
     public String userName = "";
  
     
-    public GameManager(boolean menuOn , boolean gameplayOn ,String userName)
+    public GameManager(boolean menuOn , boolean gameplayOn ,String userName , int level)
     {
         
         this.menuOn = menuOn;
@@ -38,7 +38,7 @@ public class GameManager {
         if(this.gameplayOn)
         {
             //Gameplay gameplay = new Gameplay(time.timeText , this);
-            Gameplay gameplay = new Gameplay( this);
+            Gameplay gameplay = new Gameplay( this , level);
             //sound.playSound(1);
             sound.PlaySoundEffect(2);
         }
@@ -80,10 +80,6 @@ public class GameManager {
     {
         menuOn = true;
         gameplayOn = false;
-        //time = new Timing();
-        //sound.playSound(0);
-        
-        
         StartMenu  menu = new StartMenu(this, userName);
         
     }

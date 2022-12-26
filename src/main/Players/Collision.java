@@ -6,16 +6,22 @@ import javax.media.opengl.GL;
 import main.Enemys.Enemy;
 import main.Enemys.EnemyEffect;
 import main.Entity;
+
+import main.Sound;
 import static main.MainCode.gl;
 import main.Timing;
+
 
 public class Collision {
 
     float x;
     float y;
     float r;
-    Entity e;   
+
+    Entity e;
+    Sound s = new Sound();
     Timing time = new Timing();
+
     public Collision(float x, float y, float radius) {
         this.x = x;
         this.y = y;
@@ -34,14 +40,14 @@ public class Collision {
     public void drawCirclie(GL gl, float x, float y) {
         this.x = x;
         this.y = y;
-//        gl.glBegin(GL.GL_LINE_LOOP);
-//
-//        for (int i = 0; i < 360; i++) {
-//            gl.glVertex2d(r * Math.cos(Math.toRadians(i)) + x, r * Math.sin(Math.toRadians(i)) + y);
-//
-//        }
-//        gl.glEnd();
-//
+        gl.glBegin(GL.GL_LINE_LOOP);
+
+        for (int i = 0; i < 360; i++) {
+            gl.glVertex2d(r * Math.cos(Math.toRadians(i)) + x, r * Math.sin(Math.toRadians(i)) + y);
+
+        }
+        gl.glEnd();
+
     }
 
     public float getRadius() {
@@ -57,6 +63,7 @@ public class Collision {
     }
     
     
+
     public void collision(Object obj1, Object obj2) {
         if ((obj1 instanceof Enemy enemy && obj2 instanceof Player player)) {
             if (detectCollision(enemy.c, player.c)) {
@@ -73,6 +80,7 @@ public class Collision {
         }
 
     }
+
 
     private boolean detectCollision(Collision c1, Collision c2) {
         double offset = 0.01;
@@ -96,12 +104,15 @@ public class Collision {
             if (detectCollision(bullet.bullet_collision, enemy.c)) {
                 Player.score+=enemy.bonusScore;
                 bullet.isDestroyed = true;
+                s.PlaySoundEffect(2);
+               
                 EnemyEffect enemyeffect =new EnemyEffect(enemy.getXWorld(),enemy.getYWorld());
                 e.destroyEnemyFromList(enemy, eList);
                 Entity.EnemyEffects.add(enemyeffect);
+
             }
 
-        } else if ((obj2 instanceof Enemy enemy && obj1 instanceof Bullet bullet)) {
+        } else if ((obj1 instanceof Enemy enemy && obj2 instanceof Bullet bullet)) {
             if (detectCollision(enemy.c, bullet.bullet_collision)) {
                 enemy.health--;
                 if (enemy.health <= 0) {
@@ -111,5 +122,23 @@ public class Collision {
                 bullet.isDestroyed = true;
             }
         }
+        
+        
+        
+        if ((obj1 instanceof Bullet bullet && obj2 instanceof Player player)) {
+            if (detectCollision(bullet.bullet_collision, player.c)) {
+                //e.destroyEnemyFromList(bullet, eList);
+                System.out.println("I am Here");
+            }
+        } else if ((obj2 instanceof Player player  && obj1 instanceof Bullet bullet)) {
+            if (detectCollision(player.c,bullet.bullet_collision)) {
+                //e.destroyEnemyFromList(enemy, eList);
+                System.out.println("I am Here 2 ");
+            }
+
+        }
+        
+        
+        
     }
 }
