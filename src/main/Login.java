@@ -1,4 +1,3 @@
-
 package main;
 
 import java.awt.Color;
@@ -15,7 +14,8 @@ import javax.swing.JTextField;
  *
  * @author hossa
  */
-public class Login extends JFrame  implements ActionListener {
+public class Login extends JFrame implements ActionListener {
+
     JTextField textField;
     JPasswordField passwordField;
     JButton loginBtu;
@@ -25,47 +25,40 @@ public class Login extends JFrame  implements ActionListener {
     JLabel userPassword;
     int xWorld = 250;
     int yWorld = 450;
-    
-    
-    public static void main(String [] string)
-    {
+    Sound buttonssound=new Sound();
+
+    public static void main(String[] string) {
         new Login();
     }
-    
-    public Login()
-    {
-        
-        
-        
-        
+
+    public Login() {
+
         textField = new JTextField();
         textField.setBounds(xWorld, yWorld, 200, 32);
         textField.setFont(new Font("Monospaced", Font.BOLD, 20));
         textField.setCaretColor(Color.blue);
-        
-        userText  = new JLabel("User Name");
-        userText.setBounds(xWorld - 100, yWorld + 16 , 100, 16);
+
+        userText = new JLabel("User Name");
+        userText.setBounds(xWorld - 100, yWorld + 16, 100, 16);
         userText.setFont(new Font("", Font.CENTER_BASELINE, 12));
 
-        loginBtu= new JButton("Login");
+        loginBtu = new JButton("Login");
         loginBtu.setBounds(xWorld, yWorld + 40, 80, 28);
         loginBtu.setFont(new Font("", Font.CENTER_BASELINE, 12));
         loginBtu.addActionListener(this);
-        
-        
-        cancelBtu= new JButton("Cancel");
+
+        cancelBtu = new JButton("Cancel");
         cancelBtu.setBounds(xWorld + 100, yWorld + 40, 80, 28);
         cancelBtu.setFont(new Font("", Font.BOLD, 12));
         cancelBtu.addActionListener(this);
-        
-                
+
         //add(passwordField);
         add(textField);
         //add(userPassword);
         add(userText);
         add(loginBtu);
         add(cancelBtu);
-        
+
         setTitle("Guns Login");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -77,14 +70,14 @@ public class Login extends JFrame  implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
-        
-        
         if (e.getSource() == loginBtu) {
-            gameManger = new GameManager(true , false , textField.getText());
+            buttonssound.PlaySoundEffect(5);
+            gameManger = new GameManager(true, false, textField.getText(),buttonssound);
+            gameManger.sound=buttonssound;
             this.dispose();
-        }
-        else if (e.getSource() == cancelBtu) {
+        } else if (e.getSource() == cancelBtu) {
+            buttonssound.PlaySoundEffect(5);
+
             System.exit(0);
         }
 
