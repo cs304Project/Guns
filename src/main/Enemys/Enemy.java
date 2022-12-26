@@ -278,6 +278,7 @@ public class Enemy {
 
         if (isFire) {
             createBullet(gl, Entity.enemyBullets, 270, "EnemyBullet", .03f);
+            Enemy_bulletsound.PlaySoundEffect(4);
             isFire = false;
 
         }

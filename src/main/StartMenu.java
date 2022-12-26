@@ -105,18 +105,25 @@ public class StartMenu extends JFrame implements ActionListener {
 
         if (e.getSource() == easyBtu){
             gameManager.sound.stopSound();
+            gameManager.sound.PlaySoundEffect(5);
+            
             level = 1; 
             gameManager = new GameManager(false, true, gameManager.userName);
+           
         }
         else if (e.getSource() == hardBtu){
             gameManager.sound.stopSound();
+            gameManager.sound.PlaySoundEffect(5);
             level = 2;
             gameManager = new GameManager(false, true, gameManager.userName);
+           
         }
         else if(e.getSource () == exitBtu)
+          
             System.exit(0);
 
         if(e.getSource() == LeaderBoard){
+              
             try {
                 gameManager = new GameManager(false,false,true,false,gameManager.userName);
             } catch (IOException ex) {
