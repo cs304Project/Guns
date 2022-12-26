@@ -10,6 +10,7 @@ public class GameManager {
     public boolean menuOn;
     public boolean gameplayOn;
     public boolean leaderBoardOn;
+    public boolean howToPlayOn;
     //public  Timing time;
     public Sound sound = new Sound();
     public String userName = "";
@@ -42,13 +43,14 @@ public class GameManager {
         }
         
     }
-    public GameManager(boolean menuOn , boolean gameplayOn,boolean leaderBoardOn ,String userName) throws IOException, FileNotFoundException, ParseException
+    public GameManager(boolean menuOn , boolean gameplayOn,boolean leaderBoardOn,boolean howToPlayOn ,String userName) throws IOException, FileNotFoundException, ParseException
     {
         
         this.menuOn = menuOn;
         this.gameplayOn = gameplayOn;
         this.leaderBoardOn = leaderBoardOn;
         this.userName = userName;
+        this.howToPlayOn = howToPlayOn;
         //time = new Timing();
         
         // Active the menu windows
@@ -64,6 +66,9 @@ public class GameManager {
         
         if(this.leaderBoardOn){
             LeaderBoard leaderBoard = new LeaderBoard(this);
+        }
+        if (this.howToPlayOn){
+            HowToPlay howToPlay = new HowToPlay(this);
         }
         
     }
