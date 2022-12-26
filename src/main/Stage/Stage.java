@@ -124,7 +124,6 @@ public class Stage {
        for(int i = 0; i < tmp; i++)
            {
                Random r = new Random();
-               System.out.println (list.size());
                Entity.randmicList[i] = r.nextInt(list.size());
            }
        
