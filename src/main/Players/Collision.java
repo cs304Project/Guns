@@ -4,15 +4,18 @@ package main.Players;
 import java.util.ArrayList;
 import javax.media.opengl.GL;
 import main.Enemys.Enemy;
+import main.Enemys.EnemyEffect;
 import main.Entity;
+import static main.MainCode.gl;
+import main.Timing;
 
 public class Collision {
 
     float x;
     float y;
     float r;
-    Entity e;
-
+    Entity e;   
+    Timing time = new Timing();
     public Collision(float x, float y, float radius) {
         this.x = x;
         this.y = y;
@@ -89,11 +92,13 @@ public class Collision {
             }
 
         }
-        if ((obj2 instanceof Bullet bullet && obj1 instanceof Enemy enemy)) {
+        if ((obj1 instanceof Bullet bullet && obj2 instanceof Enemy enemy)) {
             if (detectCollision(bullet.bullet_collision, enemy.c)) {
-                e.destroyEnemyFromList(enemy, eList);
                 Player.score+=enemy.bonusScore;
                 bullet.isDestroyed = true;
+                EnemyEffect enemyeffect =new EnemyEffect(enemy.getXWorld(),enemy.getYWorld());
+                e.destroyEnemyFromList(enemy, eList);
+                Entity.EnemyEffects.add(enemyeffect);
             }
 
         } else if ((obj2 instanceof Enemy enemy && obj1 instanceof Bullet bullet)) {

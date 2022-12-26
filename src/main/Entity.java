@@ -2,6 +2,7 @@ package main;
 import main.Enemys.Enemy;
 import java.util.ArrayList;
 import javax.media.opengl.GL;
+import main.Enemys.EnemyEffect;
 import main.Players.Bullet;
 
 public class Entity {
@@ -14,6 +15,8 @@ public class Entity {
     public static ArrayList<Enemy> EnemyStage_3_01 = new ArrayList<>();
     public static ArrayList<Enemy> EnemyStage_3_02 = new ArrayList<>();
     public static ArrayList<Enemy> EnemyStage_4 = new ArrayList<>();
+    public static ArrayList<EnemyEffect> EnemyEffects = new ArrayList<>();
+
     public static ArrayList<Bullet> enemyBullets = new ArrayList<>();
     public static int[] randmicList = new int[10];
     //texture setting
@@ -73,5 +76,11 @@ public class Entity {
         gl.glPopMatrix();
 
         gl.glDisable(GL.GL_BLEND);
+    }
+
+    static class EnemyEffects {
+
+        public EnemyEffects() {
+        }
     }
 }

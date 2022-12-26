@@ -18,11 +18,18 @@ public class Stage2 extends Stage {
         "enemy10.png", "enemy11.png", "enemy12.png", "enemy13.png", "enemy14.png"};
     public static TextureReader.Texture enemyTexture[] = new TextureReader.Texture[14];
     public static int enemyTextures[] = new int[14];
+    
+    public String[] enemyTextureEffectName={ "enemy-effect1.png","enemy-effect2.png","enemy-effect3.png","enemy-effect4.png"
+       };
+    public static TextureReader.Texture enemyTextureEffect[] = new TextureReader.Texture[4];
+    public static int enemyTextureEffects[] = new int[4];
     ReadImages read = new ReadImages();
 
     public Stage2(int enemyNumber) {
         createStage2Enemys(enemyNumber);
         read.readTexture(enemyTextureName, enemyTextures, enemyTexture, "/enemy/stage2/");
+        read.readTexture( enemyTextureEffectName, enemyTextureEffects,enemyTextureEffect, "/enemy/stage2/");
+
     }
     public void createStage2Enemys(int enemyNumber) {
             separetedEnemy(enemyNumber,20,EnemyStage_2);
