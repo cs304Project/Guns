@@ -8,11 +8,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -22,6 +26,7 @@ public class StartMenu extends JFrame implements ActionListener, MouseListener {
 
     JButton easyBtu;
     JButton hardBtu;
+    JButton LeaderBoard;
     JButton exitBtu;
     JLabel userText;
     GameManager gameManager;
@@ -40,13 +45,16 @@ public class StartMenu extends JFrame implements ActionListener, MouseListener {
 
         easyBtu = new JButton();
         hardBtu = new JButton();
+        LeaderBoard = new JButton();
         exitBtu = new JButton();
         easyBtu.setBounds(xWorld - 100, yWorld, btuWidth, btuHeight);
         hardBtu.setBounds(xWorld - 100, yWorld + 100, btuWidth, btuHeight);
-        exitBtu.setBounds(350 - 100, 400, btuWidth, btuHeight);
+        LeaderBoard.setBounds(xWorld - 100,yWorld+200,btuWidth,btuHeight);
+        exitBtu.setBounds(xWorld - 100,yWorld+300 , btuWidth, btuHeight);
 
         easyBtu = createBtu(easyBtu, "EASY", new Color(0f, 0f, 0f, 0.5f));
         hardBtu = createBtu(hardBtu, "HARD", new Color(0f, 0f, 0f, 0.5f));
+        LeaderBoard = createBtu(LeaderBoard,"Leader Board",new Color(0f,0f,0f,0.5f));
         exitBtu = createBtu(exitBtu, "EXIT", new Color(0f, 0f, 0f, 0.5f));
         setContentPane(new JLabel(new ImageIcon("D:/Guns/src/Assets/player/background.jpeg")));
         setLayout(new FlowLayout());
@@ -59,6 +67,7 @@ public class StartMenu extends JFrame implements ActionListener, MouseListener {
         //Add properties for JFrame screen;
         this.add(easyBtu);
         this.add(hardBtu);
+        this.add(LeaderBoard);
         this.add(exitBtu);
         this.add(userText);
 
@@ -95,7 +104,16 @@ public class StartMenu extends JFrame implements ActionListener, MouseListener {
             this.dispose();
 
         }
-
+        if(e.getSource() == LeaderBoard){
+            try {
+                gameManager = new GameManager(false,false,true,gameManager.userName);
+            } catch (IOException ex) {
+                Logger.getLogger(StartMenu.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(StartMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.dispose();
+        }
         if (e.getSource() == exitBtu) {
             System.exit(0);
         }

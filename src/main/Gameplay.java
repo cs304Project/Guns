@@ -8,12 +8,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.media.opengl.GLCanvas;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import main.Players.Player;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -90,7 +95,15 @@ public class Gameplay extends JFrame implements ActionListener {
 
             Entity.EnemyStage_3_01 = new ArrayList<Enemy>();
             Entity.EnemyStage_3_02= new ArrayList<Enemy>();
-
+            ScoreBoard scoreboard = new ScoreBoard();
+            try {
+                scoreboard.addScore(gameManager.userName,Player.score);
+            } catch (IOException ex) {
+                Logger.getLogger(Gameplay.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(Gameplay.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Player.score=0;
             //gameManager.sound.stopSound();
             gameManager = new GameManager(true, false, gameManager.userName);
             //gameManager.time.stop();
