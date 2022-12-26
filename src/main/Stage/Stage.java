@@ -94,7 +94,7 @@ public class Stage {
 //                    System.out.println("Hi I am in poistion");
 //                }
                 
-               if (Entity.enemyBullets.get(i).getYWorld() < -1 || Entity.enemyBullets.get(i).getYWorld() > 1 
+               if (Entity.enemyBullets.get(i).getYWorld() < -1.1 || Entity.enemyBullets.get(i).getYWorld() > 1 
                        ||Entity.enemyBullets.get(i).isDestroyed ) {
 
                    e.destroyBulletFromList(Entity.enemyBullets.get(i), Entity.enemyBullets);
