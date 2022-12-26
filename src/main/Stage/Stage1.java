@@ -13,7 +13,7 @@ public class Stage1 extends Stage {
     };
     public static TextureReader.Texture enemyTexture[] = new TextureReader.Texture[14];
     public static int enemyTextures[] = new int[14];
-   public String[] enemyTextureEffectName={ "enemy-effect1.png","enemy-effect2.png","enemy-effect3.png","enemy-effect4.png"
+    public String[] enemyTextureEffectName={ "enemy-effect1.png","enemy-effect2.png","enemy-effect3.png","enemy-effect4.png"
        };
     public static TextureReader.Texture enemyTextureEffect[] = new TextureReader.Texture[4];
     public static int enemyTextureEffects[] = new int[4];

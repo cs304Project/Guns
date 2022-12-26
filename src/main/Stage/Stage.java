@@ -8,6 +8,8 @@ import main.Enemys.Enemy;
 import main.Enemys.EnemyAI;
 import main.Enemys.EnemyBoss;
 import main.Entity;
+import main.MainCode;
+import main.Players.Bullet;
 import main.Players.Collision;
 import main.Players.Player;
 
@@ -18,9 +20,10 @@ import main.Players.Player;
 public class Stage {
     EnemyAI ai;
     Entity e;    
-    Collision  c = new Collision();
+    Collision c ;
     public Stage()
     {
+        c = new Collision();
         this.ai = new EnemyAI();
         this.e = new Entity();
     }
@@ -64,6 +67,7 @@ public class Stage {
  
     }
     
+
    public void drawEnemyBullet(GL gl , int stage , boolean isPause , Player player)
    {
        if(isPause)
@@ -90,7 +94,8 @@ public class Stage {
 //                    System.out.println("Hi I am in poistion");
 //                }
                 
-               if (Entity.enemyBullets.get(i).getYWorld() < -1 || Entity.enemyBullets.get(i).getYWorld() > 1) {
+               if (Entity.enemyBullets.get(i).getYWorld() < -1 || Entity.enemyBullets.get(i).getYWorld() > 1 
+                       ||Entity.enemyBullets.get(i).isDestroyed ) {
 
                    e.destroyBulletFromList(Entity.enemyBullets.get(i), Entity.enemyBullets);
                }
@@ -98,7 +103,6 @@ public class Stage {
                
            }
        }
-       
        
        
        if(Entity.enemyBullets.size() <= 0)

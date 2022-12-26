@@ -280,7 +280,7 @@ public class Enemy {
 
     public void createBullet(GL gl, ArrayList<Bullet> bullets, float angle, String typBullet, float bulletScale) {
 
-        Bullet bullet = new Bullet(gl, getScaledXWorld(), (yWorld - 10) * scale * speed, 0.005f, typBullet, angle, bulletScale);
+        Bullet bullet = new Bullet(gl, getScaledXWorld(), getScaledYWorld() , 0.005f, typBullet, angle, bulletScale);
         bullets.add(bullet);
 
     }

@@ -10,6 +10,7 @@ import main.Enemys.Enemy;
 public class Player {
 
     Entity e = new Entity();
+    public Collision c;
 
     //Player setting
     float xWorld;
@@ -26,7 +27,6 @@ public class Player {
     //Keyboard orders
     HandleKeys key;
     //default object to attach the class with the maincode class
-    public Collision c = new Collision(0 * speed * scale, 0 * speed * scale, 0.09f);
 
     GL gl;
 
@@ -35,6 +35,7 @@ public class Player {
     public Player(GL gl, HandleKeys key, float x, float y) {
         this.key = key;
         this.gl = gl;
+        c = new Collision(xWorld * speed * scale, yWorld * speed * scale, 0.09f);
 
         xWorld = x;
         yWorld = y;
@@ -45,6 +46,7 @@ public class Player {
     public Player(GL gl, HandleKeys key) {
         this.key = key;
         this.gl = gl;
+        c = new Collision(xWorld * speed * scale, yWorld * speed * scale, 0.09f);
 
         xWorld = 0f;
         yWorld = -100f;
