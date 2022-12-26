@@ -101,6 +101,7 @@ public class PauseMenu extends JPanel implements ActionListener{
 
             Entity.EnemyStage_3_01 = new ArrayList<>();
             Entity.EnemyStage_3_02= new ArrayList<>();
+            gameManager.sound.stopSound();
             ScoreBoard scoreboard = new ScoreBoard();
             try {
                 scoreboard.addScore(gameManager.userName,Player.score);
