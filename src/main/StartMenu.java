@@ -26,6 +26,7 @@ public class StartMenu extends JFrame implements ActionListener {
     JButton easyBtu;
     JButton hardBtu;
     JButton LeaderBoard;
+    JButton HowToPlay;
     JButton exitBtu;
     JLabel userText;
     GameManager gameManager;
@@ -44,15 +45,19 @@ public class StartMenu extends JFrame implements ActionListener {
         easyBtu = new JButton();
         hardBtu = new JButton();
         LeaderBoard = new JButton();
+        HowToPlay = new JButton();
         exitBtu = new JButton();
         easyBtu.setBounds(xWorld - 100, yWorld, btuWidth, btuHeight);
-        hardBtu.setBounds(xWorld - 100, yWorld + 100, btuWidth, btuHeight);
-        LeaderBoard.setBounds(xWorld - 100,yWorld+200,btuWidth,btuHeight);
+        hardBtu.setBounds(xWorld - 100, yWorld + 75, btuWidth, btuHeight);
+        LeaderBoard.setBounds(xWorld - 100,yWorld+150,btuWidth,btuHeight);
+        HowToPlay.setBounds(xWorld - 100,yWorld+225,btuWidth,btuHeight);
         exitBtu.setBounds(xWorld - 100,yWorld+300 , btuWidth, btuHeight);
 
         easyBtu = createBtu(easyBtu, "EASY", new Color(0f, 0f, 0f, 0.5f));
         hardBtu = createBtu(hardBtu, "HARD", new Color(0f, 0f, 0f, 0.5f));
+        HowToPlay = createBtu(HowToPlay, "How to play", new Color(0f,0f,0f,.5f));
         LeaderBoard = createBtu(LeaderBoard,"Leader Board",new Color(0f,0f,0f,0.5f));
+        
         exitBtu = createBtu(exitBtu, "EXIT", new Color(0f, 0f, 0f, 0.5f));
         setContentPane(new JLabel(new ImageIcon("D:/Guns/src/Assets/player/background.jpeg")));
         setLayout(new FlowLayout());
@@ -66,6 +71,7 @@ public class StartMenu extends JFrame implements ActionListener {
         this.add(easyBtu);
         this.add(hardBtu);
         this.add(LeaderBoard);
+        this.add(HowToPlay);
         this.add(exitBtu);
         this.add(userText);
 
@@ -112,13 +118,25 @@ public class StartMenu extends JFrame implements ActionListener {
 
         if(e.getSource() == LeaderBoard){
             try {
-                gameManager = new GameManager(false,false,true,gameManager.userName);
+                gameManager = new GameManager(false,false,true,false,gameManager.userName);
             } catch (IOException ex) {
                 Logger.getLogger(StartMenu.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ParseException ex) {
                 Logger.getLogger(StartMenu.class.getName()).log(Level.SEVERE, null, ex);
             }
             this.dispose();
+        }
+        
+        if (e.getSource() == HowToPlay){
+           
+            try {
+                gameManager = new GameManager(false,false,false,true,gameManager.userName);
+            } catch (IOException ex) {
+                Logger.getLogger(StartMenu.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ParseException ex) {
+                Logger.getLogger(StartMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           
         }
 
         gameManager.level=level;
