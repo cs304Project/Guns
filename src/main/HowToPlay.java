@@ -28,8 +28,10 @@ public class HowToPlay extends JFrame implements ActionListener{
     int xWorld = 350;
     int yWorld = 200;
     GameManager gameManager;
+    Sound buttonssound;
     public HowToPlay(GameManager gameManager){
         this.gameManager = gameManager;
+        buttonssound=gameManager.sound;
         menuButton = new JButton();
         menuButton.setBounds(xWorld-330, yWorld-180, 100, 40);
         createBtu(menuButton, "menu", new Color(0f, 0f, 0f, 0.5f));
@@ -76,7 +78,9 @@ public class HowToPlay extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == menuButton){
-            gameManager = new GameManager(true, false, gameManager.userName);
+            //gameManager.sound.stopSound();
+             buttonssound.PlaySoundEffect(5);
+            gameManager = new GameManager(true, false, gameManager.userName,gameManager.sound);
             this.dispose();
         }
     }

@@ -41,6 +41,7 @@ public class PauseMenu extends JPanel implements ActionListener{
     GameManager gameManager;
     Gameplay gameplay;
     Sound sound;
+    Sound buttonssound=new Sound();
     
     public PauseMenu(GameManager gameManager ,Gameplay gameplay,Sound sound)
     {
@@ -99,6 +100,7 @@ public class PauseMenu extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
        
         if (e.getSource() == menuBtu) {
+            buttonssound.PlaySoundEffect(5);
            sound.stopSound();
             Entity.EnemyStage_1 = new ArrayList<>();
             Entity.EnemyStage_2 = new ArrayList<>();
@@ -121,6 +123,7 @@ public class PauseMenu extends JPanel implements ActionListener{
         }
         else if (e.getSource() == cancelBtu)
         {
+           buttonssound.PlaySoundEffect(5);
             sound.playSound(1);
             this.setVisible(false);
             MainCode.isPause = false;
