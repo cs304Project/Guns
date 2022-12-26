@@ -12,16 +12,21 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public class Sound {
 
     Clip clip;
-    File soundFile[] = new File[5];
+    File soundFile[] = new File[10];
 
     public Sound() {
         String pathName = "src/Assets/Sounds/";
 
-        soundFile[0] = new File(pathName + "startmenu8.wav");
-        soundFile[1] = new File(pathName + "mixkit-game-show-fun-suspense-942.wav");
-        soundFile[2] = new File(pathName + "player bullet 2.wav");
+        soundFile[0] = new File(pathName + "start menu.wav");
+        soundFile[1] = new File(pathName + "game level.wav");
+        soundFile[2] = new File(pathName + "player bullet.wav");
         soundFile[3] = new File(pathName + "Enemy death effect.wav");
-        // soundFile[4] = new File(pathName + "player bullet 5.wav");
+        soundFile[4] = new File(pathName + "Enemy bullet.wav");
+        soundFile[5] = new File(pathName + "button sound 3.wav");
+        soundFile[6] = new File(pathName + "enemy_boss bullet effect.wav");
+        soundFile[7] = new File(pathName + "Game over.wav");
+        soundFile[8] = new File(pathName + "Enemy boss death effect.wav");
+
     }
 
     private void setFile(int i) {

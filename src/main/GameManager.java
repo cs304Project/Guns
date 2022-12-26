@@ -33,13 +33,14 @@ public class GameManager {
             sound.playSound(0);
         }
         
+        
         // Active the gameplay windows
         if(this.gameplayOn)
         {
             //Gameplay gameplay = new Gameplay(time.timeText , this);
             Gameplay gameplay = new Gameplay( this ,level);
             sound.playSound(1);
-            sound.PlaySoundEffect(2);
+            
         }
         
     }
@@ -58,7 +59,8 @@ public class GameManager {
         {
             StartMenu  menu = new StartMenu(this , userName);
             
-            //sound.playSound(0);
+            sound.playSound(0);
+            sound.PlaySoundEffect(1);
 
         }
         
