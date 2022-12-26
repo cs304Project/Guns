@@ -12,6 +12,8 @@ import javax.media.opengl.GLCanvas;
 import main.Enemys.EnemyEffect;
 import main.Players.Bullet;
 import main.Players.Player;
+import main.Players.PlayerEffect;
+import main.Players.ReadPlayerAssets;
 import main.Stage.Stage;
 import main.Stage.Stage1;
 import main.Stage.Stage2;
@@ -44,7 +46,7 @@ public class MainCode extends AnimListener {
     public int textures[] = new int[e.textureNames.length];
 
     //player setting
-    Player player = new Player(gl, key);
+    public Player player;
 
     //EnemyAI ai = new EnemyAI();
     public static int stage1 = 24;
@@ -75,6 +77,8 @@ public class MainCode extends AnimListener {
     public void init(GLAutoDrawable glad) {
 
         initDefaultValues(glad);
+        player = new Player(gl, key);
+
         gl.glLoadIdentity();
         time.start();
     }
@@ -92,117 +96,131 @@ public class MainCode extends AnimListener {
         playerActions(gl);
 
         //-------------------------NewClearCode-------------------------------//
-        if (StageOneOn) {
-            if (time.seconds < 2) {
-                e.drawText(gl, textScale, 3, textures);
-                textScale = (textScale + 0.002f) % 1f;
-            } else if (time.seconds < 5) {
-                e.drawText(gl, 0.3f, 3, textures);
-            }
-            if (enemyKey) {
-                Stage1 s1 = new Stage1(stage1);
-                enemyKey = false;
-            }
-            stage.drawEnemy(gl, player, 1);
-            stage.drawEnemyBullet(gl, 1);
-            drawEnemyEffects(Entity.EnemyEffects,1);
+        if (player != null) {
+            if (StageOneOn) {
+                if (time.seconds < 2) {
+                    e.drawText(gl, textScale, 3, textures);
+                    textScale = (textScale + 0.002f) % 1f;
+                } else if (time.seconds < 5) {
+                    e.drawText(gl, 0.3f, 3, textures);
+                }
+                if (enemyKey) {
+                    Stage1 s1 = new Stage1(stage1);
+                    ReadPlayerAssets playerassets = new ReadPlayerAssets();
 
-            if (Entity.EnemyStage_1.size() <= 0) {
-                StageOneOn = false;
-                StageTwoOn = true;
-                enemyKey = true;
-                time.stop();
-                textScale = 0.1f;
+                    enemyKey = false;
+                }
+                stage.drawEnemy(gl, player, 1);
+                stage.drawEnemyBullet(gl, 1, player);
+                drawEnemyEffects(Entity.EnemyEffects, 1);
+                drawPlayerEffects(Entity.PlayerEffects, 1);
 
-            }
+                if (Entity.EnemyStage_1.size() <= 0) {
+                    StageOneOn = false;
+                    StageTwoOn = true;
+                    enemyKey = true;
+                    time.stop();
+                    textScale = 0.1f;
 
-        } else if (StageTwoOn) {
-            time.start();
-            playerStage = "stage2";
-            if (time.seconds < 2) {
-                e.drawText(gl, textScale, 4, textures);
-                textScale = (textScale + 0.002f) % 1f;
-            } else if (time.seconds < 5) {
-                e.drawText(gl, 0.3f, 4, textures);
-            }
-            if (enemyKey) {
-                Stage2 s2 = new Stage2(stage2);
-                enemyKey = false;
-            }
-            stage.drawEnemy(gl, player, 2);
-            stage.drawEnemyBullet(gl, 2);
-            drawEnemyEffects(Entity.EnemyEffects,2);
+                }
 
+            } else if (StageTwoOn) {
+                time.start();
+                playerStage = "stage2";
+                if (time.seconds < 2) {
+                    e.drawText(gl, textScale, 4, textures);
+                    textScale = (textScale + 0.002f) % 1f;
+                } else if (time.seconds < 5) {
+                    e.drawText(gl, 0.3f, 4, textures);
+                }
+                if (enemyKey) {
+                    Stage2 s2 = new Stage2(stage2);
+                    ReadPlayerAssets playerassets = new ReadPlayerAssets();
 
-            if (Entity.EnemyStage_2.size() <= 0) {
+                    enemyKey = false;
+                }
+                stage.drawEnemy(gl, player, 2);
+                stage.drawEnemyBullet(gl, 2, player);
+                drawEnemyEffects(Entity.EnemyEffects, 2);
+                drawPlayerEffects(Entity.PlayerEffects, 2);
 
-                StageTwoOn = false;
-                StageThreeOn = true;
-                enemyKey = true;
-                time.stop();
-                textScale = 0.1f;
-            }
+                if (Entity.EnemyStage_2.size() <= 0) {
 
-        } else if (StageThreeOn) {
-            time.start();
-            playerStage = "stage3";
-            if (time.seconds < 2) {
-                e.drawText(gl, textScale, 5, textures);
-                textScale = (textScale + 0.002f) % 1f;
-            } else if (time.seconds < 5) {
-                e.drawText(gl, 0.3f, 5, textures);
-            }
-            if (enemyKey) {
-                Stage3 s3 = new Stage3(stage3);
-                enemyKey = false;
-            }
-            stage.drawEnemy(gl, player, 3);
-            drawEnemyEffects(Entity.EnemyEffects,3);
+                    StageTwoOn = false;
+                    StageThreeOn = true;
+                    enemyKey = true;
+                    time.stop();
+                    textScale = 0.1f;
+                }
 
-            if (Entity.EnemyStage_3_01.size() <= 0 && Entity.EnemyStage_3_02.size() <= 0) {
-                StageThreeOn = false;
-                StageFourOn = true;
-                enemyKey = true;
-                time.stop();
-                textScale = 0.1f;
+            } else if (StageThreeOn) {
+                time.start();
+                playerStage = "stage3";
+                if (time.seconds < 2) {
+                    e.drawText(gl, textScale, 5, textures);
+                    textScale = (textScale + 0.002f) % 1f;
+                } else if (time.seconds < 5) {
+                    e.drawText(gl, 0.3f, 5, textures);
+                }
+                if (enemyKey) {
+                    Stage3 s3 = new Stage3(stage3);
+                    ReadPlayerAssets playerassets = new ReadPlayerAssets();
 
-            }
-        } else if (StageFourOn) {
-            time.start();
-            playerStage = "stage4";
-            if (time.seconds < 2) {
-                e.drawText(gl, textScale, 6, textures);
-                textScale = (textScale + 0.002f) % 1f;
-            } else if (time.seconds < 5) {
-                e.drawText(gl, 0.3f, 6, textures);
-            }
-            if (enemyKey) {
-                Stage4 s4 = new Stage4(stage4);
-                enemyKey = false;
-            }
-            stage.drawEnemy(gl, player, 4);
-            drawBossBullets(gl, Entity.bossBullets);
-            drawEnemyEffects(Entity.EnemyEffects,4);
+                    enemyKey = false;
+                }
+                stage.drawEnemy(gl, player, 3);
+                drawEnemyEffects(Entity.EnemyEffects, 3);
+                drawPlayerEffects(Entity.PlayerEffects, 3);
 
-            if (Entity.EnemyStage_4.size() <= 0) {
-                StageFourOn = false;
-                time.stop();
-            }
-        } else {
-            time.start();
-            if (time.seconds < 2) {
-                e.drawText(gl, textScale, 8, textures);
-                textScale = (textScale + 0.002f) % 1f;
-            } else if (time.seconds < 10) {
-                e.drawText(gl, 0.6f, 8, textures);
+                if (Entity.EnemyStage_3_01.size() <= 0 && Entity.EnemyStage_3_02.size() <= 0) {
+                    StageThreeOn = false;
+                    StageFourOn = true;
+                    enemyKey = true;
+                    time.stop();
+                    textScale = 0.1f;
+
+                }
+            } else if (StageFourOn) {
+                time.start();
+                playerStage = "stage4";
+                if (time.seconds < 2) {
+                    e.drawText(gl, textScale, 6, textures);
+                    textScale = (textScale + 0.002f) % 1f;
+                } else if (time.seconds < 5) {
+                    e.drawText(gl, 0.3f, 6, textures);
+                }
+                if (enemyKey) {
+                    Stage4 s4 = new Stage4(stage4);
+                    ReadPlayerAssets playerassets = new ReadPlayerAssets();
+                    enemyKey = false;
+                }
+                stage.drawEnemy(gl, player, 4);
+                drawBossBullets(gl, Entity.bossBullets);
+                drawEnemyEffects(Entity.EnemyEffects, 4);
+                drawPlayerEffects(Entity.PlayerEffects, 4);
+
+                if (Entity.EnemyStage_4.size() <= 0) {
+                    StageFourOn = false;
+                    time.stop();
+                }
+            } else {
+                time.start();
+                if (time.seconds < 2) {
+                    e.drawText(gl, textScale, 8, textures);
+                    textScale = (textScale + 0.002f) % 1f;
+                } else if (time.seconds < 10) {
+                    e.drawText(gl, 0.6f, 8, textures);
+                }
             }
         }
     }
 
     private void playerActions(GL gl) {
-        player.drawPlayer(gl);
-        player.move();
-        player.drawPlayerBullet(gl, playerStage);
+        if (player != null) {
+            player.drawPlayer(gl);
+            player.move();
+            player.drawPlayerBullet(gl, playerStage);
+        }
     }
 
     private void drawBossBullets(GL gl, ArrayList<Bullet> bullets) {
@@ -228,9 +246,16 @@ public class MainCode extends AnimListener {
         }
     }
 
-    public void drawEnemyEffects(ArrayList<EnemyEffect> list ,int stage) {
+    public void drawEnemyEffects(ArrayList<EnemyEffect> list, int stage) {
         for (int i = 0; i < list.size(); i++) {
-            list.get(i).drawEnemyEffects(gl ,stage);
+            list.get(i).drawEnemyEffects(gl, stage);
+        }
+
+    }
+
+    public void drawPlayerEffects(ArrayList<PlayerEffect> list, int stage) {
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).drawPlayerEffects(gl, stage);
         }
 
     }

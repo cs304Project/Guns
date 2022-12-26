@@ -8,6 +8,9 @@ import main.Enemys.Enemy;
 import main.Enemys.EnemyAI;
 import main.Enemys.EnemyBoss;
 import main.Entity;
+import main.MainCode;
+import main.Players.Bullet;
+import main.Players.Collision;
 import main.Players.Player;
 
 /**
@@ -17,8 +20,10 @@ import main.Players.Player;
 public class Stage {
     EnemyAI ai;
     Entity e;    
+    Collision c ;
     public Stage()
     {
+        c = new Collision();
         this.ai = new EnemyAI();
         this.e = new Entity();
     }
@@ -62,23 +67,24 @@ public class Stage {
  
     }
     
-   public void drawEnemyBullet(GL gl , int stage)
+   public void drawEnemyBullet(GL gl , int stage ,Player player)
    {
-       for(int i = 0; i < Entity.enemyBullets.size(); i++)
-       {
-           Entity.enemyBullets.get(i).drawBullet(gl);
-           if (Entity.enemyBullets.get(i).getYWorld() < -1) {
+       for (int i = 0; i < Entity.enemyBullets.size(); i++) {
 
                 Entity.enemyBullets.get(i).drawBullet(gl);
-                if (Entity.enemyBullets.get(i).getYWorld() < -1 || Entity.enemyBullets.get(i).getYWorld() > 1) {
 
-                    e.destroyBulletFromList(Entity.enemyBullets.get(i), Entity.enemyBullets);
-                }
+                c.collision( Entity.enemyBullets.get(i), player, Entity.EnemyStage_1);
 
-            }
-       }
-       
-       
+
+               if (Entity.enemyBullets.get(i).getYWorld() < -1 || Entity.enemyBullets.get(i).getYWorld() > 1 
+                       ||Entity.enemyBullets.get(i).isDestroyed ) {
+
+                   e.destroyBulletFromList(Entity.enemyBullets.get(i), Entity.enemyBullets);
+               }
+
+
+           }
+   
        if(Entity.enemyBullets.size() <= 0)
        {
            switch (stage) {
