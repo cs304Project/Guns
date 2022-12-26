@@ -8,6 +8,7 @@ import main.Enemys.Enemy;
 import main.Enemys.EnemyAI;
 import main.Enemys.EnemyBoss;
 import main.Entity;
+import main.Players.Collision;
 import main.Players.Player;
 
 /**
@@ -17,6 +18,7 @@ import main.Players.Player;
 public class Stage {
     EnemyAI ai;
     Entity e;    
+    Collision  c = new Collision();
     public Stage()
     {
         this.ai = new EnemyAI();
@@ -62,35 +64,60 @@ public class Stage {
  
     }
     
-   public void drawEnemyBullet(GL gl , int stage)
+   public void drawEnemyBullet(GL gl , int stage , boolean isPause , Player player)
    {
-       for(int i = 0; i < Entity.enemyBullets.size(); i++)
+       if(isPause)
        {
-           Entity.enemyBullets.get(i).drawBullet(gl);
-           if (Entity.enemyBullets.get(i).getYWorld() < -1) {
-
-                Entity.enemyBullets.get(i).drawBullet(gl);
+           for (int i = 0; i < Entity.enemyBullets.size(); i++) {
+               
+                float x = Entity.enemyBullets.get(i).getXWorld();
+                float y = Entity.enemyBullets.get(i).getYWorld();
+                Entity.enemyBullets.get(i).drawBullet(gl,x,y);
                 if (Entity.enemyBullets.get(i).getYWorld() < -1 || Entity.enemyBullets.get(i).getYWorld() > 1) {
 
-                    e.destroyBulletFromList(Entity.enemyBullets.get(i), Entity.enemyBullets);
-                }
+                       e.destroyBulletFromList(Entity.enemyBullets.get(i), Entity.enemyBullets);
+                   }
 
-            }
+           }
        }
+       else
+       {
+           for (int i = 0; i < Entity.enemyBullets.size(); i++) {
+               
+                Entity.enemyBullets.get(i).drawBullet(gl);
+                
+                c.collision( Entity.enemyBullets.get(i), player, Entity.EnemyStage_1);
+                //System.out.println("bullet Position y" + Entity.enemyBullets.get(i).getYWorld());
+                //System.out.println("player Position y" +  player.getScaledXWorld() );
+//                if(player.getScaledXWorld()== Entity.enemyBullets.get(i).getXWorld())
+//                {
+//                    
+//                    System.out.println("Hi I am in poistion");
+//                }
+                
+               if (Entity.enemyBullets.get(i).getYWorld() < -1 || Entity.enemyBullets.get(i).getYWorld() > 1) {
+
+                   e.destroyBulletFromList(Entity.enemyBullets.get(i), Entity.enemyBullets);
+               }
+
+               
+           }
+       }
+       
        
        
        if(Entity.enemyBullets.size() <= 0)
        {
            switch (stage) {
                case 1:
-                   detectTheEnemy(Entity.EnemyStage_1,1);
+                   detectTheEnemy(Entity.EnemyStage_1,stage);
                    break;
                case 2:
-                   detectTheEnemy(Entity.EnemyStage_2, 2);
+                   detectTheEnemy(Entity.EnemyStage_2, stage);
 
                    break;
                case 3:
-
+                   detectTheEnemy(Entity.EnemyStage_2, stage);
                    break;
 
                default:
@@ -117,15 +144,18 @@ public class Stage {
                 tmp = 5;
            break;
            case 3:
-               tmp = 4;
+               tmp = 2;
            break;
            
        }
        for(int i = 0; i < tmp; i++)
            {
                Random r = new Random();
-               System.out.println (list.size());
-               Entity.randmicList[i] = r.nextInt(list.size());
+               if(list.size() >= 1)
+               {
+                   Entity.randmicList[i] = r.nextInt(list.size());
+               }
+               
            }
        
        for(int i = 0; i < Entity.randmicList.length; i++) {

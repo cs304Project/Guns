@@ -2,7 +2,9 @@ package main;
 import main.Enemys.Enemy;
 import java.util.ArrayList;
 import javax.media.opengl.GL;
+
 import main.Players.Bullet;
+
 
 public class Entity {
 
@@ -73,5 +75,5 @@ public class Entity {
         gl.glPopMatrix();
 
         gl.glDisable(GL.GL_BLEND);
-    }
+    }   
 }

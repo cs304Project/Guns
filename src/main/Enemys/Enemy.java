@@ -16,7 +16,7 @@ public class Enemy {
 
     //default object to attach the class with the maincode class
     Entity e = new Entity();
-    public boolean isFire = true;
+    public boolean isFire = false;
     //Enemy setting
     protected float xWorld;
     protected float yWorld;
@@ -79,14 +79,16 @@ public class Enemy {
     public float getYWorld() {
         return this.yWorld;
     }
-    
-    public float getScaledXWorld()
-    {
+
+    public int getIndexTexture() {
+        return index;
+    }
+
+    public float getScaledXWorld() {
         return getXWorld() * scale * speed;
     }
-    
-    public float getScaledYWorld()
-    {
+
+    public float getScaledYWorld() {
         return getYWorld() * scale * speed;
     }
 
@@ -143,10 +145,51 @@ public class Enemy {
         //drawenemyBullets(gl, bullet);
 
         c.drawCirclie(gl, xWorld * speed * scale, yWorld * speed * scale);
-        
-       
+
     }
 
+    public void drawEnemy(GL gl, float x, float y, int stageNumber) {
+
+        gl.glEnable(GL.GL_BLEND);
+        switch (stageNumber) {
+            case 1:
+                gl.glBindTexture(GL.GL_TEXTURE_2D, Stage1.enemyTextures[getIndexTexture()]);
+                break;
+
+            case 2:
+                gl.glBindTexture(GL.GL_TEXTURE_2D, Stage2.enemyTextures[getIndexTexture()]);
+                break;
+            case 3:
+                gl.glBindTexture(GL.GL_TEXTURE_2D, Stage3.enemyTextures[getIndexTexture()]);
+                break;
+            case 4:
+                gl.glBindTexture(GL.GL_TEXTURE_2D, Stage4.enemyTextures[getIndexTexture()]);
+                break;
+        }
+
+        //gl.glColor3f(1, 1, 0);
+        gl.glPushMatrix();
+        gl.glTranslated(x, y, 1);
+        gl.glScaled(scale, scale, 1);
+        gl.glBegin(GL.GL_QUADS);
+        // Front Face
+        gl.glTexCoord2f(0.0f, 0.0f);
+        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 0.0f);
+        gl.glVertex3f(1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(1.0f, 1.0f);
+        gl.glVertex3f(1.0f, 1.0f, -1.0f);
+        gl.glTexCoord2f(0.0f, 1.0f);
+        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
+        gl.glEnd();
+        gl.glPopMatrix();
+
+        gl.glDisable(GL.GL_BLEND);
+        //drawenemyBullets(gl, bullet);
+
+        c.drawCirclie(gl, x, y);
+
+    }
 
     public void drawEnemy_AnimationAI(GL gl, float x, float y, String AIName, int stage) {
         gl.glEnable(GL.GL_BLEND);
@@ -174,7 +217,7 @@ public class Enemy {
                 }
                 gl.glBindTexture(GL.GL_TEXTURE_2D, Stage3.enemyTextures[index]); // Turn Blending On
                 break;
-                case 4:
+            case 4:
                 if (time % 7 == 0) {
                     index = (index + 1) % 6;
 
@@ -211,14 +254,12 @@ public class Enemy {
         gl.glEnd();
         gl.glPopMatrix();
         gl.glDisable(GL.GL_BLEND);
-       //drawenemyBullets(gl, bullet);
         c.drawCirclie(gl, x * speed * scale, y * speed * scale + (speed * scale * verticalAnimation));
-        
-        if(isFire)
-        {
-           createBullet(gl , Entity.enemyBullets, 270, "EnemyBullet", .03f); 
-           isFire = false;
-      
+
+        if (isFire) {
+            createBullet(gl, Entity.enemyBullets, 270, "EnemyBullet", .03f);
+            isFire = false;
+
         }
     }
 
@@ -226,21 +267,11 @@ public class Enemy {
         gl.glTranslated(x * speed * scale, y * speed * scale, 1);
     }
 
-//    public void AutoAttack(GL gl, ArrayList<Bullet> bullets) {
-//
-//        if (fireRate == 500) {
-//            Bullet bullet = new Bullet(gl, xWorld * scale * speed, yWorld * scale * speed, 0.005f, "EnemyBullet", 270, bulletScale);
-//            bullets.add(bullet);
-//        }
-//        fireRate = (fireRate + 1) % 501;
-//
-//    }
-
     public void createBullet(GL gl, ArrayList<Bullet> bullets, float angle, String typBullet, float bulletScale) {
 
         Bullet bullet = new Bullet(gl, getScaledXWorld(), (yWorld - 10) * scale * speed, 0.005f, typBullet, angle, bulletScale);
         bullets.add(bullet);
-        
+
     }
 
 }
