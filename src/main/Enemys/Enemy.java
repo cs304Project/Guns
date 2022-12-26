@@ -6,10 +6,12 @@ import javax.media.opengl.GL;
 import static main.MainCode.gl;
 import main.Players.Bullet;
 import main.Players.Collision;
+import main.Sound;
 import main.Stage.Stage1;
 import main.Stage.Stage2;
 import main.Stage.Stage3;
 import main.Stage.Stage4;
+import main.Timing;
 
 public class Enemy {
 
@@ -27,10 +29,12 @@ public class Enemy {
     protected float collidingRaduis = 0.09f;
     float bulletScale = 0.02f;
     public int health = 1;
+    Sound Enemy_bulletsound=new Sound();
 
     //Keyboard orders
     int fireRate = 500 + (int) (Math.random() * 20000000);
     Bullet bullet = new Bullet(gl, xWorld, yWorld, speed, "enemy", angle, scale);
+    Timing time1 = new Timing();
     public Collision c;
     public int index = 0;
     int time = 0;
@@ -89,8 +93,10 @@ public class Enemy {
                 if (time % 5 == 0) {
                     index = (index + 1) % 7;
                 }
+
                 gl.glBindTexture(GL.GL_TEXTURE_2D, Stage1.enemyTextures[index]); // Turn Blending On
                 break;
+
             case 2:
                 if (time % 5 == 0) {
                     index = (index + 1) % 14;
@@ -165,7 +171,7 @@ public class Enemy {
                 }
                 gl.glBindTexture(GL.GL_TEXTURE_2D, Stage3.enemyTextures[index]); // Turn Blending On
                 break;
-                case 4:
+            case 4:
                 if (time % 7 == 0) {
                     index = (index + 1) % 6;
 
@@ -202,7 +208,7 @@ public class Enemy {
         gl.glEnd();
         gl.glPopMatrix();
         gl.glDisable(GL.GL_BLEND);
-       //drawenemyBullets(gl, bullet);
+        //drawenemyBullets(gl, bullet);
         c.drawCirclie(gl, x * speed * scale, y * speed * scale + (speed * scale * verticalAnimation));
     }
 
@@ -215,6 +221,7 @@ public class Enemy {
         if (fireRate == 500) {
             Bullet bullet = new Bullet(gl, xWorld * scale * speed, yWorld * scale * speed, 0.005f, "EnemyBullet", 270, bulletScale);
             bullets.add(bullet);
+            Enemy_bulletsound.PlaySoundEffect(4);
         }
         fireRate = (fireRate + 1) % 501;
 

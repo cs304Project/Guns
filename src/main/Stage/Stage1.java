@@ -8,7 +8,7 @@ import main.ReadImages;
  */
 public class Stage1 extends Stage {
 
-    String[] enemyTextureName = {"enemy1.png", "enemy2.png", "enemy3.png", "enemy4.png", "enemy5.png", "enemy6.png", "enemy7.png",
+    String[] enemyTextureName = {"enemy1.png", "enemy2.png", "enemy3.png", "enemy4.png", "enemy5.png", "enemy6.png", "enemy7.png"
 
     };
     public static TextureReader.Texture enemyTexture[] = new TextureReader.Texture[14];

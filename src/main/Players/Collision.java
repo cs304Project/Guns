@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.media.opengl.GL;
 import main.Enemys.Enemy;
 import main.Entity;
+import main.Sound;
 
 public class Collision {
 
@@ -12,6 +13,7 @@ public class Collision {
     float y;
     float r;
     Entity e;
+    Sound Enemy_Deathsound=new Sound();
 
     public Collision(float x, float y, float radius) {
         this.x = x;
@@ -85,17 +87,19 @@ public class Collision {
             }
 
         }
-        if ((obj2 instanceof Bullet bullet && obj1 instanceof Enemy enemy)) {
+        if ((obj1 instanceof Bullet bullet && obj2 instanceof Enemy enemy)) {
             if (detectCollision(bullet.bullet_collision, enemy.c)) {
                 e.destroyEnemyFromList(enemy, eList);
                 bullet.isDestroyed = true;
+                Enemy_Deathsound.PlaySoundEffect(3);
             }
 
-        } else if ((obj2 instanceof Enemy enemy && obj1 instanceof Bullet bullet)) {
+        } else if ((obj1 instanceof Enemy enemy && obj2 instanceof Bullet bullet)) {
             if (detectCollision(enemy.c, bullet.bullet_collision)) {
                 enemy.health--;
                 if (enemy.health <= 0) {
                     e.destroyEnemyFromList(enemy, eList);
+                     Enemy_Deathsound.PlaySoundEffect(3);
                 }
                 bullet.isDestroyed = true;
             }

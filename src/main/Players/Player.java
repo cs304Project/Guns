@@ -5,6 +5,7 @@ import main.Keys.HandleKeys;
 import java.util.ArrayList;
 import javax.media.opengl.GL;
 import main.Enemys.Enemy;
+import main.Sound;
 
 
 public class Player {
@@ -19,7 +20,7 @@ public class Player {
     public boolean damege = false;
     public int powerUp = 3;
     public static int fireRate;
-
+    public Sound player_bulletsound=new Sound();
     //projectile 
     public static ArrayList<Bullet> bullets = new ArrayList<>();
     //Keyboard orders
@@ -139,6 +140,7 @@ public class Player {
         if (key.isKeyPressed(key.SPACE) && fireRate > 10) {
             
             createBullet();
+            player_bulletsound.PlaySoundEffect(2);
         }
     }
 
@@ -148,6 +150,8 @@ public class Player {
             //Player.bullets.get(i).setYWorld(Player.bullets.get(i).getYWorld());
 
             Player.bullets.get(i).drawBullet(gl);
+           
+            
             
             if("stage1".equals(name))
             {

@@ -7,7 +7,7 @@ public class GameManager {
     public boolean menuOn;
     public boolean gameplayOn;
     //public  Timing time;
-    //public Sound sound = new Sound();
+    public Sound sound = new Sound();
     public String userName = "";
  
     
@@ -23,7 +23,8 @@ public class GameManager {
         if(this.menuOn)
         {
             StartMenu  menu = new StartMenu(this , userName);
-            //sound.playSound(0);
+            sound.playSound(0);
+            
 
         }
         
@@ -32,7 +33,8 @@ public class GameManager {
         {
             //Gameplay gameplay = new Gameplay(time.timeText , this);
             Gameplay gameplay = new Gameplay( this);
-            //sound.playSound(1);
+            
+            sound.playSound(1);
         }
         
     }
@@ -42,7 +44,7 @@ public class GameManager {
         menuOn = true;
         gameplayOn = false;
         //time = new Timing();
-        //sound.playSound(0);
+        sound.playSound(0);
         
         
         StartMenu  menu = new StartMenu(this, userName);
