@@ -5,14 +5,14 @@ import main.Keys.HandleKeys;
 import java.util.ArrayList;
 import javax.media.opengl.GL;
 import main.Enemys.Enemy;
-
+import main.Sound;
 
 public class Player {
 
     Entity e = new Entity();
     public Collision c;
 
-    //Player setting
+    // Player setting
     float xWorld;
     float yWorld;
     public float scale = 0.1f;
@@ -20,13 +20,14 @@ public class Player {
     public boolean damege = false;
     public int powerUp = 3;
     public static int fireRate;
-    public static int score=0;
+    public static int score = 0;
 
-    //projectile 
+    public Sound player_bulletsound = new Sound();
+    // projectile
     public static ArrayList<Bullet> bullets = new ArrayList<>();
-    //Keyboard orders
+    // Keyboard orders
     HandleKeys key;
-    //default object to attach the class with the maincode class
+    // default object to attach the class with the maincode class
 
     GL gl;
 
@@ -60,9 +61,8 @@ public class Player {
     public float getXWorld() {
         return this.xWorld;
     }
-    
-    public float getScaledXWorld()
-    {
+
+    public float getScaledXWorld() {
         return getXWorld() * speed * scale;
     }
 
@@ -73,22 +73,21 @@ public class Player {
     public float getYWorld() {
         return this.yWorld;
     }
-    
-    public float getScaledYWorld()
-    {
+
+    public float getScaledYWorld() {
         return getYWorld() * speed * scale;
     }
 
     public void drawPlayer(GL gl) {
 
         gl.glEnable(GL.GL_BLEND);
-        gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex);	// Turn Blending On
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex); // Turn Blending On
 
-        //gl.glColor3f(1, 1, 0);
+        // gl.glColor3f(1, 1, 0);
         gl.glPushMatrix();
 
         gl.glTranslated((xWorld) * scale * speed, (yWorld) * scale * speed, 1);
-        //System.out.println("xWorld: " + xWorld +  ", yWorld: " + yWorld );
+        // System.out.println("xWorld: " + xWorld + ", yWorld: " + yWorld );
         gl.glScaled(scale, scale, 1);
         gl.glBegin(GL.GL_QUADS);
         // Front Face
@@ -107,18 +106,17 @@ public class Player {
         c.drawCirclie(gl, xWorld * scale * speed, yWorld * scale * speed);
 
     }
-    
-    
-    public void drawPlayer(GL gl , float x, float y) {
+
+    public void drawPlayer(GL gl, float x, float y) {
 
         gl.glEnable(GL.GL_BLEND);
-        gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex);	// Turn Blending On
+        gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex); // Turn Blending On
 
-        //gl.glColor3f(1, 1, 0);
+        // gl.glColor3f(1, 1, 0);
         gl.glPushMatrix();
 
         gl.glTranslated(x, y, 1);
-        //System.out.println("xWorld: " + xWorld +  ", yWorld: " + yWorld );
+        // System.out.println("xWorld: " + xWorld + ", yWorld: " + yWorld );
         gl.glScaled(scale, scale, 1);
         gl.glBegin(GL.GL_QUADS);
         // Front Face
@@ -144,64 +142,58 @@ public class Player {
             if (yWorld < 100) {
 
                 yWorld++;
-                //textureIndex++;
-                //textureIndex = (textureIndex % 4) + 1;
+                // textureIndex++;
+                // textureIndex = (textureIndex % 4) + 1;
 
             }
         } else if (key.isKeyPressed(key.DOWN)) {
             if (yWorld > -100) {
 
                 yWorld--;
-                //textureIndex++;
-                ///textureIndex = (textureIndex % 4) + 1;
+                // textureIndex++;
+                /// textureIndex = (textureIndex % 4) + 1;
             }
         } else if (key.isKeyPressed(key.LEFT)) {
             if (xWorld + 5 > -100) {
 
                 xWorld--;
-                //textureIndex = (textureIndex % 4) + 1;
+                // textureIndex = (textureIndex % 4) + 1;
             }
         } else if (key.isKeyPressed(key.RIGHT)) {
             if (xWorld < 100) {
 
                 xWorld++;
-               // textureIndex = (textureIndex % 4) + 1;
+                // textureIndex = (textureIndex % 4) + 1;
             }
         }
-        
+
         if (key.isKeyPressed(key.SPACE) && fireRate > 10) {
-            
+
             createBullet();
+            player_bulletsound.PlaySoundEffect(2);
         }
     }
 
-    public void drawPlayerBullet(GL gl , String name) {
+    public void drawPlayerBullet(GL gl, String name) {
 
         for (int i = 0; i < Player.bullets.size(); i++) {
-            //Player.bullets.get(i).setYWorld(Player.bullets.get(i).getYWorld());
+            // Player.bullets.get(i).setYWorld(Player.bullets.get(i).getYWorld());
 
             Player.bullets.get(i).drawBullet(gl);
-            
-            if("stage1".equals(name))
-            {
-                CheckEnemyColisionWithBullet( Entity.EnemyStage_1 , i);
 
+            if ("stage1".equals(name)) {
+                CheckEnemyColisionWithBullet(Entity.EnemyStage_1, i);
+
+            } else if ("stage2".equals(name)) {
+                CheckEnemyColisionWithBullet(Entity.EnemyStage_2, i);
+            } else if ("stage3".equals(name)) {
+                CheckEnemyColisionWithBullet(Entity.EnemyStage_3_01, i);
+                CheckEnemyColisionWithBullet(Entity.EnemyStage_3_02, i);
+            } else if ("stage4".equals(name)) {
+
+                CheckEnemyColisionWithBullet(Entity.EnemyStage_4, i);
             }
-            else if("stage2".equals(name))
-            {
-                CheckEnemyColisionWithBullet( Entity.EnemyStage_2 , i);
-            }
-            else if("stage3".equals(name))
-            {
-                CheckEnemyColisionWithBullet( Entity.EnemyStage_3_01, i);
-                CheckEnemyColisionWithBullet( Entity.EnemyStage_3_02, i);
-            }
-            else if("stage4".equals(name))
-            {
-                
-                CheckEnemyColisionWithBullet( Entity.EnemyStage_4 , i);
-            }
-            
+
             if (bullets.get(i).isDestroyed == true) {
                 e.destroyBulletFromList(Player.bullets.get(i), Player.bullets);
 
@@ -209,19 +201,17 @@ public class Player {
                 e.destroyBulletFromList(Player.bullets.get(i), Player.bullets);
 
             }
-            
 
         }
         Player.fireRate += 1;
     }
-        
-    private void CheckEnemyColisionWithBullet(ArrayList<Enemy> list , int bulletNum)
-    {
+
+    private void CheckEnemyColisionWithBullet(ArrayList<Enemy> list, int bulletNum) {
         for (int j = 0; j < list.size() &&
-                bullets.get(bulletNum).isDestroyed == false; j++) 
-                c.collision(bullets.get(bulletNum), list.get(j), list);
+                bullets.get(bulletNum).isDestroyed == false; j++)
+            c.collision(bullets.get(bulletNum), list.get(j), list);
     }
-    
+
     public void createBullet() {
         Bullet bullet = new Bullet(gl, getScaledXWorld(), getScaledYWorld(),
                 0.009f, "PlayerBullet", 90, 0.02f);

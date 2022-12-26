@@ -10,7 +10,6 @@ import main.Sound;
 import static main.MainCode.gl;
 import main.Timing;
 
-
 public class Collision {
 
     float x;
@@ -19,6 +18,7 @@ public class Collision {
     Entity e;
     Sound s = new Sound();
     Timing time = new Timing();
+    Sound Enemy_Deathsound = new Sound();
 
     public Collision(float x, float y, float radius) {
         this.x = x;
@@ -77,7 +77,6 @@ public class Collision {
 
     }
 
-
     private boolean detectCollision(Collision c1, Collision c2) {
         double offset = 0.01;
         double r = (c1.getRadius() - offset) + (c2.getRadius() - offset);
@@ -104,11 +103,12 @@ public class Collision {
                 Player.score += enemy.bonusScore;
                 bullet.isDestroyed = true;
                 s.PlaySoundEffect(2);
-               
-                EnemyEffect enemyeffect =new EnemyEffect(enemy.getXWorld(),enemy.getYWorld());
+
+                EnemyEffect enemyeffect = new EnemyEffect(enemy.getXWorld(), enemy.getYWorld());
                 e.destroyEnemyFromList(enemy, eList);
                 Entity.EnemyEffects.add(enemyeffect);
 
+                Enemy_Deathsound.PlaySoundEffect(3);
             }
 
         } else if ((obj1 instanceof Enemy enemy && obj2 instanceof Bullet bullet)) {
@@ -117,6 +117,7 @@ public class Collision {
                 if (enemy.health <= 0) {
                     e.destroyEnemyFromList(enemy, eList);
                     Player.score += enemy.bonusScore;
+                    Enemy_Deathsound.PlaySoundEffect(3);
                 }
                 bullet.isDestroyed = true;
             }
@@ -125,7 +126,7 @@ public class Collision {
             if (detectCollision(bullet.bullet_collision, player.c)) {
                 bullet.isDestroyed = true;
                 PlayerEffect playereffect = new PlayerEffect(player.getScaledXWorld(), player.getScaledYWorld());
-                System.out.println("player x" + player.getScaledXWorld()+ " playery "+player.getScaledYWorld());
+                System.out.println("player x" + player.getScaledXWorld() + " playery " + player.getScaledYWorld());
                 Entity.PlayerEffects.add(playereffect);
             }
         } else if ((obj2 instanceof Player player && obj1 instanceof Bullet bullet)) {

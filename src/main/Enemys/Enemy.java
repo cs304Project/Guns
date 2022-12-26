@@ -7,17 +7,19 @@ import javax.media.opengl.GL;
 import static main.MainCode.gl;
 import main.Players.Bullet;
 import main.Players.Collision;
+import main.Sound;
 import main.Stage.Stage1;
 import main.Stage.Stage2;
 import main.Stage.Stage3;
 import main.Stage.Stage4;
+import main.Timing;
 
 public class Enemy {
 
-    //default object to attach the class with the maincode class
+    // default object to attach the class with the maincode class
     Entity e = new Entity();
     public boolean isFire = false;
-    //Enemy setting
+    // Enemy setting
     protected float xWorld;
     protected float yWorld;
     public float scale = 0.1f;
@@ -28,11 +30,14 @@ public class Enemy {
     protected float collidingRaduis = 0.09f;
     float bulletScale = 0.02f;
     public int health = 1;
-    public int bonusScore=1;
+    public int bonusScore = 1;
 
-    //Keyboard orders
-    int fireRate = 500 + (int) (Math.random() * 20000000);
-    //Bullet bullet = new Bullet(gl, xWorld, yWorld, speed, "enemy", angle, scale);
+    // Bullet bullet = new Bullet(gl, xWorld, yWorld, speed, "enemy", angle, scale);
+    Sound Enemy_bulletsound = new Sound();
+
+    // Keyboard orders
+    Bullet bullet = new Bullet(gl, xWorld, yWorld, speed, "enemy", angle, scale);
+    Timing time1 = new Timing();
     public Collision c;
     public int index = 0;
     int time = 0;
@@ -64,7 +69,8 @@ public class Enemy {
         this.health = health;
         c = new Collision(xWorld * speed * scale, yWorld * speed * scale, collidingRaduis);
     }
-     public Enemy(float x, float y, int health,int bonusScore) {
+
+    public Enemy(float x, float y, int health, int bonusScore) {
 
         xWorld = x;
         yWorld = y;
@@ -113,8 +119,10 @@ public class Enemy {
                 if (time % 5 == 0) {
                     index = (index + 1) % 7;
                 }
+
                 gl.glBindTexture(GL.GL_TEXTURE_2D, Stage1.enemyTextures[index]); // Turn Blending On
                 break;
+
             case 2:
                 if (time % 5 == 0) {
                     index = (index + 1) % 14;
@@ -135,7 +143,7 @@ public class Enemy {
                 break;
 
         }
-        //gl.glColor3f(1, 1, 0);
+        // gl.glColor3f(1, 1, 0);
         gl.glPushMatrix();
         gl.glTranslated((xWorld * scale * speed), (yWorld * scale * speed), 1);
         gl.glScaled(scale, scale, 1);
@@ -153,7 +161,7 @@ public class Enemy {
         gl.glPopMatrix();
 
         gl.glDisable(GL.GL_BLEND);
-        //drawenemyBullets(gl, bullet);
+        // drawenemyBullets(gl, bullet);
 
         c.drawCirclie(gl, xWorld * speed * scale, yWorld * speed * scale);
 
@@ -178,7 +186,7 @@ public class Enemy {
                 break;
         }
 
-        //gl.glColor3f(1, 1, 0);
+        // gl.glColor3f(1, 1, 0);
         gl.glPushMatrix();
         gl.glTranslated(x, y, 1);
         gl.glScaled(scale, scale, 1);
@@ -196,7 +204,7 @@ public class Enemy {
         gl.glPopMatrix();
 
         gl.glDisable(GL.GL_BLEND);
-        //drawenemyBullets(gl, bullet);
+        // drawenemyBullets(gl, bullet);
 
         c.drawCirclie(gl, x, y);
 
@@ -236,7 +244,7 @@ public class Enemy {
                 gl.glBindTexture(GL.GL_TEXTURE_2D, Stage3.enemyTextures[index]); // Turn Blending On
                 break;
         }
-        //gl.glColor3f(1, 1, 0);
+        // gl.glColor3f(1, 1, 0);
         gl.glPushMatrix();
 
         if ("AI01".equals(AIName)) {
@@ -265,6 +273,7 @@ public class Enemy {
         gl.glEnd();
         gl.glPopMatrix();
         gl.glDisable(GL.GL_BLEND);
+        // drawenemyBullets(gl, bullet);
         c.drawCirclie(gl, x * speed * scale, y * speed * scale + (speed * scale * verticalAnimation));
 
         if (isFire) {
@@ -280,7 +289,7 @@ public class Enemy {
 
     public void createBullet(GL gl, ArrayList<Bullet> bullets, float angle, String typBullet, float bulletScale) {
 
-        Bullet bullet = new Bullet(gl, getScaledXWorld(), getScaledYWorld() , 0.005f, typBullet, angle, bulletScale);
+        Bullet bullet = new Bullet(gl, getScaledXWorld(), getScaledYWorld(), 0.005f, typBullet, angle, bulletScale);
         bullets.add(bullet);
 
     }

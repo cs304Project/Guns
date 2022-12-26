@@ -1,8 +1,10 @@
-
 package main.Players;
+
 import javax.media.opengl.GL;
+import main.Sound;
 
 public class Bullet {
+
     float xWorld;
     float yWorld;
     float scale = 0.02f;
@@ -11,14 +13,12 @@ public class Bullet {
     final float speed;
     float r;
     public Collision bullet_collision;
-    public boolean isDestroyed=false;
-    
+    public boolean isDestroyed = false;
 
     //default object to attach the class with the maincode class
     GL gl;
 
     int textureIndex = 2;
-
 
     public Bullet(GL gl, float x, float y, float speed, String typeBullet, float angle, float scale) {
         this.gl = gl;
@@ -55,6 +55,7 @@ public class Bullet {
 
         if ("PlayerBullet".equals(typeBullet)) {
             yWorld = yWorld + (float) (Math.sin(Math.toRadians(angle)) * speed);
+
         } else if ("EnemyBullet".equals(typeBullet)) {
             yWorld = yWorld + (float) (Math.sin(Math.toRadians(angle)) * speed);
         } else if ("BossBullet".equals(typeBullet)) {
@@ -79,7 +80,7 @@ public class Bullet {
         gl.glPopMatrix();
 
         gl.glDisable(GL.GL_BLEND);
-        
+
         bullet_collision.drawCirclie(gl, xWorld, yWorld);
 
     }

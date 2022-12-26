@@ -1,4 +1,3 @@
-
 package main;
 
 import java.io.FileNotFoundException;
@@ -29,9 +28,8 @@ public class GameManager {
         if(this.menuOn)
         {
             StartMenu  menu = new StartMenu(this , userName);
-            
-            //sound.playSound(0);
 
+            sound.playSound(0);
         }
         
         // Active the gameplay windows
@@ -39,7 +37,7 @@ public class GameManager {
         {
             //Gameplay gameplay = new Gameplay(time.timeText , this);
             Gameplay gameplay = new Gameplay( this ,level);
-            //sound.playSound(1);
+            sound.playSound(1);
             sound.PlaySoundEffect(2);
         }
         
@@ -74,6 +72,10 @@ public class GameManager {
     {
         menuOn = true;
         gameplayOn = false;
+        //time = new Timing();
+        sound.playSound(0);
+        
+        
         StartMenu  menu = new StartMenu(this, userName);
         
     }
