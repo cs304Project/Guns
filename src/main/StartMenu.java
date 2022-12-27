@@ -128,7 +128,7 @@ public class StartMenu extends JFrame implements ActionListener {
 
         }
         else if(e.getSource () == exitBtu)
-         // buttonssound.PlaySoundEffect(5);
+         //buttonssound.PlaySoundEffect(5);
             System.exit(0);
 
         if(e.getSource() == LeaderBoard){
