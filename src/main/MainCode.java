@@ -349,6 +349,11 @@ public class MainCode extends AnimListener {
             e.bars.get(i).drawHealthyBar(gl, e.imageIdx);
         }
         if (StageThreeOn) {
+            if (clock.time >= 3600) {
+                e.drawGameOver(gl);
+                card.drawCredits(gl);
+
+            }
             clock.drawClock(gl);
         }
 
@@ -366,8 +371,11 @@ public class MainCode extends AnimListener {
             }
             if (time.seconds > 6) {
                 player.drawPlayerBullet(gl, playerStage, isPause);
-            }else {
-                player.fireRate = 0;
+
+            } else {
+                for (int i = 0; i < players.size(); i++) {
+                    players.get(i).fireRate = 0;
+                }
             }
         }
     }

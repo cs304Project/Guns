@@ -52,7 +52,7 @@ public class Player {
         return this.liveScore;
     }
 
-    public Player(GL gl, HandleKeys key, float x, float y, float xBar ,float yBar ) {
+    public Player(GL gl, HandleKeys key, float x, float y, float xBar, float yBar) {
         this.key = key;
         this.gl = gl;
         c = new Collision(xWorld * speed * scale, yWorld * speed * scale, 0.09f);
@@ -188,13 +188,13 @@ public class Player {
         }
 
         if (key.isKeyPressed(key.SPACE) && fireRate > 10) {
-
+            
             createBullet();
             player_bulletsound.PlaySoundEffect(2);
         }
     }
-public void move2()
-    {
+
+    public void move2() {
         if (key.isKeyPressed(key.W)) {
             if (yWorld < 100) {
 
@@ -232,73 +232,42 @@ public void move2()
     }
 
     public void drawPlayerBullet(GL gl, String name, boolean isPause) {
-            for (int i = 0; i < this.bullets.size(); i++) {
-                // Player.bullets.get(i).setYWorld(Player.bullets.get(i).getYWorld());
-                 float x =0;
-                 float y=0; 
-                if(isPause)
-                {
-                    x =  Player.bullets.get(i).getXWorld();
-                    y =  Player.bullets.get(i).getYWorld();
-                     Player.bullets.get(i).drawBullet(gl, x, y);
-                }
-                else
-                {
-//                    if(powerUp==1){
+        for (int i = 0; i < this.bullets.size(); i++) {
+            // Player.bullets.get(i).setYWorld(Player.bullets.get(i).getYWorld());
+            float x = Player.bullets.get(i).getXWorld();
+            float y = Player.bullets.get(i).getYWorld();
+            if (isPause) {
+                x = Player.bullets.get(i).getXWorld();
+                y = Player.bullets.get(i).getYWorld();
+                Player.bullets.get(i).drawBullet(gl, x, y);
+            } else {
                     Player.bullets.get(i).drawBullet(gl);
-//                    }
-//                    else if(powerUp==2){
-//                    x -= 0.03f;
-//                    Bullet bullet1 = new Bullet(gl, x, y, 0.05f,"PlayerBullet",0.02f,0);
-//                    x += 0.05f;
-//                    Bullet bullet2 = new Bullet(gl, x, y,0.05f,"PlayerBullet",0.02f,0);
-//                    bullets.add(bullet1);
-//                    bullets.add(bullet2);
-//                       
-//                    Player.bullets.get(i).drawBullet(gl);
-//                    Player.bullets.get(i).drawBullet(gl);
-//
-//                }
-//                    else{
-//                          x -= 0.03f;
-//                    Bullet bullet1 = new Bullet(gl, x, y, 0.05f,"PlayerBullet",0.02f,0);
-//                    x += 0.05f;
-//                    Bullet bullet2 = new Bullet(gl, x, y,0.05f,"PlayerBullet",0.02f,0);
-//                    bullets.add(bullet1);
-//                    bullets.add(bullet2);
-                       
-//                    Player.bullets.get(i).drawBullet(gl);
-//                    Player.bullets.get(i).drawBullet(gl);
-//                    }
-                }
-                
-
-                if ("stage1".equals(name)) {
-                    CheckEnemyColisionWithBullet(Entity.EnemyStage_1, i);
-
-                } else if ("stage2".equals(name)) {
-                    CheckEnemyColisionWithBullet(Entity.EnemyStage_2, i);
-                } else if ("stage3".equals(name)) {
-                    CheckEnemyColisionWithBullet(Entity.EnemyStage_3_01, i);
-                    CheckEnemyColisionWithBullet(Entity.EnemyStage_3_02, i);
-                } else if ("stage4".equals(name)) {
-
-                    CheckEnemyColisionWithBullet(Entity.EnemyStage_4, i);
-                }
-
-                if (bullets.get(i).isDestroyed == true) {
-                    e.destroyBulletFromList(Player.bullets.get(i), Player.bullets);
-
-                } else if (Player.bullets.get(i).getYWorld() > .95f) {
-                    e.destroyBulletFromList(Player.bullets.get(i), Player.bullets);
-
-                }
             }
+
+            if ("stage1".equals(name)) {
+                CheckEnemyColisionWithBullet(Entity.EnemyStage_1, i);
+
+            } else if ("stage2".equals(name)) {
+                CheckEnemyColisionWithBullet(Entity.EnemyStage_2, i);
+            } else if ("stage3".equals(name)) {
+                CheckEnemyColisionWithBullet(Entity.EnemyStage_3_01, i);
+                CheckEnemyColisionWithBullet(Entity.EnemyStage_3_02, i);
+            } else if ("stage4".equals(name)) {
+
+                CheckEnemyColisionWithBullet(Entity.EnemyStage_4, i);
+            }
+
+            if (bullets.get(i).isDestroyed == true) {
+                e.destroyBulletFromList(Player.bullets.get(i), Player.bullets);
+
+            } else if (Player.bullets.get(i).getYWorld() > .95f) {
+                e.destroyBulletFromList(Player.bullets.get(i), Player.bullets);
+
+            }
+        }
         Player.fireRate += 1;
 
     }
-    
-    
 
     private void CheckEnemyColisionWithBullet(ArrayList<Enemy> list, int bulletNum) {
         for (int j = 0; j < list.size()
@@ -311,8 +280,7 @@ public void move2()
         Bullet bullet = new Bullet(gl, getScaledXWorld(), getScaledYWorld(),
                 0.009f, "PlayerBullet", 90, 0.02f);
         bullets.add(bullet);
+      
         fireRate = 0;
     }
 }
-
-

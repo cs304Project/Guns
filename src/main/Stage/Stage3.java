@@ -31,7 +31,7 @@ public class Stage3 extends Stage {
             if (i < enemyNumber / 2) {
                 createEnemy(EnemyStage_3_01, -i * 50, 220,enemySpeed,health*2);
             } else {
-                createEnemy(EnemyStage_3_02, i * 50, 220,enemySpeed,health*2);
+                createEnemy(EnemyStage_3_02, i * 50, 220,enemySpeed,health*3);
             }
         }
     }
