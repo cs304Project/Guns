@@ -366,6 +366,8 @@ public class MainCode extends AnimListener {
             }
             if (time.seconds > 6) {
                 player.drawPlayerBullet(gl, playerStage, isPause);
+            }else {
+                player.fireRate = 0;
             }
         }
     }
