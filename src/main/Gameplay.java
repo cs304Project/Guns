@@ -7,7 +7,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.media.opengl.GLCanvas;
 import javax.swing.BorderFactory;
@@ -20,7 +21,7 @@ import javax.swing.JLabel;
  *
  * @author hossa
  */
-public class Gameplay extends JFrame implements ActionListener {
+public class Gameplay extends JFrame implements KeyListener {
 
     PauseMenu pausePanel;
     JButton pauseBtu;
@@ -29,19 +30,14 @@ public class Gameplay extends JFrame implements ActionListener {
     int maxY = 700;
     GameManager gameManager;
     MainCode mc;
-
-    Timing time;
-    
-
+    Timing time = new Timing();
 
     //public Gameplay(JLabel textTime , GameManager gameManager)
     public Gameplay(GameManager gameManager, int level) {
-       
-        this.gameManager = gameManager;
-        time = new Timing();
-        mc = new MainCode(level);
 
-        pausePanel = new PauseMenu(this.gameManager , this, gameManager.sound);
+        this.gameManager = gameManager;
+        mc = new MainCode(level);
+        pausePanel = new PauseMenu(this.gameManager, this,gameManager.sound);
         pausePanel.setVisible(false);
 
         GLCanvas glcanvas;
@@ -63,19 +59,13 @@ public class Gameplay extends JFrame implements ActionListener {
         title.setBounds(140, 200, 400, 40);
         title.setFont(new Font("", Font.BOLD, 20));
         
-        JLabel textTime = new JLabel();
-        title.setBounds(140, 200, 400, 40);
-        title.setFont(new Font("", Font.BOLD, 20));
-        textTime.setText(time.secondText);
-        add(textTime);
-
+        glcanvas.addKeyListener(this);
         add(pausePanel);
-        
-        add(pauseBtu);
+        //add(textTime);
+        //add(pauseBtu);
         //add(title);
         add(glcanvas);
         
-
         setTitle("Guns");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(maxX, maxY);
@@ -94,21 +84,31 @@ public class Gameplay extends JFrame implements ActionListener {
         btu.setFont(new Font("", Font.BOLD, 16));
         btu.setBackground(Color.lightGray);
         btu.setForeground(Color.black);
-        btu.addActionListener(this);
         btu.setBorder(BorderFactory.createEtchedBorder());
 
         return btu;
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == pauseBtu) {
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+         if(e.getKeyCode() == KeyEvent.VK_ESCAPE)
+        {
             gameManager.sound.stopSound();
 
             MainCode.isPause = true;
             pausePanel.setVisible(true);
         }
+         
+ 
+    }
 
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 }

@@ -23,7 +23,7 @@ public class Stage1 extends Stage {
     }
     private void createStage1Enemys(int enemyNumber) {
         for (int i = 0; i < enemyNumber; i++) {
-            createEnemy(EnemyStage_1, -200, 210);
+            createEnemy(EnemyStage_1, -220, 220);
         }
     }
 

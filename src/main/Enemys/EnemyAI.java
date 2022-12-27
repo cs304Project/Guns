@@ -3,7 +3,6 @@ package main.Enemys;
 import main.Entity;
 import main.Timing;
 import java.util.ArrayList;
-import java.util.Random;
 import javax.media.opengl.GL;
 import main.MainCode;
 import main.Players.Bullet;

@@ -11,6 +11,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -40,13 +42,9 @@ public class PauseMenu extends JPanel implements ActionListener{
     GameManager gameManager;
     Gameplay gameplay;
     Sound sound;
-    Sound buttonssound=new Sound();
     
-    
-    public PauseMenu(GameManager gameManager ,Gameplay gameplay, Sound sound)
-
+    public PauseMenu(GameManager gameManager ,Gameplay gameplay,Sound sound)
     {
-        this.sound = sound;
         this.gameManager = gameManager;
         this.gameplay = gameplay;
         this.sound=sound;
@@ -102,13 +100,21 @@ public class PauseMenu extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
        
         if (e.getSource() == menuBtu) {
-            buttonssound.PlaySoundEffect(5);
            sound.stopSound();
             Entity.EnemyStage_1 = new ArrayList<>();
             Entity.EnemyStage_2 = new ArrayList<>();
             Entity.EnemyStage_3_01 = new ArrayList<>();
             Entity.EnemyStage_3_02= new ArrayList<>();
-
+            Entity.bossBullets = new ArrayList<>();
+            Entity.EnemyStage_4 = new ArrayList<>();
+            Entity.enemyBullets = new ArrayList<>();
+            Entity.healthyList = new ArrayList<>();
+            Entity.presentsList = new ArrayList<>();   
+            Entity.specialList = new ArrayList<>();
+            Entity.specialbullets = new ArrayList<>();
+            Entity.PlayerEffects  = new ArrayList<>();
+            Entity.EnemyEffects = new ArrayList<>();
+            
             ScoreBoard scoreboard = new ScoreBoard();
             try {
                 scoreboard.addScore(gameManager.userName,Player.score);
@@ -119,16 +125,17 @@ public class PauseMenu extends JPanel implements ActionListener{
             }
             Player.score=0;
             gameManager = new GameManager();
+            System.out.println("Went to Menu");
             MainCode.isPause = false;
             this.gameplay.dispose(); 
         }
         else if (e.getSource() == cancelBtu)
         {
-           buttonssound.PlaySoundEffect(5);
             sound.playSound(1);
             this.setVisible(false);
             MainCode.isPause = false;
         }
     }
-    
+
+   
 }
