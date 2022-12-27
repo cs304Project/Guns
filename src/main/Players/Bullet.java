@@ -1,13 +1,13 @@
 package main.Players;
 
 import javax.media.opengl.GL;
-import main.Sound;
+import main.MainCode;
 
 public class Bullet {
 
     float xWorld;
     float yWorld;
-    float scale = 0.05f;
+    float scale = 0.02f;
     float angle;
     public final String typeBullet;
     final float speed;
@@ -28,11 +28,13 @@ public class Bullet {
         this.speed = speed;
         this.angle = angle;
         this.scale = scale;
-        r = 0.01f;
-        
-        bullet_collision = new Collision( xWorld * scale * speed, yWorld * scale * speed ,r);
-        if(typeBullet.equals("EnemyBullet"))
-        {
+
+        for (int i = 0; i < MainCode.players.size(); i++) {
+            r = typeBullet == "PlayerBullet" && (MainCode.players.get(i).specialHitted) ? 0.1f : 0.01f;
+        }
+
+        bullet_collision = new Collision(xWorld * scale * speed, yWorld * scale * speed, r);
+        if (typeBullet.equals("EnemyBullet")) {
             textureIndex = 10;
         }
     }
@@ -48,6 +50,7 @@ public class Bullet {
     public void drawBullet(GL gl) {
 
         gl.glEnable(GL.GL_BLEND);
+
         gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex);	// Turn Blending On
 
         //gl.glColor3f(1, 1, 0);
@@ -56,6 +59,13 @@ public class Bullet {
         if ("PlayerBullet".equals(typeBullet)) {
             yWorld = yWorld + (float) (Math.sin(Math.toRadians(angle)) * speed);
 
+            for (int i = 0; i < MainCode.players.size(); i++) {
+                if (MainCode.players.get(0).specialHitted) {
+                    scale = 0.06f;
+                    textureIndex = 21;
+                }
+            }
+
         } else if ("EnemyBullet".equals(typeBullet)) {
             yWorld = yWorld + (float) (Math.sin(Math.toRadians(angle)) * speed);
         } else if ("BossBullet".equals(typeBullet)) {
@@ -63,20 +73,32 @@ public class Bullet {
             xWorld = xWorld + (float) (Math.cos(Math.toRadians(angle)) * speed);
         }
 
-        gl.glTranslated(xWorld, yWorld, 1);
+        gl.glTranslated(xWorld, yWorld,
+                1);
         //System.out.println("xWorld: " + xWorld +  ", yWorld: " + yWorld );
-        gl.glScaled(scale, scale, 1);
+        gl.glScaled(scale, scale,
+                1);
         gl.glBegin(GL.GL_QUADS);
         // Front Face
-        gl.glTexCoord2f(0.0f, 0.0f);
-        gl.glVertex3f(-1.0f, -1.0f, -1.0f);
-        gl.glTexCoord2f(1.0f, 0.0f);
-        gl.glVertex3f(1.0f, -1.0f, -1.0f);
-        gl.glTexCoord2f(1.0f, 1.0f);
-        gl.glVertex3f(1.0f, 1.0f, -1.0f);
-        gl.glTexCoord2f(0.0f, 1.0f);
-        gl.glVertex3f(-1.0f, 1.0f, -1.0f);
+
+        gl.glTexCoord2f(
+                0.0f, 0.0f);
+        gl.glVertex3f(
+                -1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(
+                1.0f, 0.0f);
+        gl.glVertex3f(
+                1.0f, -1.0f, -1.0f);
+        gl.glTexCoord2f(
+                1.0f, 1.0f);
+        gl.glVertex3f(
+                1.0f, 1.0f, -1.0f);
+        gl.glTexCoord2f(
+                0.0f, 1.0f);
+        gl.glVertex3f(
+                -1.0f, 1.0f, -1.0f);
         gl.glEnd();
+
         gl.glPopMatrix();
 
         gl.glDisable(GL.GL_BLEND);
@@ -84,8 +106,8 @@ public class Bullet {
         bullet_collision.drawCirclie(gl, xWorld, yWorld);
 
     }
-    
-    public void drawBullet(GL gl, float x , float y) {
+
+    public void drawBullet(GL gl, float x, float y) {
 
         gl.glEnable(GL.GL_BLEND);
         gl.glBindTexture(GL.GL_TEXTURE_2D, textureIndex);	// Turn Blending On
@@ -110,7 +132,7 @@ public class Bullet {
         gl.glPopMatrix();
 
         gl.glDisable(GL.GL_BLEND);
-        
+
         bullet_collision.drawCirclie(gl, xWorld, yWorld);
 
     }
