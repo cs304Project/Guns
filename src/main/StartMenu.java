@@ -60,7 +60,7 @@ public class StartMenu extends JFrame implements ActionListener {
         LeaderBoard = createBtu(LeaderBoard,"Leader Board",new Color(0f,0f,0f,1f));
         
         exitBtu = createBtu(exitBtu, "EXIT", new Color(0f, 0f, 0f, 1f));
-        setContentPane(new JLabel(new ImageIcon()));
+        setContentPane(new JLabel(new ImageIcon("C:/Users/hp/Documents/Guns/src/Assets/background.png")));
         setLayout(new FlowLayout());
 
         userText = new JLabel();
@@ -69,7 +69,7 @@ public class StartMenu extends JFrame implements ActionListener {
         userText.setText("User Name: " + UserName);
 
         //Add properties for JFrame screen;
-        setBackground(Color.YELLOW);
+        setBackground(Color.PINK);
         this.add(easyBtu);
         this.add(hardBtu);
         this.add(multiplayerBtu);

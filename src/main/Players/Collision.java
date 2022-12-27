@@ -131,11 +131,13 @@ public class Collision {
                     Player.score += enemy.bonusScore;
 
                 }
-              //  if (player.isSpecialHitted()) {
-                   // bullet.isDestroyed = false;
-                //} else {
+                for(int i=0;i<MainCode.players.size();i++){
+                if (MainCode.players.get(i).isSpecialHitted()) {
+                    bullet.isDestroyed = false;
+                } else {
                     bullet.isDestroyed = true;
-             //   }
+                }
+                }
 //s.PlaySoundEffect(2);
 
                 EnemyEffect enemyeffect = new EnemyEffect(enemy.getXWorld(), enemy.getYWorld());
@@ -152,12 +154,13 @@ public class Collision {
                     Enemy_Deathsound.PlaySoundEffect(3);
                     Player.score += enemy.bonusScore;
                 }
-                //if (player.isSpecialHitted()) {
-                  //  bullet.isDestroyed = false;
-                //} else {
+                for(int i=0;i<MainCode.players.size();i++){
+                if (MainCode.players.get(i).isSpecialHitted()) {
+                    bullet.isDestroyed = false;
+                } else {
                     bullet.isDestroyed = true;
-                //}
-                
+                }
+                }
             }
         }
         if ((obj1 instanceof Bullet bullet && obj2 instanceof Player player)) {

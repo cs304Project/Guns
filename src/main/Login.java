@@ -74,8 +74,13 @@ public class Login extends JFrame implements ActionListener {
 
            
             buttonssound.PlaySoundEffect(5);
+            if(!textField.getText().isEmpty()){
             gameManger = new GameManager(true, false, textField.getText(),0,buttonssound);
-            gameManger.sound=buttonssound;
+                        gameManger.sound=buttonssound;
+
+            }else{
+                System.out.println("must enter name");
+            }
 
             this.dispose();
         } else if (e.getSource() == cancelBtu) {
