@@ -44,7 +44,7 @@ public class Entity {
 
     
     //texture setting
-    public String textureNames[] = {"background.jpeg", "player.png", "playerBullet.png", "stage1.png",
+    public String textureNames[] = {"back2.jpg", "player.png", "playerBullet.png", "stage1.png",
         "stage2.png", "stage3.png", "stage4.png", "gameover.png", "won.png", "bullet.png",
         "present.png", "healthy.png", "powerup1.png", "powerup2.png", "powerup3.png", "powerup4.png", "powerup5.png",
         "powerup6.png", "gameover.png", "specialPresent.png", "fire.png"};

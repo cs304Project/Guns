@@ -8,8 +8,6 @@ import main.Enemys.Enemy;
 import main.Enemys.EnemyAI;
 import main.Enemys.EnemyBoss;
 import main.Entity;
-import main.MainCode;
-import main.Players.Bullet;
 import main.Players.Collision;
 import main.Players.Player;
 
@@ -54,9 +52,9 @@ public class Stage {
                     
         }
     }
-    public void createEnemy(ArrayList<Enemy> enemyList,float x, float y)
+    public void createEnemy(ArrayList<Enemy> enemyList,float x, float y,float enemySpeed,int health)
     {
-        Enemy enemy = new Enemy(x, y);
+        Enemy enemy = new Enemy(x, y,enemySpeed,health);
         enemyList.add(enemy);
  
     }
@@ -68,7 +66,7 @@ public class Stage {
     }
     
 
-   public void drawEnemyBullet(GL gl , int stage , boolean isPause , ArrayList<Player> players)
+   public void drawEnemyBullet(GL gl , int stage , boolean isPause , ArrayList<Player> players ,int temp)
    {
        if(isPause)
        {
@@ -106,10 +104,10 @@ public class Stage {
        {
            switch (stage) {
                case 1:
-                   detectTheEnemy(Entity.EnemyStage_1,stage);
+                   detectTheEnemy(Entity.EnemyStage_1,stage, temp);
                    break;
                case 2:
-                   detectTheEnemy(Entity.EnemyStage_2, stage);
+                   detectTheEnemy(Entity.EnemyStage_2, stage,temp);
 
                    break;
                default:
@@ -124,20 +122,19 @@ public class Stage {
    
    
    
-   private void detectTheEnemy(ArrayList<Enemy> list, int stage)
+   private void detectTheEnemy(ArrayList<Enemy> list, int stage,int temp)
    {
-       int tmp = 0;
        switch(stage)
        {
            case 1:
-                tmp = 4;
+                temp = 4;
            break;
            case 2:
-                tmp = 4;
+                temp = 4;
            break;
            
        }
-       for(int i = 0; i < tmp; i++)
+       for(int i = 0; i < temp; i++)
            {
                Random r = new Random();
 

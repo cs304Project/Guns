@@ -91,14 +91,34 @@ public class Collision {
 
                 Player.score += enemy.bonusScore;
                 player.liveScore--;
+                PlayerEffect playereffect = new PlayerEffect(player.getScaledXWorld(), player.getScaledYWorld());
+                Entity.PlayerEffects.add(playereffect);
                 System.out.println("live score" + player.liveScore);
+                if (player.liveScore <= 0) {
+                    player.isDestroy =true;
+                    
+                }
+                
+                if(player.liveScore == 0&& MainCode.players.size()==0){
+                    MainCode.gameOver = true;
+                }
             }
         } else if ((obj2 instanceof Enemy enemy && obj1 instanceof Player player)) {
             if (detectCollision(player.c, enemy.c)) {
                 e.destroyEnemyFromList(enemy, eList);
                 Player.score += enemy.bonusScore;
                 player.liveScore--;
+                PlayerEffect playereffect = new PlayerEffect(player.getScaledXWorld(), player.getScaledYWorld());
+                Entity.PlayerEffects.add(playereffect);
                 System.out.println("live score" + player.liveScore);
+                if (player.liveScore <= 0) {
+                    player.isDestroy =true;
+                    
+                }
+                
+                if(player.liveScore == 0&& MainCode.players.size()==0){
+                    MainCode.gameOver = true;
+                }
             }
 
         }
@@ -119,7 +139,6 @@ public class Collision {
 //s.PlaySoundEffect(2);
 
                 EnemyEffect enemyeffect = new EnemyEffect(enemy.getXWorld(), enemy.getYWorld());
-                e.destroyEnemyFromList(enemy, eList);
                 Enemy_Deathsound.PlaySoundEffect(3);
                 Entity.EnemyEffects.add(enemyeffect);
 
@@ -138,22 +157,8 @@ public class Collision {
                 //} else {
                     bullet.isDestroyed = true;
                 //}
+                
             }
-        }
-        if ((obj1 instanceof Bullet bullet && obj2 instanceof Player player)) {
-            if (detectCollision(bullet.bullet_collision, player.c)) {
-                bullet.isDestroyed = true;
-                PlayerEffect playereffect = new PlayerEffect(player.getScaledXWorld(), player.getScaledYWorld());
-                Entity.PlayerEffects.add(playereffect);
-            }
-        } else if ((obj2 instanceof Player player && obj1 instanceof Bullet bullet)) {
-            if (detectCollision(player.c, bullet.bullet_collision)) {
-                bullet.isDestroyed = true;
-                PlayerEffect playereffect = new PlayerEffect(player.getScaledXWorld(), player.getScaledYWorld());
-                Entity.PlayerEffects.add(playereffect);
-
-            }
-
         }
         if ((obj1 instanceof Bullet bullet && obj2 instanceof Player player)) {
             if (detectCollision(bullet.bullet_collision, player.c)) {
@@ -161,6 +166,14 @@ public class Collision {
                 player.liveScore--;
                 PlayerEffect playereffect = new PlayerEffect(player.getScaledXWorld(), player.getScaledYWorld());
                 Entity.PlayerEffects.add(playereffect);
+                if (player.liveScore <= 0) {
+                    player.isDestroy =true;
+                    
+                }
+                
+                if(player.liveScore == 0&& MainCode.players.size()==0){
+                    MainCode.gameOver = true;
+                }
             }
         } else if ((obj2 instanceof Player player && obj1 instanceof Bullet bullet)) {
             if (detectCollision(player.c, bullet.bullet_collision)) {
@@ -168,6 +181,14 @@ public class Collision {
                 player.liveScore--;
                 PlayerEffect playereffect = new PlayerEffect(player.getScaledXWorld(), player.getScaledYWorld());
                 Entity.PlayerEffects.add(playereffect);
+                if (player.liveScore <= 0) {
+                    player.isDestroy =true;
+                    
+                }
+                
+                if(player.liveScore == 0&& MainCode.players.size()==0){
+                    MainCode.gameOver = true;
+                }
 
             }
 
@@ -194,6 +215,9 @@ public class Collision {
                 player.specialHitted = false;
                 if (player.liveScore < 5) {
                     player.liveScore++;
+                }
+                if(player.liveScore == 0&& MainCode.players.size()==0){
+                    MainCode.gameOver = true;
                 }
                 System.out.println("live score" + player.liveScore);
             }

@@ -25,17 +25,17 @@ public class Stage2 extends Stage {
     public static int enemyTextureEffects[] = new int[4];
     ReadImages read = new ReadImages();
 
-    public Stage2(int enemyNumber) {
-        createStage2Enemys(enemyNumber);
+    public Stage2(int enemyNumber,float enemySpeed,int health) {
+        createStage2Enemys(enemyNumber,enemySpeed,health);
         read.readTexture(enemyTextureName, enemyTextures, enemyTexture, "/enemy/stage2/");
         read.readTexture( enemyTextureEffectName, enemyTextureEffects,enemyTextureEffect, "/enemy/stage2/");
 
     }
-    public void createStage2Enemys(int enemyNumber) {
-            separetedEnemy(enemyNumber,20,EnemyStage_2);
+    public void createStage2Enemys(int enemyNumber,float enemySpeed,int health) {
+            separetedEnemy(enemyNumber,20,EnemyStage_2,enemySpeed,health);
 
     }
-    public void separetedEnemy(int enemyNumber, float startPosition, ArrayList<Enemy> list){
+    public void separetedEnemy(int enemyNumber, float startPosition, ArrayList<Enemy> list,float enemySpeed,int health){
         for(int i =0 ;i<enemyNumber ;i++){
             if((enemyNumber - 1) / 4 >= i) {
                 startPosition = 20f;
@@ -46,7 +46,7 @@ public class Stage2 extends Stage {
             } else {
                 startPosition = 170f;
             }
-            createEnemy(list, -200 - (i%10 * 50), startPosition);
+            createEnemy(list, -200 - (i%10 * 50), startPosition,enemySpeed,health*2);
 
         }
     }

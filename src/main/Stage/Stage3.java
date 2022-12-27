@@ -19,19 +19,19 @@ public class Stage3 extends Stage {
     public static int enemyTextureEffects[] = new int[4];
     
     ReadImages read = new ReadImages();
-    public Stage3(int enemyNumber) {
-        createStage3Enemys(enemyNumber);
+    public Stage3(int enemyNumber,float enemySpeed,int health) {
+        createStage3Enemys(enemyNumber,enemySpeed,health);
         read.readTexture(enemyTextureName, enemyTextures, enemyTexture, "/enemy/stage3/");
         read.readTexture( enemyTextureEffectName, enemyTextureEffects,enemyTextureEffect, "/enemy/stage3/");
 
     }
 
-    public void createStage3Enemys(int enemyNumber) {
+    public void createStage3Enemys(int enemyNumber,float enemySpeed,int health) {
         for (int i = 0; i < enemyNumber; i++) {
             if (i < enemyNumber / 2) {
-                createEnemy(EnemyStage_3_01, -i * 50, 220);
+                createEnemy(EnemyStage_3_01, -i * 50, 220,enemySpeed,health*2);
             } else {
-                createEnemy(EnemyStage_3_02, i * 50, 220);
+                createEnemy(EnemyStage_3_02, i * 50, 220,enemySpeed,health*2);
             }
         }
     }

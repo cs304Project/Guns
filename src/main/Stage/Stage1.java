@@ -15,15 +15,15 @@ public class Stage1 extends Stage {
     public static TextureReader.Texture enemyTextureEffect[] = new TextureReader.Texture[4];
     public static int enemyTextureEffects[] = new int[4];
     ReadImages read = new ReadImages();
-    public Stage1(int enemyNumber  ) {
-        createStage1Enemys(enemyNumber);
+    public Stage1(int enemyNumber ,float enemySpeed,int health ) {
+        createStage1Enemys(enemyNumber ,enemySpeed,health);
         read.readTexture( enemyTextureName, enemyTextures,enemyTexture, "/enemy/stage1/");
         read.readTexture( enemyTextureEffectName, enemyTextureEffects,enemyTextureEffect, "/enemy/stage1/");
 
     }
-    private void createStage1Enemys(int enemyNumber) {
+    private void createStage1Enemys(int enemyNumber,float enemySpeed,int health) {
         for (int i = 0; i < enemyNumber; i++) {
-            createEnemy(EnemyStage_1, -220, 220);
+            createEnemy(EnemyStage_1, -220, 220,enemySpeed ,health);
         }
     }
 
