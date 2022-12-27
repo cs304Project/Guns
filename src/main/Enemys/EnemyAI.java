@@ -32,7 +32,7 @@ public class EnemyAI {
 
     //target to reach a position 1 and translate to another position
     //
-    public void createAI01(ArrayList<Enemy> eList, GL gl, Player player,
+    public void createAI01(ArrayList<Enemy> eList, GL gl, ArrayList<Player> players,
             ArrayList<Bullet> enemyBullets) {
         int rowStep = 0;
         int colStep = 0;
@@ -87,21 +87,29 @@ public class EnemyAI {
                 }
 
             }
-
-            collision.collision(eList.get(i), player, Entity.EnemyStage_1);
+            
+            for(int j = 0; j < players.size(); j++)
+            {
+                collision.collision(eList.get(i), players.get(j), Entity.EnemyStage_1);
+            }
+            
 
         }
 
     }
 
-    public void createAI02(ArrayList<Enemy> eList1, GL gl, Player player,
+    public void createAI02(ArrayList<Enemy> eList1, GL gl, ArrayList<Player> players,
             ArrayList<Bullet> enemyBullets) {
 
         for (int i = 0; i < eList1.size(); i++) {
 
             AI02(eList1, gl, i);
 
-            collision.collision(eList1.get(i), player, Entity.EnemyStage_2);
+            for(int j = 0; j < players.size(); j++)
+            {
+                collision.collision(eList1.get(i), players.get(j), Entity.EnemyStage_2);
+            }
+            
 
         }
 
@@ -124,16 +132,22 @@ public class EnemyAI {
 
     }
 
-    public void createAI03(ArrayList<Enemy> eList, ArrayList<Enemy> eList2, GL gl, Player player,
+    public void createAI03(ArrayList<Enemy> eList, ArrayList<Enemy> eList2, GL gl, ArrayList<Player> players,
             ArrayList<Bullet> enemyBullets) {
         for (int i = 0; i < eList.size(); i++) {
             AI03_01(eList, gl, i, eList.size());
-
-            collision.collision(eList.get(i), player, Entity.EnemyStage_3_01);
+            
+           for(int j = 0; j < players.size(); j++)
+            {
+                collision.collision(eList.get(i), players.get(j), Entity.EnemyStage_3_01);
+            }
         }
         for (int i = 0; i < eList2.size(); i++) {
             AI03_02(eList2, gl, i, eList2.size() * 2);
-            collision.collision(eList2.get(i), player, Entity.EnemyStage_3_02);
+            for(int j = 0; j < players.size(); j++)
+            {
+                collision.collision(eList2.get(i), players.get(j), Entity.EnemyStage_3_02);
+            }
 
         }
     }
@@ -188,10 +202,14 @@ public class EnemyAI {
 
     }
 
-    public void createAI04(ArrayList<Enemy> eList, GL gl, Player player) {
+    public void createAI04(ArrayList<Enemy> eList, GL gl, ArrayList<Player> players) {
         for (int i = 0; i < eList.size(); i++) {
             eList.get(i).drawEnemy(gl, 4);
-            collision.collision(eList.get(i), player, Entity.EnemyStage_4);
+             for(int j = 0; j < players.size(); j++)
+            {
+                 collision.collision(eList.get(i), players.get(j), Entity.EnemyStage_4);
+            }
+           
         }
     }
 }

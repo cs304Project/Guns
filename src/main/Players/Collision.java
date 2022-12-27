@@ -8,7 +8,6 @@ import main.Entity;
 import main.MainCode;
 import main.Sound;
 import static main.MainCode.gl;
-import static main.MainCode.player;
 import main.Timing;
 
 public class Collision {
@@ -39,12 +38,12 @@ public class Collision {
     public void drawCirclie(GL gl, float x, float y) {
         this.x = x;
         this.y = y;
-//        gl.glBegin(GL.GL_LINE_LOOP);
-//
-//        for (int i = 0; i < 360; i++) {
-//            gl.glVertex2d(r * Math.cos(Math.toRadians(i)) + x, r * Math.sin(Math.toRadians(i)) + y);
-//
-//        }
+        gl.glBegin(GL.GL_LINE_LOOP);
+
+        for (int i = 0; i < 360; i++) {
+            gl.glVertex2d(r * Math.cos(Math.toRadians(i)) + x, r * Math.sin(Math.toRadians(i)) + y);
+
+        }
         gl.glEnd();
 
     }
@@ -89,41 +88,29 @@ public class Collision {
 
             if (detectCollision(enemy.c, player.c)) {
                 e.destroyEnemyFromList(enemy, eList);
-
+                
                 Player.score += enemy.bonusScore;
-                Player.liveScore--;
-                System.out.println("live score" + player.liveScore);
+               
             }
         } else if ((obj2 instanceof Enemy enemy && obj1 instanceof Player player)) {
             if (detectCollision(player.c, enemy.c)) {
                 e.destroyEnemyFromList(enemy, eList);
                 Player.score += enemy.bonusScore;
-                Player.liveScore--;
-                System.out.println("live score" + player.liveScore);
             }
 
         }
         if ((obj1 instanceof Bullet bullet && obj2 instanceof Enemy enemy)) {
             if (detectCollision(bullet.bullet_collision, enemy.c)) {
-                enemy.health--;
-                if (enemy.health <= 0) {
-                    e.destroyEnemyFromList(enemy, eList);
-                    Enemy_Deathsound.PlaySoundEffect(3);
-                    Player.score += enemy.bonusScore;
-
-                }
-                if (player.isSpecialHitted()) {
-                    bullet.isDestroyed = false;
-                } else {
-                    bullet.isDestroyed = true;
-                }
-//s.PlaySoundEffect(2);
+                Player.score += enemy.bonusScore;
+                bullet.isDestroyed = true;
+                //s.PlaySoundEffect(2);
 
                 EnemyEffect enemyeffect = new EnemyEffect(enemy.getXWorld(), enemy.getYWorld());
                 e.destroyEnemyFromList(enemy, eList);
                 Enemy_Deathsound.PlaySoundEffect(3);
                 Entity.EnemyEffects.add(enemyeffect);
 
+                
             }
 
         } else if ((obj1 instanceof Enemy enemy && obj2 instanceof Bullet bullet)) {
@@ -133,18 +120,16 @@ public class Collision {
                     e.destroyEnemyFromList(enemy, eList);
                     Enemy_Deathsound.PlaySoundEffect(3);
                     Player.score += enemy.bonusScore;
+                    
                 }
-                if (player.isSpecialHitted()) {
-                    bullet.isDestroyed = false;
-                } else {
-                    bullet.isDestroyed = true;
-                }
+                bullet.isDestroyed = true;
             }
         }
         if ((obj1 instanceof Bullet bullet && obj2 instanceof Player player)) {
             if (detectCollision(bullet.bullet_collision, player.c)) {
                 bullet.isDestroyed = true;
                 PlayerEffect playereffect = new PlayerEffect(player.getScaledXWorld(), player.getScaledYWorld());
+                System.out.println("player x" + player.getScaledXWorld() + " playery " + player.getScaledYWorld());
                 Entity.PlayerEffects.add(playereffect);
             }
         } else if ((obj2 instanceof Player player && obj1 instanceof Bullet bullet)) {
@@ -153,74 +138,9 @@ public class Collision {
                 PlayerEffect playereffect = new PlayerEffect(player.getScaledXWorld(), player.getScaledYWorld());
                 Entity.PlayerEffects.add(playereffect);
 
-            }
-
-        }
-        if ((obj1 instanceof Bullet bullet && obj2 instanceof Player player)) {
-            if (detectCollision(bullet.bullet_collision, player.c)) {
-                bullet.isDestroyed = true;
-                player.liveScore--;
-                PlayerEffect playereffect = new PlayerEffect(player.getScaledXWorld(), player.getScaledYWorld());
-                Entity.PlayerEffects.add(playereffect);
-            }
-        } else if ((obj2 instanceof Player player && obj1 instanceof Bullet bullet)) {
-            if (detectCollision(player.c, bullet.bullet_collision)) {
-                bullet.isDestroyed = true;
-                player.liveScore--;
-                PlayerEffect playereffect = new PlayerEffect(player.getScaledXWorld(), player.getScaledYWorld());
-                Entity.PlayerEffects.add(playereffect);
-
-            }
-
-        }
-        if ((obj1 instanceof PowerUp power && obj2 instanceof Player player)) {
-            if (detectCollision(power.c, player.c)) {
-                Entity.destroy((PowerUp) power);
-                player.powerUp++;
-                player.specialHitted = false;
-            }
-        } else if ((obj2 instanceof Player player && obj1 instanceof PowerUp power)) {
-            if (detectCollision(player.c, power.c)) {
-                Entity.destroy((PowerUp) power);
-                player.powerUp++;
-                player.specialHitted = false;
-
-            }
-
-        }
-        if ((obj1 instanceof Healthy health && obj2 instanceof Player player)) {
-            if (detectCollision(health.c, player.c)) {
-                Entity.destroy((Healthy) health);
-                player.specialHitted = false;
-                if (player.liveScore < 5) {
-                    player.liveScore++;
-                }
-                System.out.println("live score" + player.liveScore);
-            }
-        } else if ((obj2 instanceof Player player && obj1 instanceof Healthy health)) {
-            if (detectCollision(player.c, health.c)) {
-                Entity.destroy((Healthy) health);
-                player.specialHitted = false;
-                if (player.liveScore < 5) {
-                    player.liveScore++;
-                }
-                System.out.println("live score" + player.liveScore);
-            }
-
-        }
-        if ((obj1 instanceof specialGift special && obj2 instanceof Player player)) {
-            if (detectCollision(special.c, player.c)) {
-                Entity.destroy((specialGift) special);
-                player.specialHitted = true;
-            }
-        } else if ((obj2 instanceof Player player && obj1 instanceof specialGift special)) {
-            if (detectCollision(player.c, special.c)) {
-                Entity.destroy((specialGift) special);
-                player.specialHitted = true;
             }
 
         }
 
     }
-
 }

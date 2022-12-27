@@ -28,25 +28,25 @@ public class Stage {
         this.e = new Entity();
     }
     //Draw Enemy;
-    public void drawEnemy(GL gl , Player player , int stageNum)
+    public void drawEnemy(GL gl , ArrayList<Player> players , int stageNum)
     {
         switch(stageNum)
         {
             case 1:
-                ai.createAI01(Entity.EnemyStage_1 , gl , player , Entity.enemyBullets);
+                ai.createAI01(Entity.EnemyStage_1 , gl , players , Entity.enemyBullets);
                 break;
             case 2:
                 ai.createAI02(Entity.EnemyStage_2,
-                        gl, player, Entity.enemyBullets);
+                        gl, players, Entity.enemyBullets);
                 break;
             case 3:
-                 ai.createAI03(Entity.EnemyStage_3_01,Entity.EnemyStage_3_02, gl, player, Entity.enemyBullets);
+                 ai.createAI03(Entity.EnemyStage_3_01,Entity.EnemyStage_3_02, gl, players, Entity.enemyBullets);
                 break;
             case 4:
                 
                 //if(!enemyList.isEmpty())
                 // enemyList.get(0).
-                ai.createAI04(Entity.EnemyStage_4, gl,player);
+                ai.createAI04(Entity.EnemyStage_4, gl,players);
                 break;
             default:
                 System.out.println("I am so sorry I cannot find you right Stage");
@@ -68,7 +68,7 @@ public class Stage {
     }
     
 
-   public void drawEnemyBullet(GL gl , int stage , boolean isPause , Player player)
+   public void drawEnemyBullet(GL gl , int stage , boolean isPause , ArrayList<Player> players)
    {
        if(isPause)
        {
@@ -85,15 +85,12 @@ public class Stage {
                
                 Entity.enemyBullets.get(i).drawBullet(gl);
                 
-                c.collision( Entity.enemyBullets.get(i), player, Entity.EnemyStage_1);
-                //System.out.println("bullet Position y" + Entity.enemyBullets.get(i).getYWorld());
-                //System.out.println("player Position y" +  player.getScaledXWorld() );
-//                if(player.getScaledXWorld()== Entity.enemyBullets.get(i).getXWorld())
-//                {
-//                    
-//                    System.out.println("Hi I am in poistion");
-//                }
+                for(int j = 0; j < players.size(); j++)
+                {
+                    c.collision( Entity.enemyBullets.get(i), players.get(j), Entity.EnemyStage_1);
+                }
                 
+     
                if (Entity.enemyBullets.get(i).getYWorld() < -1.1 || Entity.enemyBullets.get(i).getYWorld() > 1 
                        ||Entity.enemyBullets.get(i).isDestroyed ) {
 
@@ -115,10 +112,6 @@ public class Stage {
                    detectTheEnemy(Entity.EnemyStage_2, stage);
 
                    break;
-//               case 3:
-//                   detectTheEnemy(Entity.EnemyStage_2, stage);
-//                   break;
-
                default:
                    System.out.println("draw enemy bullet has a problem");
                    break;
@@ -142,9 +135,6 @@ public class Stage {
            case 2:
                 tmp = 4;
            break;
-//           case 3:
-//               //tmp = 2;
-//           break;
            
        }
        for(int i = 0; i < tmp; i++)
@@ -153,15 +143,15 @@ public class Stage {
 
                if(list.size() >= 1)
                {
-                    Entity.randmicList.set(i, r.nextInt(list.size()));
+                    Entity.randmicList[i] = r.nextInt(list.size());
                }
   
            }
        
-       for(int i = 0; i < Entity.randmicList.size(); i++) {
+       for(int i = 0; i < Entity.randmicList.length; i++) {
            
-           if(list.get(Entity.randmicList.get(i)) != null)
-          list.get(Entity.randmicList.get(i)).isFire = true;
+           if(list.get(Entity.randmicList[i]) != null && !list.isEmpty())
+          list.get(Entity.randmicList[i]).isFire = true;
        }
        
        

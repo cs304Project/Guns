@@ -19,7 +19,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import main.Enemys.Enemy;
 import main.Players.Player;
 import org.json.simple.parser.ParseException;
 
@@ -41,9 +40,13 @@ public class PauseMenu extends JPanel implements ActionListener{
     GameManager gameManager;
     Gameplay gameplay;
     Sound sound;
+    Sound buttonssound=new Sound();
     
-    public PauseMenu(GameManager gameManager ,Gameplay gameplay,Sound sound)
+    
+    public PauseMenu(GameManager gameManager ,Gameplay gameplay, Sound sound)
+
     {
+        this.sound = sound;
         this.gameManager = gameManager;
         this.gameplay = gameplay;
         this.sound=sound;
@@ -99,12 +102,13 @@ public class PauseMenu extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
        
         if (e.getSource() == menuBtu) {
+            buttonssound.PlaySoundEffect(5);
            sound.stopSound();
             Entity.EnemyStage_1 = new ArrayList<>();
             Entity.EnemyStage_2 = new ArrayList<>();
             Entity.EnemyStage_3_01 = new ArrayList<>();
             Entity.EnemyStage_3_02= new ArrayList<>();
-           
+
             ScoreBoard scoreboard = new ScoreBoard();
             try {
                 scoreboard.addScore(gameManager.userName,Player.score);
@@ -115,12 +119,12 @@ public class PauseMenu extends JPanel implements ActionListener{
             }
             Player.score=0;
             gameManager = new GameManager();
-            System.out.println("Went to Menu");
             MainCode.isPause = false;
             this.gameplay.dispose(); 
         }
         else if (e.getSource() == cancelBtu)
         {
+           buttonssound.PlaySoundEffect(5);
             sound.playSound(1);
             this.setVisible(false);
             MainCode.isPause = false;
