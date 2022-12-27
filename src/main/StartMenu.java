@@ -64,8 +64,8 @@ public class StartMenu extends JFrame implements ActionListener {
         setLayout(new FlowLayout());
 
         userText = new JLabel();
-        userText.setBounds(100, 100, 400, 16);
-        userText.setFont(new Font("", Font.CENTER_BASELINE, 20));
+        userText.setBounds(100, 100, 400, 100);
+        userText.setFont(new Font("", Font.CENTER_BASELINE, 30));
         userText.setText("User Name: " + UserName);
 
         //Add properties for JFrame screen;
