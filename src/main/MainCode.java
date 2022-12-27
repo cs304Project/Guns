@@ -28,25 +28,26 @@ public class MainCode extends AnimListener {
     public static int xMax;
     public static int yMax;
     float textScale = 0.1f;
-    Clock clock;
     //deault Objects
     public static GL gl;
     GLCanvas canvas;
     Entity e = new Entity();
+    Loot loot = new Loot();
     Stage stage = new Stage();
     Timing time = new Timing();
+    Clock clock;
 
     String playerStage = "stage1";
     ReadImages read = new ReadImages();
 
     //player and key setting
     HandleKeys key = new HandleKeys();
-    ArrayList<Player> players = new ArrayList<>();
-    
-    Player player;
+        ArrayList<Player> players = new ArrayList<>();
+
+    public static Player player;
     Player player2;
     public TextureReader.Texture texture[] = new TextureReader.Texture[e.textureNames.length];
-    public int textures[] = new int[e.textureNames.length];
+    public static int textures[] = new int[21];
 
     public int level = 0;
     public static int stage1 = 24;
@@ -58,7 +59,6 @@ public class MainCode extends AnimListener {
     boolean StageTwoOn = false;
     boolean StageThreeOn = false;
     boolean StageFourOn = false;
-    
 
     public static boolean isPause = false;
 
@@ -89,8 +89,6 @@ public class MainCode extends AnimListener {
                 System.out.println("NO LEVELS : ");
                 break;
         }
-
-
     }
 
     public void setCanvas(GLCanvas canvas) {
@@ -106,8 +104,8 @@ public class MainCode extends AnimListener {
     public void init(GLAutoDrawable glad) {
 
         initDefaultValues(glad);
-        clock=new Clock();
-
+        player = new Player(gl, key);
+        clock = new Clock();
 
         gl.glLoadIdentity();
         time.start();
@@ -133,12 +131,13 @@ public class MainCode extends AnimListener {
                 break;
             default:
                 break;
-        }
-         
         
-
+        }
+        loot.timePerFrame();
+        loot.checkForTime(gl);
+        e.HealthBarCheck(gl, player.liveScore);
+        e.bar.drawHealthyBar(gl, e.imageIdx);
     }
-
     
     public void setLevel_1()
     {
@@ -184,9 +183,127 @@ public class MainCode extends AnimListener {
 
         }
     }
+
     
     
-    private void stageLogic() {
+    
+    
+//    private void stageLogic() {
+//        if (StageOneOn) {
+//            if (time.seconds < 2) {
+//                e.drawText(gl, textScale, 3, textures);
+//                textScale = (textScale + 0.002f) % 1f;
+//            } else if (time.seconds < 5) {
+//                e.drawText(gl, 0.3f, 3, textures);
+//            }
+//            if (enemyKey) {
+//                Stage1 s1 = new Stage1(stage1);
+//                enemyKey = false;
+//            }
+//            stage.drawEnemy(gl, player, 1);
+//            stage.drawEnemyBullet(gl, 1, isPause, player);
+//            drawEnemyEffects(Entity.EnemyEffects, 1);
+//            drawPlayerEffects(Entity.PlayerEffects, 1);
+//
+//            if (Entity.EnemyStage_1.size() <= 0) {
+//                StageOneOn = false;
+//                StageTwoOn = true;
+//                enemyKey = true;
+//                time.stop();
+//                textScale = 0.1f;
+//
+//            }
+//        } else if (StageTwoOn) {
+//            time.start();
+//            playerStage = "stage2";
+//            if (time.seconds < 2) {
+//                e.drawText(gl, textScale, 4, textures);
+//                textScale = (textScale + 0.002f) % 1f;
+//            } else if (time.seconds < 5) {
+//                e.drawText(gl, 0.3f, 4, textures);
+//            }
+//            if (enemyKey) {
+//                Stage2 s2 = new Stage2(stage2);
+//                ReadPlayerAssets playerassets = new ReadPlayerAssets();
+//
+//                enemyKey = false;
+//            }
+//            stage.drawEnemy(gl, player, 2);
+//
+//            //stage.drawEnemyBullet(gl, 2, isPause, player);
+//            drawEnemyEffects(Entity.EnemyEffects, 2);
+//            drawPlayerEffects(Entity.PlayerEffects, 2);
+//
+//            if (Entity.EnemyStage_2.size() <= 0) {
+//
+//                StageTwoOn = false;
+//                StageThreeOn = true;
+//                enemyKey = true;
+//                time.stop();
+//                textScale = 0.1f;
+//            }
+//
+//        } else if (StageThreeOn) {
+//            time.start();
+//            playerStage = "stage3";
+//            if (time.seconds < 2) {
+//                e.drawText(gl, textScale, 5, textures);
+//                textScale = (textScale + 0.002f) % 1f;
+//            } else if (time.seconds < 5) {
+//                e.drawText(gl, 0.3f, 5, textures);
+//            }
+//            if (enemyKey) {
+//                Stage3 s3 = new Stage3(stage3);
+//                enemyKey = false;
+//            }
+//            stage.drawEnemy(gl, player, 3);
+//
+//            drawEnemyEffects(Entity.EnemyEffects, 3);
+//            drawPlayerEffects(Entity.PlayerEffects, 3);
+//
+//            if (Entity.EnemyStage_3_01.size() <= 0 && Entity.EnemyStage_3_02.size() <= 0) {
+//                StageThreeOn = false;
+//                StageFourOn = true;
+//                enemyKey = true;
+//                time.stop();
+//                textScale = 0.1f;
+//
+//            }
+//        } else if (StageFourOn) {
+//            time.start();
+//            playerStage = "stage4";
+//            if (time.seconds < 2) {
+//                e.drawText(gl, textScale, 6, textures);
+//                textScale = (textScale + 0.002f) % 1f;
+//            } else if (time.seconds < 5) {
+//                e.drawText(gl, 0.3f, 6, textures);
+//            }
+//            if (enemyKey) {
+//                Stage4 s4 = new Stage4(stage4);
+//                ReadPlayerAssets playerassets = new ReadPlayerAssets();
+//                enemyKey = false;
+//            }
+//            stage.drawEnemy(gl, player, 4);
+//            drawBossBullets(gl, Entity.bossBullets);
+//            drawEnemyEffects(Entity.EnemyEffects, 4);
+//            drawPlayerEffects(Entity.PlayerEffects, 4);
+//
+//            if (Entity.EnemyStage_4.size() <= 0) {
+//                StageFourOn = false;
+//                time.stop();
+//            } else {
+//                time.start();
+//                if (time.seconds < 2) {
+//                    e.drawText(gl, textScale, 8, textures);
+//                    textScale = (textScale + 0.002f) % 1f;
+//                } else if (time.seconds < 10) {
+//                    e.drawText(gl, 0.6f, 8, textures);
+//                }
+//            }
+//        }
+//
+//    }
+ private void stageLogic() {
         if (StageOneOn) {
             if (time.seconds < 2) {
                 e.drawText(gl, textScale, 3, textures);
@@ -300,7 +417,6 @@ public class MainCode extends AnimListener {
         }
 
     }
-
     private void playerActions(GL gl , int level , Player player) {
         if (player != null ) {
             

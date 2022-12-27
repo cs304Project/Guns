@@ -19,13 +19,12 @@ public class HandleKeys implements KeyListener {
     public final int LEFT = KeyEvent.VK_LEFT;
     public final int RIGHT = KeyEvent.VK_RIGHT;
     public final int SPACE = KeyEvent.VK_SPACE;
-    public final int W = KeyEvent.VK_W;
+ public final int W = KeyEvent.VK_W;
     public final int S = KeyEvent.VK_S;
     public final int A = KeyEvent.VK_A;
     public final int D = KeyEvent.VK_D;
     public final int E = KeyEvent.VK_E;
     
-
     
     
     final BitSet keyBits = new BitSet(256);
@@ -40,6 +39,10 @@ public class HandleKeys implements KeyListener {
         int keyCode = e.getKeyCode();
         
         keyBits.set(keyCode);
+       
+
+       // System.out.println(Player.fireRate);
+        
         
     }
 
