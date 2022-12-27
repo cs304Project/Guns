@@ -42,8 +42,6 @@ public class PauseMenu extends JPanel implements ActionListener{
     Sound sound;
     Sound buttonssound=new Sound();
     
-
-    Sound sound;
     
     public PauseMenu(GameManager gameManager ,Gameplay gameplay, Sound sound)
 

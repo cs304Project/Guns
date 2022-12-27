@@ -106,7 +106,6 @@ public class MainCode extends AnimListener {
     public void init(GLAutoDrawable glad) {
 
         initDefaultValues(glad);
-        player = new Player(gl, key);
         clock=new Clock();
 
 

@@ -5,12 +5,9 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -112,7 +109,7 @@ public class StartMenu extends JFrame implements ActionListener {
            buttonssound.PlaySoundEffect(5);
             
             level = 1; 
-            gameManager = new GameManager(false, true, gameManager.userName, 0, gameManager.sound);
+            gameManager = new GameManager(false, true, gameManager.userName, level, gameManager.sound);
            
 
         }
@@ -120,13 +117,13 @@ public class StartMenu extends JFrame implements ActionListener {
             gameManager.sound.stopSound();
             buttonssound.PlaySoundEffect(5);
             level = 2;
-            gameManager = new GameManager(false, true, gameManager.userName, level);
+            gameManager = new GameManager(false, true, gameManager.userName, level, buttonssound);
         }
         else if (e.getSource() == multiplayerBtu)
         {
             gameManager.sound.stopSound();
             level = 3;
-            gameManager = new GameManager(false, true, gameManager.userName, 0 ,gameManager.sound);
+            gameManager = new GameManager(false, true, gameManager.userName, level ,gameManager.sound);
            
 
         }
