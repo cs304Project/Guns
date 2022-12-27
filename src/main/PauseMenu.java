@@ -114,6 +114,7 @@ public class PauseMenu extends JPanel implements ActionListener{
             Entity.specialbullets = new ArrayList<>();
             Entity.PlayerEffects  = new ArrayList<>();
             Entity.EnemyEffects = new ArrayList<>();
+            MainCode.players  = new ArrayList<>();
             
             ScoreBoard scoreboard = new ScoreBoard();
             try {
