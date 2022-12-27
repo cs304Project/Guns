@@ -173,6 +173,44 @@ public class Player {
             player_bulletsound.PlaySoundEffect(2);
         }
     }
+    
+    public void move2()
+    {
+        if (key.isKeyPressed(key.W)) {
+            if (yWorld < 100) {
+
+                yWorld++;
+                // textureIndex++;
+                // textureIndex = (textureIndex % 4) + 1;
+
+            }
+        } else if (key.isKeyPressed(key.S)) {
+            if (yWorld > -100) {
+
+                yWorld--;
+                // textureIndex++;
+                /// textureIndex = (textureIndex % 4) + 1;
+            }
+        } else if (key.isKeyPressed(key.A)) {
+            if (xWorld + 5 > -100) {
+
+                xWorld--;
+                // textureIndex = (textureIndex % 4) + 1;
+            }
+        } else if (key.isKeyPressed(key.D)) {
+            if (xWorld < 100) {
+
+                xWorld++;
+                // textureIndex = (textureIndex % 4) + 1;
+            }
+        }
+
+        if (key.isKeyPressed(key.E) && fireRate > 10) {
+
+            createBullet();
+            player_bulletsound.PlaySoundEffect(2);
+        }
+    }
 
     public void drawPlayerBullet(GL gl, String name) {
 

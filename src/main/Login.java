@@ -81,7 +81,7 @@ public class Login extends JFrame  implements ActionListener {
         
         
         if (e.getSource() == loginBtu) {
-            gameManger = new GameManager(true , false , textField.getText());
+            gameManger = new GameManager(true , false , textField.getText(),0);
             this.dispose();
         }
         else if (e.getSource() == cancelBtu) {

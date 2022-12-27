@@ -7,7 +7,7 @@ public class Bullet {
 
     float xWorld;
     float yWorld;
-    float scale = 0.02f;
+    float scale = 0.05f;
     float angle;
     public final String typeBullet;
     final float speed;

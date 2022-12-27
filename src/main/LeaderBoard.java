@@ -91,7 +91,7 @@ public class LeaderBoard extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == menuButton){
-            gameManager = new GameManager(true, false, gameManager.userName);
+            gameManager = new GameManager(true, false, gameManager.userName, 0);
             this.dispose();
         }
     }

@@ -21,23 +21,12 @@ public class Entity {
     public static ArrayList<PlayerEffect> PlayerEffects = new ArrayList<>();
 
     public static ArrayList<Bullet> enemyBullets = new ArrayList<>();
-    public static  ArrayList<Integer> randmicList = new ArrayList<>();;
+    public static  int[] randmicList = new int[10];;
     
     //texture setting
     public String textureNames[] = {"background.jpeg","player.png","playerBullet.png","stage1.png",
         "stage2.png","stage3.png","stage4.png","gameover.png","won.png","bullet.png"};
     
-    public Entity()
-    {
-        randmicList.add(0);
-        randmicList.add(0);
-        randmicList.add(0);
-        randmicList.add(0);
-        randmicList.add(0);
-        randmicList.add(0);
-        randmicList.add(0);
-        randmicList.add(0);
-    }
     
     public void destroy(Object obj) {
 

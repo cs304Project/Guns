@@ -19,7 +19,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import main.Enemys.Enemy;
 import main.Players.Player;
 import org.json.simple.parser.ParseException;
 
@@ -41,8 +40,11 @@ public class PauseMenu extends JPanel implements ActionListener{
     GameManager gameManager;
     Gameplay gameplay;
     
-    public PauseMenu(GameManager gameManager ,Gameplay gameplay)
+    Sound sound;
+    
+    public PauseMenu(GameManager gameManager ,Gameplay gameplay, Sound sound)
     {
+        this.sound = sound;
         this.gameManager = gameManager;
         this.gameplay = gameplay;
         setBounds(150, 150,width, height);
@@ -98,10 +100,10 @@ public class PauseMenu extends JPanel implements ActionListener{
         if (e.getSource() == menuBtu) {
             Entity.EnemyStage_1 = new ArrayList<>();
             Entity.EnemyStage_2 = new ArrayList<>();
-
+            
             Entity.EnemyStage_3_01 = new ArrayList<>();
             Entity.EnemyStage_3_02= new ArrayList<>();
-            gameManager.sound.stopSound();
+            this.sound.stopSound();
             ScoreBoard scoreboard = new ScoreBoard();
             try {
                 scoreboard.addScore(gameManager.userName,Player.score);
@@ -112,7 +114,6 @@ public class PauseMenu extends JPanel implements ActionListener{
             }
             Player.score=0;
             gameManager = new GameManager();
-            System.out.println("Went to Menu");
             MainCode.isPause = false;
             this.gameplay.dispose(); 
         }

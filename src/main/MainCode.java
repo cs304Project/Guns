@@ -40,7 +40,10 @@ public class MainCode extends AnimListener {
 
     //player and key setting
     HandleKeys key = new HandleKeys();
-    Player player = new Player(gl, key);
+    ArrayList<Player> players = new ArrayList<>();
+    
+    Player player;
+    Player player2;
     public TextureReader.Texture texture[] = new TextureReader.Texture[e.textureNames.length];
     public int textures[] = new int[e.textureNames.length];
 
@@ -54,6 +57,7 @@ public class MainCode extends AnimListener {
     boolean StageTwoOn = false;
     boolean StageThreeOn = false;
     boolean StageFourOn = false;
+    
 
     public static boolean isPause = false;
 
@@ -62,18 +66,29 @@ public class MainCode extends AnimListener {
 
         switch (this.level) {
             case 1:
+                player = new Player(gl, key);
+                players.add(player);
                 System.out.println("MY LEVEL : " + this.level);
                 break;
             case 2:
+                player= new Player(gl, key);
+                 players.add(player);
                 System.out.println("MY LEVEL : " + this.level);
+                break;
+            case 3:
+                
+                player= new Player(gl, key);
+                player2= new Player(gl, key);
+                System.out.println("MY LEVEL : " + this.level);
+                players.add(player);
+                players.add(player2);
+                
                 break;
             default:
                 System.out.println("NO LEVELS : ");
                 break;
         }
 
-        this.xMax = xMax;
-        this.yMax = yMax;
 
     }
 
@@ -104,10 +119,40 @@ public class MainCode extends AnimListener {
 
         e.drawBackground(gl, textures);
 
+        switch (level) {
+            case 1:
+                setLevel_1();
+                break;
+            case 2:
+                setLevel_1();
+                break;
+            case 3:
+                setLevel_1();
+                break;
+            default:
+                break;
+        }
+         
+        
+
+    }
+
+    
+    public void setLevel_1()
+    {
         if (!isPause) {
 
             //Draw the player
-            playerActions(gl);
+            if(level >= 3 )
+            {
+                playerActions(gl, 1 , players.get(0));
+                playerActions(gl, 3 , players.get(1));
+            }
+            else
+            {
+                playerActions(gl, 1 , players.get(0));
+            }
+           
 
             //Draw stage
             stageLogic();
@@ -118,22 +163,22 @@ public class MainCode extends AnimListener {
             player.drawPlayer(gl, x, y);
 
             if (StageOneOn) {
-                stage.drawEnemy(gl, player, 1);
-                stage.drawEnemyBullet(gl, 1, isPause, player);
+                stage.drawEnemy(gl, players, 1);
+                stage.drawEnemyBullet(gl, 1, isPause, players);
 
             } else if (StageTwoOn) {
-                stage.drawEnemy(gl, player, 2);
-                stage.drawEnemyBullet(gl, 2, isPause, player);
+                stage.drawEnemy(gl, players, 2);
+                stage.drawEnemyBullet(gl, 2, isPause, players);
             } else if (StageThreeOn) {
-                stage.drawEnemy(gl, player, 3);
+                stage.drawEnemy(gl, players, 3);
             } else if (StageFourOn) {
 //                stage.drawEnemyBullet(gl , 4 , isPause, player);
             }
 
         }
-
     }
-
+    
+    
     private void stageLogic() {
         if (StageOneOn) {
             if (time.seconds < 2) {
@@ -146,9 +191,10 @@ public class MainCode extends AnimListener {
                 Stage1 s1 = new Stage1(stage1);
                 enemyKey = false;
             }
-            stage.drawEnemy(gl, player, 1);
-            stage.drawEnemyBullet(gl, 1, isPause, player);
-            //drawEnemyEffects(Entity.EnemyEffects, 1);
+            stage.drawEnemy(gl, players, 1);
+            stage.drawEnemyBullet(gl, 1, isPause, players);
+            drawEnemyEffects(Entity.EnemyEffects, 1);
+            drawPlayerEffects(Entity.PlayerEffects, 2);
 
             if (Entity.EnemyStage_1.size() <= 0) {
                 StageOneOn = false;
@@ -173,9 +219,9 @@ public class MainCode extends AnimListener {
 
                 enemyKey = false;
             }
-            stage.drawEnemy(gl, player, 2);
+            stage.drawEnemy(gl, players, 2);
 
-            //stage.drawEnemyBullet(gl, 2, isPause, player);
+            stage.drawEnemyBullet(gl, 2, isPause, players);
             drawEnemyEffects(Entity.EnemyEffects, 2);
             drawPlayerEffects(Entity.PlayerEffects, 2);
 
@@ -201,7 +247,7 @@ public class MainCode extends AnimListener {
                 Stage3 s3 = new Stage3(stage3);
                 enemyKey = false;
             }
-            stage.drawEnemy(gl, player, 3);
+            stage.drawEnemy(gl, players, 3);
 
             drawEnemyEffects(Entity.EnemyEffects, 3);
 
@@ -227,7 +273,7 @@ public class MainCode extends AnimListener {
                 ReadPlayerAssets playerassets = new ReadPlayerAssets();
                 enemyKey = false;
             }
-            stage.drawEnemy(gl, player, 4);
+            stage.drawEnemy(gl, players, 4);
             drawBossBullets(gl, Entity.bossBullets);
             drawEnemyEffects(Entity.EnemyEffects, 4);
             drawPlayerEffects(Entity.PlayerEffects, 4);
@@ -248,10 +294,15 @@ public class MainCode extends AnimListener {
 
     }
 
-    private void playerActions(GL gl) {
-        if (player != null) {
+    private void playerActions(GL gl , int level , Player player) {
+        if (player != null ) {
+            
             player.drawPlayer(gl);
-            player.move();
+            if( level == 1 || level == 2)
+                player.move();
+            if(level == 3)
+                player.move2();
+            
             player.drawPlayerBullet(gl, playerStage);
         }
     }

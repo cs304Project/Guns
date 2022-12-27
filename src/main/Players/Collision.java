@@ -90,7 +90,7 @@ public class Collision {
                 e.destroyEnemyFromList(enemy, eList);
                 
                 Player.score += enemy.bonusScore;
-
+               
             }
         } else if ((obj2 instanceof Enemy enemy && obj1 instanceof Player player)) {
             if (detectCollision(player.c, enemy.c)) {

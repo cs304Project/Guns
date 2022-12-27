@@ -49,6 +49,7 @@ public class Enemy {
         speed = 0.05f;
         angle = 0;
         c = new Collision(xWorld * speed * scale, yWorld * speed * scale, collidingRaduis);
+        isFire = false;
     }
 
     public Enemy() {
@@ -58,6 +59,7 @@ public class Enemy {
         speed = 0.05f;
         angle = 0;
         c = new Collision(xWorld * speed * scale, yWorld * speed * scale, collidingRaduis);
+        isFire = false;
     }
 
     public Enemy(float x, float y, int health) {
@@ -212,8 +214,7 @@ public class Enemy {
 
     public void drawEnemy_AnimationAI(GL gl, float x, float y, String AIName, int stage) {
         gl.glEnable(GL.GL_BLEND);
-        time++;
-
+        
         switch (stage) {
             case 1:
                 if (time % 7 == 0) {
