@@ -7,14 +7,18 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.media.opengl.GLCanvas;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
+import main.Players.Player;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -30,18 +34,12 @@ public class Gameplay extends JFrame implements ActionListener {
     GameManager gameManager;
     MainCode mc;
 
-    Timing time;
-    
-
-
     //public Gameplay(JLabel textTime , GameManager gameManager)
     public Gameplay(GameManager gameManager, int level) {
-       
-        this.gameManager = gameManager;
-        time = new Timing();
-        mc = new MainCode(level);
 
-        pausePanel = new PauseMenu(this.gameManager , this, gameManager.sound);
+        this.gameManager = gameManager;
+        mc = new MainCode(level);
+        pausePanel = new PauseMenu(this.gameManager, this,gameManager.sound);
         pausePanel.setVisible(false);
 
         GLCanvas glcanvas;
@@ -62,19 +60,12 @@ public class Gameplay extends JFrame implements ActionListener {
         JLabel title = new JLabel("DROP YOUR CODE");
         title.setBounds(140, 200, 400, 40);
         title.setFont(new Font("", Font.BOLD, 20));
-        
-        JLabel textTime = new JLabel();
-        title.setBounds(140, 200, 400, 40);
-        title.setFont(new Font("", Font.BOLD, 20));
-        textTime.setText(time.secondText);
-        add(textTime);
 
         add(pausePanel);
-        
+        //add(textTime);
         add(pauseBtu);
         //add(title);
         add(glcanvas);
-        
 
         setTitle("Guns");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
