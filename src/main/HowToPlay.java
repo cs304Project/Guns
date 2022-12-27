@@ -16,7 +16,7 @@ import javax.swing.WindowConstants;
 public class HowToPlay extends JFrame implements ActionListener{
     JButton menuButton;
     JLabel [] labels = new JLabel[10];
-    String[] text = {"Instructions","arrow up        move up","arrow down      move down","arrow left      move left","arrow right     move right","space           shoot"};
+    String[] text = {"Instructions","arrows   to move player 1","W,A,S,D  to move player 2","space    shoot for player 1","E        shoot for player 2","Esc      PauseMenu"};
     int screenWidth = 700;
     int screenHeight = 700;
     int xWorld = 350;
@@ -76,7 +76,7 @@ public class HowToPlay extends JFrame implements ActionListener{
             //gameManager.sound.stopSound();
              buttonssound.PlaySoundEffect(5);
             gameManager = new GameManager(true, false, gameManager.userName, 0 ,gameManager.sound);
-
+            
             this.dispose();
         }
     }
