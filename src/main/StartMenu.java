@@ -25,6 +25,7 @@ public class StartMenu extends JFrame implements ActionListener {
 
     JButton easyBtu;
     JButton hardBtu;
+    JButton multiplayerBtu;
     JButton LeaderBoard;
     JButton HowToPlay;
     JButton exitBtu;
@@ -44,22 +45,25 @@ public class StartMenu extends JFrame implements ActionListener {
 
         easyBtu = new JButton();
         hardBtu = new JButton();
+        multiplayerBtu = new JButton();
         LeaderBoard = new JButton();
         HowToPlay = new JButton();
         exitBtu = new JButton();
         easyBtu.setBounds(xWorld - 100, yWorld, btuWidth, btuHeight);
         hardBtu.setBounds(xWorld - 100, yWorld + 75, btuWidth, btuHeight);
-        LeaderBoard.setBounds(xWorld - 100,yWorld+150,btuWidth,btuHeight);
-        HowToPlay.setBounds(xWorld - 100,yWorld+225,btuWidth,btuHeight);
-        exitBtu.setBounds(xWorld - 100,yWorld+300 , btuWidth, btuHeight);
+        multiplayerBtu.setBounds(xWorld - 100,yWorld+150, btuWidth, btuHeight);
+        LeaderBoard.setBounds(xWorld - 100,yWorld+225,btuWidth,btuHeight);
+        HowToPlay.setBounds(xWorld - 100,yWorld+300,btuWidth,btuHeight);
+        exitBtu.setBounds(xWorld - 100,yWorld+375 , btuWidth, btuHeight);
 
-        easyBtu = createBtu(easyBtu, "EASY", new Color(0f, 0f, 0f, 0.5f));
-        hardBtu = createBtu(hardBtu, "HARD", new Color(0f, 0f, 0f, 0.5f));
-        HowToPlay = createBtu(HowToPlay, "How to play", new Color(0f,0f,0f,.5f));
-        LeaderBoard = createBtu(LeaderBoard,"Leader Board",new Color(0f,0f,0f,0.5f));
+        easyBtu = createBtu(easyBtu, "EASY", new Color(0f, 0f, 0f, 1f));
+        hardBtu = createBtu(hardBtu, "HARD", new Color(0f, 0f, 0f, 1f));
+        multiplayerBtu = createBtu(multiplayerBtu, "Multiplayer", new Color(0f, 0f, 0f, 1f));
+        HowToPlay = createBtu(HowToPlay, "How to play", new Color(0f,0f,0f,1f));
+        LeaderBoard = createBtu(LeaderBoard,"Leader Board",new Color(0f,0f,0f,1f));
         
-        exitBtu = createBtu(exitBtu, "EXIT", new Color(0f, 0f, 0f, 0.5f));
-        setContentPane(new JLabel(new ImageIcon("D:/Guns/src/Assets/player/background.jpeg")));
+        exitBtu = createBtu(exitBtu, "EXIT", new Color(0f, 0f, 0f, 1f));
+        setContentPane(new JLabel(new ImageIcon()));
         setLayout(new FlowLayout());
 
         userText = new JLabel();
@@ -68,8 +72,10 @@ public class StartMenu extends JFrame implements ActionListener {
         userText.setText("User Name: " + UserName);
 
         //Add properties for JFrame screen;
+        setBackground(Color.YELLOW);
         this.add(easyBtu);
         this.add(hardBtu);
+        this.add(multiplayerBtu);
         this.add(LeaderBoard);
         this.add(HowToPlay);
         this.add(exitBtu);
@@ -106,15 +112,23 @@ public class StartMenu extends JFrame implements ActionListener {
            buttonssound.PlaySoundEffect(5);
             
             level = 1; 
-            gameManager = new GameManager(false, true, gameManager.userName,gameManager.sound);
+            gameManager = new GameManager(false, true, gameManager.userName, 0, gameManager.sound);
            
+
         }
         else if (e.getSource() == hardBtu){
             gameManager.sound.stopSound();
             buttonssound.PlaySoundEffect(5);
             level = 2;
-            gameManager = new GameManager(false, true, gameManager.userName,gameManager.sound);
+            gameManager = new GameManager(false, true, gameManager.userName, level);
+        }
+        else if (e.getSource() == multiplayerBtu)
+        {
+            gameManager.sound.stopSound();
+            level = 3;
+            gameManager = new GameManager(false, true, gameManager.userName, 0 ,gameManager.sound);
            
+
         }
         else if(e.getSource () == exitBtu)
          // buttonssound.PlaySoundEffect(5);

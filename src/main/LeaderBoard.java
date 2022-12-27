@@ -95,11 +95,13 @@ public class LeaderBoard extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
        // leaderbuttonsound.PlaySoundEffect(5);
         if(e.getSource() == menuButton){
+        
+
       //leaderbuttonsound.PlaySoundEffect(5);
            
             //sound.stopSound();
              sound.PlaySoundEffect(5);
-            gameManager = new GameManager(true, false, gameManager.userName,sound);
+            gameManager = new GameManager(true, false, gameManager.userName,0,sound);
             this.dispose();
         }
     }

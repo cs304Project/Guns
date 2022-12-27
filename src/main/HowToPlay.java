@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package main;
 
 import java.awt.Color;
@@ -76,9 +73,11 @@ public class HowToPlay extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == menuButton){
+        
             //gameManager.sound.stopSound();
              buttonssound.PlaySoundEffect(5);
-            gameManager = new GameManager(true, false, gameManager.userName,gameManager.sound);
+            gameManager = new GameManager(true, false, gameManager.userName, 0 ,gameManager.sound);
+
             this.dispose();
         }
     }

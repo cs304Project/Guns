@@ -71,9 +71,12 @@ public class Login extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginBtu) {
+
+           
             buttonssound.PlaySoundEffect(5);
-            gameManger = new GameManager(true, false, textField.getText(),buttonssound);
+            gameManger = new GameManager(true, false, textField.getText(),0,buttonssound);
             gameManger.sound=buttonssound;
+
             this.dispose();
         } else if (e.getSource() == cancelBtu) {
             buttonssound.PlaySoundEffect(5);
