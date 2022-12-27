@@ -60,11 +60,11 @@ public class Enemy {
         c = new Collision(xWorld * speed * scale, yWorld * speed * scale, collidingRaduis);
     }
 
-    public Enemy(float x, float y, int health) {
+    public Enemy(float x, float y,float speed ,int health) {
 
         xWorld = x;
         yWorld = y;
-        speed = 0.05f;
+       this.speed = speed;
         angle = 0;
         this.health = health;
         c = new Collision(xWorld * speed * scale, yWorld * speed * scale, collidingRaduis);

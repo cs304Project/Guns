@@ -94,7 +94,6 @@ public class Healthy {
         gl.glVertex3f(-1.0f, 1.0f, -1.0f);
         gl.glEnd();
         gl.glPopMatrix();
-        
         gl.glDisable(GL.GL_BLEND);
         c.drawCirclie(gl, xHealthy, yHealthy);
     }

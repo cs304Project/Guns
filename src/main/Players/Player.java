@@ -18,6 +18,8 @@ public class Player {
     public float scale = 0.1f;
     public float speed = 0.09f;
     public boolean damege = false;
+    public boolean isDestroy = false;
+
     public int powerUp = 1;
     public static int fireRate;
     public static int score = 0;
@@ -232,15 +234,42 @@ public void move2()
     public void drawPlayerBullet(GL gl, String name, boolean isPause) {
             for (int i = 0; i < this.bullets.size(); i++) {
                 // Player.bullets.get(i).setYWorld(Player.bullets.get(i).getYWorld());
+                 float x =0;
+                 float y=0; 
                 if(isPause)
                 {
-                    float x =  Player.bullets.get(i).getXWorld();
-                    float y =  Player.bullets.get(i).getYWorld();
+                    x =  Player.bullets.get(i).getXWorld();
+                    y =  Player.bullets.get(i).getYWorld();
                      Player.bullets.get(i).drawBullet(gl, x, y);
                 }
                 else
                 {
+//                    if(powerUp==1){
                     Player.bullets.get(i).drawBullet(gl);
+//                    }
+//                    else if(powerUp==2){
+//                    x -= 0.03f;
+//                    Bullet bullet1 = new Bullet(gl, x, y, 0.05f,"PlayerBullet",0.02f,0);
+//                    x += 0.05f;
+//                    Bullet bullet2 = new Bullet(gl, x, y,0.05f,"PlayerBullet",0.02f,0);
+//                    bullets.add(bullet1);
+//                    bullets.add(bullet2);
+//                       
+//                    Player.bullets.get(i).drawBullet(gl);
+//                    Player.bullets.get(i).drawBullet(gl);
+//
+//                }
+//                    else{
+//                          x -= 0.03f;
+//                    Bullet bullet1 = new Bullet(gl, x, y, 0.05f,"PlayerBullet",0.02f,0);
+//                    x += 0.05f;
+//                    Bullet bullet2 = new Bullet(gl, x, y,0.05f,"PlayerBullet",0.02f,0);
+//                    bullets.add(bullet1);
+//                    bullets.add(bullet2);
+                       
+//                    Player.bullets.get(i).drawBullet(gl);
+//                    Player.bullets.get(i).drawBullet(gl);
+//                    }
                 }
                 
 
