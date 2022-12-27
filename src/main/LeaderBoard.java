@@ -32,9 +32,12 @@ public class LeaderBoard extends JFrame implements ActionListener{
     int xWorld = 350;
     int yWorld = 200;
     GameManager gameManager;
+    Sound sound;
+    //Sound leaderbuttonsound=new Sound();
 
     public LeaderBoard(GameManager gameManager) throws IOException, FileNotFoundException, ParseException{
         this.gameManager = gameManager;
+        this.sound=gameManager.sound;
         scoreboard = new ScoreBoard();
         ArrayList<Score> scoresList =  scoreboard.getScores();
         
@@ -90,8 +93,15 @@ public class LeaderBoard extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
+       // leaderbuttonsound.PlaySoundEffect(5);
         if(e.getSource() == menuButton){
-            gameManager = new GameManager(true, false, gameManager.userName, 0);
+        
+
+      //leaderbuttonsound.PlaySoundEffect(5);
+           
+            //sound.stopSound();
+             sound.PlaySoundEffect(5);
+            gameManager = new GameManager(true, false, gameManager.userName,0,sound);
             this.dispose();
         }
     }

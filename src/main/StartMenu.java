@@ -38,7 +38,7 @@ public class StartMenu extends JFrame implements ActionListener {
     int xWorld = 350;
     int yWorld = 200;
     int level;
-
+    Sound buttonssound=new Sound();
     public StartMenu(GameManager gameManager, String UserName) {
 
         this.gameManager = gameManager;
@@ -107,15 +107,18 @@ public class StartMenu extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         
-        
-
         if (e.getSource() == easyBtu){
-            gameManager.sound.stopSound();
+           gameManager.sound.stopSound();
+           buttonssound.PlaySoundEffect(5);
+            
             level = 1; 
-            gameManager = new GameManager(false, true, gameManager.userName, level);
+            gameManager = new GameManager(false, true, gameManager.userName, 0, gameManager.sound);
+           
+
         }
         else if (e.getSource() == hardBtu){
             gameManager.sound.stopSound();
+            buttonssound.PlaySoundEffect(5);
             level = 2;
             gameManager = new GameManager(false, true, gameManager.userName, level);
         }
@@ -123,12 +126,16 @@ public class StartMenu extends JFrame implements ActionListener {
         {
             gameManager.sound.stopSound();
             level = 3;
-            gameManager = new GameManager(false, true, gameManager.userName, level);
+            gameManager = new GameManager(false, true, gameManager.userName, 0 ,gameManager.sound);
+           
+
         }
         else if(e.getSource () == exitBtu)
+         // buttonssound.PlaySoundEffect(5);
             System.exit(0);
 
         if(e.getSource() == LeaderBoard){
+           buttonssound.PlaySoundEffect(5);
             try {
                 gameManager = new GameManager(false,false,true,false,gameManager.userName);
             } catch (IOException ex) {
@@ -140,7 +147,7 @@ public class StartMenu extends JFrame implements ActionListener {
         }
         
         if (e.getSource() == HowToPlay){
-           
+           buttonssound.PlaySoundEffect(5);
             try {
                 gameManager = new GameManager(false,false,false,true,gameManager.userName);
             } catch (IOException ex) {

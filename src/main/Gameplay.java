@@ -24,13 +24,15 @@ public class Gameplay extends JFrame implements ActionListener {
 
     PauseMenu pausePanel;
     JButton pauseBtu;
-    
+
     int maxX = 700;
     int maxY = 700;
     GameManager gameManager;
     MainCode mc;
+
     Timing time;
     
+
 
     //public Gameplay(JLabel textTime , GameManager gameManager)
     public Gameplay(GameManager gameManager, int level) {
@@ -38,28 +40,24 @@ public class Gameplay extends JFrame implements ActionListener {
         this.gameManager = gameManager;
         time = new Timing();
         mc = new MainCode(level);
+
         pausePanel = new PauseMenu(this.gameManager , this, gameManager.sound);
         pausePanel.setVisible(false);
-        
+
         GLCanvas glcanvas;
         Animator animator;
         glcanvas = new GLCanvas();
         getContentPane().add(glcanvas, BorderLayout.CENTER);
         glcanvas.addGLEventListener(mc);
         mc.setCanvas(glcanvas);
-        
-        
-        
+
         pauseBtu = new JButton();
         pauseBtu.setBounds(5, 5, 60, 40);
         pauseBtu = createBtu(this.pauseBtu, "Pause");
-        
 
         animator = new FPSAnimator(60);
         animator.add(glcanvas);
         animator.start();
-        
-        
 
         JLabel title = new JLabel("DROP YOUR CODE");
         title.setBounds(140, 200, 400, 40);
@@ -70,6 +68,7 @@ public class Gameplay extends JFrame implements ActionListener {
         title.setFont(new Font("", Font.BOLD, 20));
         textTime.setText(time.secondText);
         add(textTime);
+
         add(pausePanel);
         
         add(pauseBtu);
@@ -104,7 +103,9 @@ public class Gameplay extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == pauseBtu) {                      
+        if (e.getSource() == pauseBtu) {
+            gameManager.sound.stopSound();
+
             MainCode.isPause = true;
             pausePanel.setVisible(true);
         }

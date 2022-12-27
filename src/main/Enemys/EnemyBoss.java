@@ -6,6 +6,7 @@ import javax.media.opengl.GL;
 import main.Entity;
 import main.Players.Bullet;
 import main.Players.Collision;
+import main.Sound;
 
 import main.Timing;
 
@@ -22,6 +23,7 @@ public class EnemyBoss extends Enemy {
     int normalAttackTimer = 0;
     int specialAttackTimer = 0;
     int counter = 0;
+    Sound enemyBoss_bulletSound=new Sound();
 
     Timing t = new Timing();
 
@@ -51,11 +53,13 @@ public class EnemyBoss extends Enemy {
         if (normalAttackTimer % 5 == 0 && normalAttackTimer != 0 && specialAttackTimer <= 5) {
             bulletScale = 0.02f;
             createBullet(gl, Entity.bossBullets, 270, "BossBullet", bulletScale);
+            //enemyBoss_bulletSound.PlaySoundEffect(6);
             normalAttackTimer = 0;
 
         } else if (specialAttackTimer % 5 == 0 && specialAttackTimer > 5) {
             bulletScale = 0.03f;
             super.createBullet(gl, Entity.bossBullets, angle, "SpecilEnemyBullet", bulletScale);
+            //enemyBoss_bulletSound.PlaySoundEffect(6);
             specialAttackTimer = 0;
             normalAttackTimer = 0;
         }

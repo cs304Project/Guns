@@ -16,22 +16,24 @@ public class GameManager {
     public String userName = "";
     public int level;
     
-    public GameManager(boolean menuOn , boolean gameplayOn ,String userName, int level)
+    public GameManager(boolean menuOn , boolean gameplayOn ,String userName, int level , Sound sound)
     {
         this.level = level;
         this.menuOn = menuOn;
         this.gameplayOn = gameplayOn;
         this.leaderBoardOn = false;
         this.userName = userName;
+        this.sound=sound;
         //time = new Timing();
         
         // Active the menu windows
         if(this.menuOn)
         {
             StartMenu  menu = new StartMenu(this , userName);
-
+            if(sound==null)
             sound.playSound(0);
         }
+        
         
         // Active the gameplay windows
         if(this.gameplayOn)
@@ -40,6 +42,7 @@ public class GameManager {
             Gameplay gameplay = new Gameplay( this ,level);
             sound.playSound(1);
             //sound.PlaySoundEffect(2);
+
         }
         
     }
@@ -58,7 +61,8 @@ public class GameManager {
         {
             StartMenu  menu = new StartMenu(this , userName);
             
-            //sound.playSound(0);
+            sound.playSound(0);
+            sound.PlaySoundEffect(1);
 
         }
         

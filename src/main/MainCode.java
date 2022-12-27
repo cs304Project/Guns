@@ -28,6 +28,7 @@ public class MainCode extends AnimListener {
     public static int xMax;
     public static int yMax;
     float textScale = 0.1f;
+    Clock clock;
     //deault Objects
     public static GL gl;
     GLCanvas canvas;
@@ -106,6 +107,8 @@ public class MainCode extends AnimListener {
 
         initDefaultValues(glad);
         player = new Player(gl, key);
+        clock=new Clock();
+
 
         gl.glLoadIdentity();
         time.start();
@@ -143,6 +146,7 @@ public class MainCode extends AnimListener {
         if (!isPause) {
 
             //Draw the player
+
             if(level >= 3 )
             {
                 playerActions(gl, 1 , players.get(0));
@@ -153,6 +157,9 @@ public class MainCode extends AnimListener {
                 playerActions(gl, 1 , players.get(0));
             }
            
+            if (StageThreeOn){
+                clock.drawClock(gl);
+            }
 
             //Draw stage
             stageLogic();
@@ -165,6 +172,7 @@ public class MainCode extends AnimListener {
             if (StageOneOn) {
                 stage.drawEnemy(gl, players, 1);
                 stage.drawEnemyBullet(gl, 1, isPause, players);
+
 
             } else if (StageTwoOn) {
                 stage.drawEnemy(gl, players, 2);

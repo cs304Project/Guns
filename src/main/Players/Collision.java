@@ -103,13 +103,14 @@ public class Collision {
             if (detectCollision(bullet.bullet_collision, enemy.c)) {
                 Player.score += enemy.bonusScore;
                 bullet.isDestroyed = true;
-                s.PlaySoundEffect(2);
+                //s.PlaySoundEffect(2);
 
                 EnemyEffect enemyeffect = new EnemyEffect(enemy.getXWorld(), enemy.getYWorld());
                 e.destroyEnemyFromList(enemy, eList);
+                Enemy_Deathsound.PlaySoundEffect(3);
                 Entity.EnemyEffects.add(enemyeffect);
 
-                Enemy_Deathsound.PlaySoundEffect(3);
+                
             }
 
         } else if ((obj1 instanceof Enemy enemy && obj2 instanceof Bullet bullet)) {
@@ -117,8 +118,9 @@ public class Collision {
                 enemy.health--;
                 if (enemy.health <= 0) {
                     e.destroyEnemyFromList(enemy, eList);
-                    Player.score += enemy.bonusScore;
                     Enemy_Deathsound.PlaySoundEffect(3);
+                    Player.score += enemy.bonusScore;
+                    
                 }
                 bullet.isDestroyed = true;
             }
