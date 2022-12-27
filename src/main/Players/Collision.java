@@ -201,6 +201,7 @@ public class Collision {
                 Entity.destroy((PowerUp) power);
                 power.isDestroyed = true;
                 player.powerUp++;
+                Player.score+=(int)(Math.random()*20)+1;
                 player.specialHitted = false;
             }
         } else if ((obj2 instanceof Player player && obj1 instanceof PowerUp power)) {

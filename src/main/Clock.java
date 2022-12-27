@@ -30,7 +30,10 @@ public class Clock {
         gl.glEnable(GL.GL_BLEND);
         time++;
         if (time % (60*5) == 0) {
-            index = (index + 1) % 12;
+            index = (index + 1);
+            if (index>=12){
+                index=11;
+            }
         }
         gl.glBindTexture(GL.GL_TEXTURE_2D, clockTextures[index]);
         gl.glPushMatrix();
