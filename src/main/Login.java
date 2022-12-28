@@ -23,8 +23,8 @@ public class Login extends JFrame implements ActionListener {
     GameManager gameManger;
     JLabel userText;
     JLabel userPassword;
-    int xWorld = 250;
-    int yWorld = 450;
+    int xWorld = 200;
+    int yWorld = 200;
     Sound buttonssound=new Sound();
 
     public static void main(String[] string) {
@@ -58,11 +58,12 @@ public class Login extends JFrame implements ActionListener {
         add(userText);
         add(loginBtu);
         add(cancelBtu);
-
+        setBackground(Color.PINK);
+        
         setTitle("Guns Login");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
-        this.setSize(700, 700);
+        this.setSize(500, 500);
         this.setLayout(null);
         this.setVisible(true);
         setLocationRelativeTo(null);

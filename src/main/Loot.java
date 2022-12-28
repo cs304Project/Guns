@@ -33,7 +33,7 @@ public class Loot {
         }
         drawPresent(gl, players, isPause);
         e.destroyPresent();
-        if ((timeCountSpecial) == 20 && timeCountSpecial != 0) {
+        if ((timeCountSpecial) == 25 && timeCountSpecial != 0) {
             fillSpecialArray(gl);
             timeCountSpecial = 0;
         }
