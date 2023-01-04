@@ -27,7 +27,7 @@ public class Loot {
     Collision c = new Collision();
 
     public void checkForTime(GL gl, ArrayList<Player> players , boolean isPause) {
-        if ((timeCountePresent) == 15 && timeCountePresent != 0) {
+        if ((timeCountePresent) == 10 && timeCountePresent != 0) {
             fillPresentsArray(gl);
             timeCountePresent = 0;
         }
