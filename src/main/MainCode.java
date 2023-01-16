@@ -370,12 +370,7 @@ public class MainCode extends AnimListener {
                 player.move2();
             }
             if (time.seconds > 6) {
-                player.drawPlayerBullet(gl, playerStage, isPause);
-
-            } else {
-                for (int i = 0; i < players.size(); i++) {
-                    players.get(i).fireRate = 0;
-                }
+                player.drawPlayerBullet(gl, playerStage, isPause);            
             }
         }
     }
