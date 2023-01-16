@@ -8,6 +8,14 @@ This is a project for my computer graphics course at university of Cairo (Comput
 * Jogl
 * json-simple
 
+## How to install
+* clone this repo using this command : 
+> git clone https://github.com/cs304Project/Guns.git
+* download an ide like netbeans
+* you can find documentation to download and setup jogl here https://mgayar.blogspot.com/2014/03/how-to-install-jogl11-into-netbeans.html
+* download json-simple from here https://www.dropbox.com/sh/wz8kpntgftjpbn9/AADU20oyJyAaYEHFUjRSvNEda?dl=0
+* you can add json-simple to the project similerly to jogl
+
 ## Features
 * SinglePlayer and Multiplayer
 * Two level easy and hard 
@@ -75,15 +83,17 @@ this method can handle collision between player and enemy or between enemy and b
 ### PlayerEffect Class
 Is responsible for Draw Player Effect when it Hits with an Egg of Enemy, this effect appear few sec and hide.
 >drawPlayerEffects(GL gl, int stage)
+
 ## Enemys.main 🐔
 This Package Contains Several Classes about Enemys .
+
 ### Enemy Class
 Is responsible for Create and Draw Chicken Depend on the type of Stage,
 >drawEnemy(GL gl, float positionX, float positionY int stageNumber)
 
 This function is responsible for Draw the chicken.
 
-###EnemyAI Class
+### EnemyAI Class
 Is responsible for the way they move 
 we have four different method for the motion of enemy ,each one for specific stage
 > createAI01(ArrayList<Enemy> eList, GL gl, ArrayList<Player> players, ArrayList<Bullet> enemyBullets)
@@ -97,6 +107,6 @@ we have four different method for the motion of enemy ,each one for specific sta
 ### EnemyBoss Class
 Is responsible for Draw Special Enemy for Last Stage (final level) and move it by random way.
 
-###EnemyEffect Class
+### EnemyEffect Class
 Is responsible for Draw Enemy Effect when it Hits with a Bullet, this effect appear few sec and hide, and we have four enemy effect depend on stage.
 >drawEnemyEffects(GL gl, int stage)
