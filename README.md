@@ -1,11 +1,14 @@
-#Chicken invaders Game
+# Chicken invaders Game
 
-##Project info
+## Project info
 This is a project for my computer graphics course at university of Cairo (Computer Science Faculty).
-##Dependencies
+
+## Dependencies
 * OpenGL
 * Jogl
-##Features
+* json-simple
+
+## Features
 * SinglePlayer and Multiplayer
 * Two level easy and hard 
 * each level contain four stage
@@ -16,7 +19,7 @@ This is a project for my computer graphics course at university of Cairo (Comput
 * Effects for enemys and player appear for few sec when collision
 * Player have health and special gift for shoot special bullet and powerUp to increase score
 
-##Demo
+## Demo
 ![screenShort/0.jpeg](screenShort/0.jpeg)
 ![screenShort/2.jpeg](screenShort/2.jpeg)
 ![screenShort/3.jpeg](screenShort/3.jpeg)
@@ -35,12 +38,13 @@ This is a project for my computer graphics course at university of Cairo (Comput
 ![screenShort/16.jpeg](screenShort/16.jpeg)
 ![screenShort/17.jpeg](screenShort/17.jpeg)
 
-##main
+## main
 This Package Contains Several Classes about General setting.
 
-##Players.main
+## Players.main
 This Package Contains Several Classes about Players.
-##Player Class
+
+## Player Class
 Is responsible for Draw Players and move them and Draw Player'sBullets.
 >drawPlayer(GL gl, float x, float y)
 
@@ -54,7 +58,7 @@ Method for move SecondPlayer by A_key S_key w_key D_key and E_key for Shoot
 
 Method for Draw Bullet
 
-###Bullet Class
+### Bullet Class
 Is responsible for Draw Bullet.
 >drawBullet(GL gl, float x, float y)
 
@@ -62,18 +66,18 @@ Is responsible for Draw Bullet.
 
 This method is special for last stage ,the BossEnemy hits following bullet to kill the player.
 
-###Collision Class
+### Collision Class
 This Class Handle the Collision between any Two Object.
 >collision(Object obj1, Object obj2, ArrayList<Enemy> eList)
 
 this method can handle collision between player and enemy or between enemy and bullet or between player and health or gift or between player and egg.
 
-###PlayerEffect Class
+### PlayerEffect Class
 Is responsible for Draw Player Effect when it Hits with an Egg of Enemy, this effect appear few sec and hide.
 >drawPlayerEffects(GL gl, int stage)
-##Enemys.main 🐔
+## Enemys.main 🐔
 This Package Contains Several Classes about Enemys .
-###Enemy Class
+### Enemy Class
 Is responsible for Create and Draw Chicken Depend on the type of Stage,
 >drawEnemy(GL gl, float positionX, float positionY int stageNumber)
 
